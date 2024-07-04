@@ -48,12 +48,56 @@ export type Query = {
   getAllProducts: Array<Product>;
 };
 
+export type CreateNewProductMutationVariables = Exact<{
+  data: NewProductInput;
+}>;
+
+
+export type CreateNewProductMutation = { __typename?: 'Mutation', createNewProduct: { __typename?: 'Product', id: number, name: string, imgUrl: string, price: number, description: string } };
+
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number }> };
 
 
+export const CreateNewProductDocument = gql`
+    mutation CreateNewProduct($data: NewProductInput!) {
+  createNewProduct(data: $data) {
+    id
+    name
+    imgUrl
+    price
+    description
+  }
+}
+    `;
+export type CreateNewProductMutationFn = Apollo.MutationFunction<CreateNewProductMutation, CreateNewProductMutationVariables>;
+
+/**
+ * __useCreateNewProductMutation__
+ *
+ * To run a mutation, you first call `useCreateNewProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateNewProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createNewProductMutation, { data, loading, error }] = useCreateNewProductMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateNewProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateNewProductMutation, CreateNewProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateNewProductMutation, CreateNewProductMutationVariables>(CreateNewProductDocument, options);
+      }
+export type CreateNewProductMutationHookResult = ReturnType<typeof useCreateNewProductMutation>;
+export type CreateNewProductMutationResult = Apollo.MutationResult<CreateNewProductMutation>;
+export type CreateNewProductMutationOptions = Apollo.BaseMutationOptions<CreateNewProductMutation, CreateNewProductMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {
