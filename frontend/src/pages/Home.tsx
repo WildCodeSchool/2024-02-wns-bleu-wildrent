@@ -10,7 +10,7 @@ const HomePage = () => {
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="flex flex-wrap gap-4 justify-center">
-        {data?.getAllProducts.map(product => (
+        {data?.getAllProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
