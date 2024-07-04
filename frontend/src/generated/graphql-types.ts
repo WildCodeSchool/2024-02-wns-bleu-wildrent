@@ -17,6 +17,23 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createNewProduct: Product;
+};
+
+
+export type MutationCreateNewProductArgs = {
+  data: NewProductInput;
+};
+
+export type NewProductInput = {
+  description: Scalars['String']['input'];
+  imgUrl?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  price: Scalars['Float']['input'];
+};
+
 export type Product = {
   __typename?: 'Product';
   description: Scalars['String']['output'];
