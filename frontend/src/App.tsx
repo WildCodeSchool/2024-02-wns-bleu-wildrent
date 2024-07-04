@@ -1,22 +1,16 @@
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import { useGetAllProductsQuery } from './generated/graphql-types';
+import HomePage from './pages/Home'
+import NewProduct from './pages/NewProduct'
 
 function App() {
 
-  const { data, loading, error } = useGetAllProductsQuery();
-
-  if (loading) {
-    return <p>Loading</p>;
-  }
-  if (error) {
-    console.log("error", error);
-    return <p>Error</p>;
-  }
 
   return (
-    <>
-      {data?.getAllProducts.map(product => product.name)}
-    </>
+    <Routes>
+      <Route index element={<HomePage />} />      
+      <Route path="admin" element={<NewProduct />} />
+    </Routes>
   )
 }
 
