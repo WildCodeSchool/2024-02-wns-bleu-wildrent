@@ -29,6 +29,12 @@ export type Product = {
 export type Query = {
   __typename?: 'Query';
   getAllProducts: Array<Product>;
+  getOneProductById: Product;
+};
+
+
+export type QueryGetOneProductByIdArgs = {
+  productId: Scalars['String']['input'];
 };
 
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
