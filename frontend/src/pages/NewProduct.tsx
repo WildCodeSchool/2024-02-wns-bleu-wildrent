@@ -1,6 +1,9 @@
-import { useCreateNewProductMutation } from "../generated/graphql-types";
+import { useNavigate } from "react-router-dom";
+import { GetAllProductsDocument, useCreateNewProductMutation } from "../generated/graphql-types";
+import { Button, Form, Input } from "antd";
 
 const NewProduct = () => {
+  const navigate = useNavigate();
   const [createNewProduct] = useCreateNewProductMutation({
     onCompleted(data) {
       console.log("mutation completed data", data);
@@ -8,49 +11,66 @@ const NewProduct = () => {
     onError(error) {
       console.log("error after executing mutation", error);
     },
+    refetchQueries: [{ query: GetAllProductsDocument }]
   });
 
+  const onFinish = async (values: any) => {
+    const formJson = {
+      ...values,
+      price: parseInt(values.price),
+    };
+
+    await createNewProduct({
+      variables: {
+        data: formJson,
+      },
+    })
+    navigate("/")
+  }
+
+
   return (
-    <form
-      onSubmit={async (e) => {
-        e.preventDefault();
-
-        const form = e.target as HTMLFormElement;
-        const formData = new FormData(form);
-
-        const formJson: any = Object.fromEntries(formData.entries());
-        formJson.price = parseInt(formJson.price);
-
-        await createNewProduct({
-          variables: {
-            data: formJson,
-          },
-        });
-      }}
-    >
-      <label>
-        Nom du produit: <br />
-        <input className="text-field" name="name" />
-      </label>
-      <br />
-      <label>
-        imgUrl: <br />
-        <input className="text-field" name="imgUrl" />
-      </label>
-      <br />
-      <label>
-        Prix: <br />
-        <input className="text-field" name="price" />
-      </label>
-      <br />
-      <label>
-        description: <br />
-        <input className="text-field" name="description" />
-      </label>
-      <br />
-
-      <button className="button">Submit</button>
-    </form>
+    <>
+      <Form
+        style={{ maxWidth: 600, padding: 50 }}
+        wrapperCol={{ span: 16 }}
+        labelCol={{ span: 8 }}
+        onFinish={onFinish}
+        name="interface admin"
+      >
+        <Form.Item
+          label="Nom du produit:"
+          name='name'
+          rules={[{ required: true, message: 'Un nom de produit est nécessaire' }]}
+>
+          <Input className="text-field"  />
+        </Form.Item>
+        <Form.Item
+          label="imgUrl:"
+          name="imgUrl">
+          <Input className="text-field" />
+        </Form.Item>
+        <Form.Item
+          label="price:"
+          name="price"
+          rules={[{ required: true, message: 'Un prix est nécessaire' }]}
+>
+          <Input className="number"  />
+        </Form.Item>
+        <Form.Item
+          label="description:"
+          name="description"
+          rules={[{ required: true, message: 'Une description est nécessaire' }]}
+>
+          <Input className="text-field" />
+        </Form.Item>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </>
   );
 };
 export default NewProduct;
