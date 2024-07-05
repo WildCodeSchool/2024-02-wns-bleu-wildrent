@@ -17,14 +17,32 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type Article = {
+  __typename?: 'Article';
+  availability: Scalars['Boolean']['output'];
+  id: Scalars['Float']['output'];
+  product: Product;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  createNewArticle: Article;
   createNewProduct: Product;
+};
+
+
+export type MutationCreateNewArticleArgs = {
+  data: NewArticleInput;
 };
 
 
 export type MutationCreateNewProductArgs = {
   data: NewProductInput;
+};
+
+export type NewArticleInput = {
+  availability: Scalars['Boolean']['input'];
+  productId: Scalars['Float']['input'];
 };
 
 export type NewProductInput = {
@@ -45,6 +63,7 @@ export type Product = {
 
 export type Query = {
   __typename?: 'Query';
+  getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
 };
 
