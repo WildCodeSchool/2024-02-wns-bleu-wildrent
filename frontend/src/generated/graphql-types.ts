@@ -1,68 +1,84 @@
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
+import { gql } from "@apollo/client";
+import * as Apollo from "@apollo/client";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type MakeEmpty<
+  T extends { [key: string]: unknown },
+  K extends keyof T
+> = { [_ in K]?: never };
+export type Incremental<T> =
+  | T
+  | {
+      [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
+    };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
 };
 
 export type Article = {
-  __typename?: 'Article';
-  availability: Scalars['Boolean']['output'];
-  id: Scalars['Float']['output'];
+  __typename?: "Article";
+  availability: Scalars["Boolean"]["output"];
+  id: Scalars["Float"]["output"];
   product: Product;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   createNewArticle: Article;
   createNewProduct: Product;
+  createUser: Scalars["String"]["output"];
 };
-
 
 export type MutationCreateNewArticleArgs = {
   data: NewArticleInput;
 };
-
 
 export type MutationCreateNewProductArgs = {
   data: NewProductInput;
 };
 
 export type NewArticleInput = {
-  availability: Scalars['Boolean']['input'];
-  productId: Scalars['Float']['input'];
+  availability: Scalars["Boolean"]["input"];
+  productId: Scalars["Float"]["input"];
+};
+export type MutationCreateUserArgs = {
+  email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
 };
 
 export type NewProductInput = {
-  description: Scalars['String']['input'];
-  imgUrl?: InputMaybe<Scalars['String']['input']>;
-  name: Scalars['String']['input'];
-  price: Scalars['Float']['input'];
+  description: Scalars["String"]["input"];
+  imgUrl?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+  price: Scalars["Float"]["input"];
 };
 
 export type Product = {
-  __typename?: 'Product';
-  description: Scalars['String']['output'];
-  id: Scalars['Float']['output'];
-  imgUrl: Scalars['String']['output'];
-  name: Scalars['String']['output'];
-  price: Scalars['Float']['output'];
+  __typename?: "Product";
+  description: Scalars["String"]["output"];
+  id: Scalars["Float"]["output"];
+  imgUrl: Scalars["String"]["output"];
+  name: Scalars["String"]["output"];
+  price: Scalars["Float"]["output"];
 };
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
 };
@@ -71,27 +87,47 @@ export type CreateNewProductMutationVariables = Exact<{
   data: NewProductInput;
 }>;
 
+export type CreateNewProductMutation = {
+  __typename?: "Mutation";
+  createNewProduct: {
+    __typename?: "Product";
+    id: number;
+    name: string;
+    imgUrl: string;
+    price: number;
+    description: string;
+  };
+};
 
-export type CreateNewProductMutation = { __typename?: 'Mutation', createNewProduct: { __typename?: 'Product', id: number, name: string, imgUrl: string, price: number, description: string } };
+export type GetAllProductsQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number }> };
-
+export type GetAllProductsQuery = {
+  __typename?: "Query";
+  getAllProducts: Array<{
+    __typename?: "Product";
+    id: number;
+    name: string;
+    description: string;
+    imgUrl: string;
+    price: number;
+  }>;
+};
 
 export const CreateNewProductDocument = gql`
-    mutation CreateNewProduct($data: NewProductInput!) {
-  createNewProduct(data: $data) {
-    id
-    name
-    imgUrl
-    price
-    description
+  mutation CreateNewProduct($data: NewProductInput!) {
+    createNewProduct(data: $data) {
+      id
+      name
+      imgUrl
+      price
+      description
+    }
   }
-}
-    `;
-export type CreateNewProductMutationFn = Apollo.MutationFunction<CreateNewProductMutation, CreateNewProductMutationVariables>;
+`;
+export type CreateNewProductMutationFn = Apollo.MutationFunction<
+  CreateNewProductMutation,
+  CreateNewProductMutationVariables
+>;
 
 /**
  * __useCreateNewProductMutation__
@@ -110,24 +146,38 @@ export type CreateNewProductMutationFn = Apollo.MutationFunction<CreateNewProduc
  *   },
  * });
  */
-export function useCreateNewProductMutation(baseOptions?: Apollo.MutationHookOptions<CreateNewProductMutation, CreateNewProductMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateNewProductMutation, CreateNewProductMutationVariables>(CreateNewProductDocument, options);
-      }
-export type CreateNewProductMutationHookResult = ReturnType<typeof useCreateNewProductMutation>;
-export type CreateNewProductMutationResult = Apollo.MutationResult<CreateNewProductMutation>;
-export type CreateNewProductMutationOptions = Apollo.BaseMutationOptions<CreateNewProductMutation, CreateNewProductMutationVariables>;
-export const GetAllProductsDocument = gql`
-    query GetAllProducts {
-  getAllProducts {
-    id
-    name
-    description
-    imgUrl
-    price
-  }
+export function useCreateNewProductMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    CreateNewProductMutation,
+    CreateNewProductMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    CreateNewProductMutation,
+    CreateNewProductMutationVariables
+  >(CreateNewProductDocument, options);
 }
-    `;
+export type CreateNewProductMutationHookResult = ReturnType<
+  typeof useCreateNewProductMutation
+>;
+export type CreateNewProductMutationResult =
+  Apollo.MutationResult<CreateNewProductMutation>;
+export type CreateNewProductMutationOptions = Apollo.BaseMutationOptions<
+  CreateNewProductMutation,
+  CreateNewProductMutationVariables
+>;
+export const GetAllProductsDocument = gql`
+  query GetAllProducts {
+    getAllProducts {
+      id
+      name
+      description
+      imgUrl
+      price
+    }
+  }
+`;
 
 /**
  * __useGetAllProductsQuery__
@@ -144,19 +194,52 @@ export const GetAllProductsDocument = gql`
  *   },
  * });
  */
-export function useGetAllProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
-      }
-export function useGetAllProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
-        }
-export function useGetAllProductsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
-        }
-export type GetAllProductsQueryHookResult = ReturnType<typeof useGetAllProductsQuery>;
-export type GetAllProductsLazyQueryHookResult = ReturnType<typeof useGetAllProductsLazyQuery>;
-export type GetAllProductsSuspenseQueryHookResult = ReturnType<typeof useGetAllProductsSuspenseQuery>;
-export type GetAllProductsQueryResult = Apollo.QueryResult<GetAllProductsQuery, GetAllProductsQueryVariables>;
+export function useGetAllProductsQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    GetAllProductsQuery,
+    GetAllProductsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(
+    GetAllProductsDocument,
+    options
+  );
+}
+export function useGetAllProductsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAllProductsQuery,
+    GetAllProductsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(
+    GetAllProductsDocument,
+    options
+  );
+}
+export function useGetAllProductsSuspenseQuery(
+  baseOptions?: Apollo.SuspenseQueryHookOptions<
+    GetAllProductsQuery,
+    GetAllProductsQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useSuspenseQuery<
+    GetAllProductsQuery,
+    GetAllProductsQueryVariables
+  >(GetAllProductsDocument, options);
+}
+export type GetAllProductsQueryHookResult = ReturnType<
+  typeof useGetAllProductsQuery
+>;
+export type GetAllProductsLazyQueryHookResult = ReturnType<
+  typeof useGetAllProductsLazyQuery
+>;
+export type GetAllProductsSuspenseQueryHookResult = ReturnType<
+  typeof useGetAllProductsSuspenseQuery
+>;
+export type GetAllProductsQueryResult = Apollo.QueryResult<
+  GetAllProductsQuery,
+  GetAllProductsQueryVariables
+>;
