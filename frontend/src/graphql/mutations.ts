@@ -11,3 +11,16 @@ export const CREATE_NEW_PRODUCT = gql`
     }
   }
 `;
+
+export const CREATE_NEW_ARTICLE = gql`
+  mutation CreateNewArticle($data: NewArticleInput!) {
+    createNewArticle(data: $data) {
+      id
+      availability
+      product {
+        id
+        name
+      }
+    }
+  }
+`;
