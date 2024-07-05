@@ -1,3 +1,4 @@
+import { ProductCard } from "../components/ProductCard";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 
 const HomePage = () => {
@@ -5,19 +6,16 @@ const HomePage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
- 
 
   return (
-    <div>
-        <ul className="space-y-2">
-            {data?.getAllProducts.map(product => (
-                <li key={product.id} className="p-4 border">
-                    {product.name}
-                </li>
-            ))}
-        </ul>
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-wrap gap-4 justify-center">
+        {data?.getAllProducts.map(product => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
     </div>
-);
+  );
 };
 
 export default HomePage;
