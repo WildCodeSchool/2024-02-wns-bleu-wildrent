@@ -9,7 +9,6 @@ const HomePage = () => {
 
   return (
     <div>
-        <div className="font-bold text-2xl">Products</div>
         <ul className="space-y-2">
             {data?.getAllProducts.map(product => (
                 <li key={product.id} className="p-4 border">
