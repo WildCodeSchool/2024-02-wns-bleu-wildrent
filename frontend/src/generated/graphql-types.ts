@@ -72,6 +72,28 @@ export type Query = {
   __typename?: 'Query';
   getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
+  getOneProductById: Product;
+  login: Scalars['String']['output'];
+  logout: Scalars['String']['output'];
+  whoAmI: UserInfo;
+};
+
+
+export type QueryGetOneProductByIdArgs = {
+  productId: Scalars['String']['input'];
+};
+
+
+export type QueryLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type UserInfo = {
+  __typename?: 'UserInfo';
+  email?: Maybe<Scalars['String']['output']>;
+  isLoggedIn: Scalars['Boolean']['output'];
+  role?: Maybe<Scalars['String']['output']>;
 };
 
 export type CreateNewProductMutationVariables = Exact<{
