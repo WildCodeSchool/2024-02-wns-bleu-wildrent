@@ -32,6 +32,14 @@ class ProductResolver {
 
     return resultFromSave;
   }
+
+  @Query(() => Product)
+  async getOneProductById(@Arg("productId") productId: string) {
+    const product = await Product.findOneByOrFail({
+      id: Number.parseInt(productId),
+    });
+    return product;
+  }
 }
 
 export default ProductResolver;
