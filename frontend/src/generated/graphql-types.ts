@@ -72,6 +72,28 @@ export type Query = {
   __typename?: 'Query';
   getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
+  getOneProductById: Product;
+  login: Scalars['String']['output'];
+  logout: Scalars['String']['output'];
+  whoAmI: UserInfo;
+};
+
+
+export type QueryGetOneProductByIdArgs = {
+  productId: Scalars['String']['input'];
+};
+
+
+export type QueryLoginArgs = {
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type UserInfo = {
+  __typename?: 'UserInfo';
+  email?: Maybe<Scalars['String']['output']>;
+  isLoggedIn: Scalars['Boolean']['output'];
+  role?: Maybe<Scalars['String']['output']>;
 };
 
 export type CreateNewProductMutationVariables = Exact<{
@@ -87,6 +109,14 @@ export type CreateNewArticleMutationVariables = Exact<{
 
 
 export type CreateNewArticleMutation = { __typename?: 'Mutation', createNewArticle: { __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', id: number, name: string } } };
+
+export type CreateNewUserMutationVariables = Exact<{
+  password: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+}>;
+
+
+export type CreateNewUserMutation = { __typename?: 'Mutation', createUser: string };
 
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -174,6 +204,38 @@ export function useCreateNewArticleMutation(baseOptions?: Apollo.MutationHookOpt
 export type CreateNewArticleMutationHookResult = ReturnType<typeof useCreateNewArticleMutation>;
 export type CreateNewArticleMutationResult = Apollo.MutationResult<CreateNewArticleMutation>;
 export type CreateNewArticleMutationOptions = Apollo.BaseMutationOptions<CreateNewArticleMutation, CreateNewArticleMutationVariables>;
+export const CreateNewUserDocument = gql`
+    mutation CreateNewUser($password: String!, $email: String!) {
+  createUser(password: $password, email: $email)
+}
+    `;
+export type CreateNewUserMutationFn = Apollo.MutationFunction<CreateNewUserMutation, CreateNewUserMutationVariables>;
+
+/**
+ * __useCreateNewUserMutation__
+ *
+ * To run a mutation, you first call `useCreateNewUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateNewUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createNewUserMutation, { data, loading, error }] = useCreateNewUserMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useCreateNewUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateNewUserMutation, CreateNewUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateNewUserMutation, CreateNewUserMutationVariables>(CreateNewUserDocument, options);
+      }
+export type CreateNewUserMutationHookResult = ReturnType<typeof useCreateNewUserMutation>;
+export type CreateNewUserMutationResult = Apollo.MutationResult<CreateNewUserMutation>;
+export type CreateNewUserMutationOptions = Apollo.BaseMutationOptions<CreateNewUserMutation, CreateNewUserMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {
