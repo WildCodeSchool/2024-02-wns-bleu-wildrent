@@ -24,3 +24,15 @@ export const GET_ALL_ARTICLES = gql`
     }
   }
 `;
+
+export const GET_PRODUCT_BY_ID = gql`
+  query GetOneProductById($productId: String!) {
+    getOneProductById(productId: $productId) {
+      id
+      name
+      description
+      imgUrl
+      price
+    }
+  }
+`;

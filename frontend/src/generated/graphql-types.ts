@@ -128,6 +128,13 @@ export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllArticlesQuery = { __typename?: 'Query', getAllArticles: Array<{ __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', id: number, name: string } }> };
 
+export type GetOneProductByIdQueryVariables = Exact<{
+  productId: Scalars['String']['input'];
+}>;
+
+
+export type GetOneProductByIdQuery = { __typename?: 'Query', getOneProductById: { __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number } };
+
 
 export const CreateNewProductDocument = gql`
     mutation CreateNewProduct($data: NewProductInput!) {
@@ -323,3 +330,47 @@ export type GetAllArticlesQueryHookResult = ReturnType<typeof useGetAllArticlesQ
 export type GetAllArticlesLazyQueryHookResult = ReturnType<typeof useGetAllArticlesLazyQuery>;
 export type GetAllArticlesSuspenseQueryHookResult = ReturnType<typeof useGetAllArticlesSuspenseQuery>;
 export type GetAllArticlesQueryResult = Apollo.QueryResult<GetAllArticlesQuery, GetAllArticlesQueryVariables>;
+export const GetOneProductByIdDocument = gql`
+    query GetOneProductById($productId: String!) {
+  getOneProductById(productId: $productId) {
+    id
+    name
+    description
+    imgUrl
+    price
+  }
+}
+    `;
+
+/**
+ * __useGetOneProductByIdQuery__
+ *
+ * To run a query within a React component, call `useGetOneProductByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOneProductByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOneProductByIdQuery({
+ *   variables: {
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useGetOneProductByIdQuery(baseOptions: Apollo.QueryHookOptions<GetOneProductByIdQuery, GetOneProductByIdQueryVariables> & ({ variables: GetOneProductByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>(GetOneProductByIdDocument, options);
+      }
+export function useGetOneProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>(GetOneProductByIdDocument, options);
+        }
+export function useGetOneProductByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>(GetOneProductByIdDocument, options);
+        }
+export type GetOneProductByIdQueryHookResult = ReturnType<typeof useGetOneProductByIdQuery>;
+export type GetOneProductByIdLazyQueryHookResult = ReturnType<typeof useGetOneProductByIdLazyQuery>;
+export type GetOneProductByIdSuspenseQueryHookResult = ReturnType<typeof useGetOneProductByIdSuspenseQuery>;
+export type GetOneProductByIdQueryResult = Apollo.QueryResult<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>;
