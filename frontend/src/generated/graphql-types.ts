@@ -92,6 +92,7 @@ export type QueryLoginArgs = {
 export type UserInfo = {
   __typename?: 'UserInfo';
   email?: Maybe<Scalars['String']['output']>;
+  firstname: Scalars['String']['output'];
   isLoggedIn: Scalars['Boolean']['output'];
   role?: Maybe<Scalars['String']['output']>;
 };

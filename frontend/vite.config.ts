@@ -11,6 +11,9 @@ const config: UserConfig = {
       path: "/hmr",
       port: 7000,
     },
+    watch: {
+      usePolling: true,
+    },
   },
   test: {
     globals: true,
@@ -18,4 +21,4 @@ const config: UserConfig = {
   },
 };
 
-export default defineConfig(config)
+export default defineConfig(config);

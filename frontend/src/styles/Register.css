@@ -1,0 +1,22 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.register-content {
+  max-width: 25rem;
+  width: 100%;
+}
+
+.register-card {
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+}
+
+.register-button {
+  width: 100%;
+  font-size: 1rem;
+}
