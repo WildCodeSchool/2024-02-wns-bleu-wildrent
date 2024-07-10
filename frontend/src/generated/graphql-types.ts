@@ -44,6 +44,8 @@ export type MutationCreateNewProductArgs = {
 
 export type MutationCreateUserArgs = {
   email: Scalars['String']['input'];
+  firstname: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
   password: Scalars['String']['input'];
 };
 
@@ -111,8 +113,10 @@ export type CreateNewArticleMutationVariables = Exact<{
 export type CreateNewArticleMutation = { __typename?: 'Mutation', createNewArticle: { __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', id: number, name: string } } };
 
 export type CreateNewUserMutationVariables = Exact<{
-  password: Scalars['String']['input'];
   email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  firstname: Scalars['String']['input'];
+  lastname: Scalars['String']['input'];
 }>;
 
 
@@ -205,8 +209,13 @@ export type CreateNewArticleMutationHookResult = ReturnType<typeof useCreateNewA
 export type CreateNewArticleMutationResult = Apollo.MutationResult<CreateNewArticleMutation>;
 export type CreateNewArticleMutationOptions = Apollo.BaseMutationOptions<CreateNewArticleMutation, CreateNewArticleMutationVariables>;
 export const CreateNewUserDocument = gql`
-    mutation CreateNewUser($password: String!, $email: String!) {
-  createUser(password: $password, email: $email)
+    mutation CreateNewUser($email: String!, $password: String!, $firstname: String!, $lastname: String!) {
+  createUser(
+    email: $email
+    password: $password
+    firstname: $firstname
+    lastname: $lastname
+  )
 }
     `;
 export type CreateNewUserMutationFn = Apollo.MutationFunction<CreateNewUserMutation, CreateNewUserMutationVariables>;
@@ -224,8 +233,10 @@ export type CreateNewUserMutationFn = Apollo.MutationFunction<CreateNewUserMutat
  * @example
  * const [createNewUserMutation, { data, loading, error }] = useCreateNewUserMutation({
  *   variables: {
- *      password: // value for 'password'
  *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      firstname: // value for 'firstname'
+ *      lastname: // value for 'lastname'
  *   },
  * });
  */
