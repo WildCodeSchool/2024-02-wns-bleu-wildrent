@@ -1,4 +1,4 @@
-import { render, screen,  } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { test, expect } from "vitest";
 import Navbar from "../components/Navbar";
