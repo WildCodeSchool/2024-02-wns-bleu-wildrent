@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { UserConfig } from "vitest/config";
 
 // https://vitejs.dev/config/
-export default defineConfig({
+const config: UserConfig = {
   plugins: [react()],
   server: {
     host: true,
@@ -11,4 +12,10 @@ export default defineConfig({
       port: 7000,
     },
   },
-});
+  test: {
+    globals: true,
+    environment: "jsdom",
+  },
+};
+
+export default defineConfig(config)
