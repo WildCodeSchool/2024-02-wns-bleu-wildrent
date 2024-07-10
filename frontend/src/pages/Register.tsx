@@ -3,7 +3,7 @@ import { UserContext } from "../components/Layout";
 import { useCreateNewUserMutation } from "../generated/graphql-types";
 import { useContext } from "react";
 import { Form, Input, Button, Card, message } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import "../styles/Register.css";
 
 const Register = () => {
@@ -14,7 +14,9 @@ const Register = () => {
   const onFinish = async (values: {
     email: string;
     firstname: string;
+    lastname: string;
     password: string;
+    confirmPassword: string;
   }) => {
     try {
       const { data } = await createUser({
@@ -47,8 +49,30 @@ const Register = () => {
               ]}
             >
               <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
+                prefix={<MailOutlined className="site-form-item-icon" />}
                 placeholder="Email"
+              />
+            </Form.Item>
+            <Form.Item
+              name="firstname"
+              rules={[
+                { required: true, message: "Please input your firstname!" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Firstname"
+              />
+            </Form.Item>
+            <Form.Item
+              name="lastname"
+              rules={[
+                { required: true, message: "Please input your lastname!" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined className="site-form-item-icon" />}
+                placeholder="Lastname"
               />
             </Form.Item>
             <Form.Item
@@ -56,11 +80,38 @@ const Register = () => {
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
+              hasFeedback
             >
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Password"
+              />
+            </Form.Item>
+            <Form.Item
+              name="confirmPassword"
+              dependencies={["password"]}
+              hasFeedback
+              rules={[
+                { required: true, message: "Please confirm your password!" },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error(
+                        "The two passwords that you entered do not match!"
+                      )
+                    );
+                  },
+                }),
+              ]}
+            >
+              <Input
+                prefix={<LockOutlined className="site-form-item-icon" />}
+                type="password"
+                placeholder="Confirm your password"
               />
             </Form.Item>
             <Form.Item>
