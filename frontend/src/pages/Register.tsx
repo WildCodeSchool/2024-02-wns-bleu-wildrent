@@ -1,10 +1,10 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { useCreateNewUserMutation } from "../generated/graphql-types";
-import { useContext } from "react";
 import { Form, Input, Button, Card, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
-import "../styles/Register.css";
+import "../styles/commonLoginRegister.css";
 
 const Register = () => {
   const [createUser] = useCreateNewUserMutation();
@@ -37,9 +37,9 @@ const Register = () => {
   };
 
   return (
-    <div className="register-container">
-      <div className="register-content">
-        <Card className="register-card" title={<h1>Inscription</h1>}>
+    <div className="container">
+      <div className="content">
+        <Card className="card" title={<h1>Inscription</h1>}>
           <Form name="register" onFinish={onFinish} layout="vertical">
             <Form.Item
               name="email"
@@ -115,11 +115,7 @@ const Register = () => {
               />
             </Form.Item>
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="register-button"
-              >
+              <Button type="primary" htmlType="submit" className="button">
                 Inscription
               </Button>
             </Form.Item>
