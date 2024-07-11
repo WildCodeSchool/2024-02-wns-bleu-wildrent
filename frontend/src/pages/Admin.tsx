@@ -1,8 +1,7 @@
 import { Tabs, TabsProps } from 'antd'
-import React from 'react'
 import NewProduct from './NewProduct'
 import NewArticle from './NewArticle'
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
 
 
 function Admin() {

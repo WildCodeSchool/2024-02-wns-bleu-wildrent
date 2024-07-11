@@ -3,6 +3,7 @@ import "./App.css";
 import HomePage from "./pages/Home";
 import Layout from "./components/Layout";
 import Register from "./pages/Register";
+import ProductDescription from "./pages/ProductDescription";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 
@@ -11,9 +12,10 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="admin" element={<Admin />} />
         <Route path="register" element={<Register />} />
-        <Route path="Login" element={<Login />} />
+        <Route path="admin" element={<Admin />} />
+        <Route path="login" element={<Login />} />
+        <Route path="/product/:productId" element={<ProductDescription />} />
       </Route>
     </Routes>
   );

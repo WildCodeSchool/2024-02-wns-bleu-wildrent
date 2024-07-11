@@ -25,6 +25,18 @@ export const GET_ALL_ARTICLES = gql`
   }
 `;
 
+export const GET_PRODUCT_BY_ID = gql`
+  query GetOneProductById($productId: String!) {
+    getOneProductById(productId: $productId) {
+      id
+      name
+      description
+      imgUrl
+      price
+    }
+  }
+`;
+
 export const GET_JWT = gql`
   query Login($password: String!, $email: String!) {
     login(password: $password, email: $email)
