@@ -6,8 +6,9 @@ import Register from "./pages/Register";
 import ProductDescription from "./pages/ProductDescription";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import SearchPage from "./pages/search/[searchKeywords]";
 
-function App() {
+const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
@@ -16,9 +17,10 @@ function App() {
         <Route path="admin" element={<Admin />} />
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
+        <Route path="search/:keyword" element={<SearchPage />} />
       </Route>
     </Routes>
   );
-}
+};
 
 export default App;

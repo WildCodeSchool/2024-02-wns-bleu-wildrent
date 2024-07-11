@@ -1,12 +1,13 @@
 // import { useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Form, Select, Button, Table } from "antd";
-import { GET_ALL_ARTICLES, GET_ALL_PRODUCTS } from "../graphql/queries";
 import { CREATE_NEW_ARTICLE } from "../graphql/mutations";
 import {
   GetAllArticlesDocument,
   Product,
   NewArticleInput,
+  useGetAllProductsQuery,
+  useGetAllArticlesQuery,
 } from "../generated/graphql-types";
 import Title from "antd/es/typography/Title";
 
@@ -48,13 +49,13 @@ const NewArticle = () => {
     data: productsData,
     loading: productsLoading,
     error: productsError,
-  } = useQuery(GET_ALL_PRODUCTS);
+  } = useGetAllProductsQuery();
 
   const {
     data: articlesData,
     loading: articlesLoading,
     error: articlesError,
-  } = useQuery(GET_ALL_ARTICLES);
+  } = useGetAllArticlesQuery();
 
   const onFinish = async (values: any) => {
     const formJson: NewArticleInput = {
@@ -98,7 +99,7 @@ const NewArticle = () => {
           rules={[{ required: true, message: "A product is required" }]}
         >
           <Select>
-            {productsData.getAllProducts.map((product: Product) => (
+            {productsData?.getAllProducts.map((product: Product) => (
               <Select.Option key={product.id} value={product.id}>
                 {product.name}
               </Select.Option>
