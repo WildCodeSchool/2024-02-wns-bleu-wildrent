@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { GetAllProductsDocument, useCreateNewProductMutation } from "../generated/graphql-types";
 import { Button, Form, Input } from "antd";
+import ListProductsTable from "../components/ListProductsTable";
 
 const NewProduct = () => {
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ const NewProduct = () => {
           </Button>
         </Form.Item>
       </Form>
+      <ListProductsTable/>
     </>
   );
 };

@@ -40,3 +40,9 @@ export const CREATE_NEW_USER = gql`
     )
   }
 `;
+
+export const DELETE_PRODUCT = gql`
+  mutation DeleteProduct($deleteProductId: String!) {
+    deleteProduct(id: $deleteProductId)
+  }
+`

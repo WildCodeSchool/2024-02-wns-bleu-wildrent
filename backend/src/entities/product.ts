@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Length } from "class-validator";
 import { Field, ObjectType } from "type-graphql";
+import { Article } from "./article";
 
 @ObjectType() //typeGraphQl
 @Entity() //typeORM
@@ -28,4 +29,8 @@ export class Product extends BaseEntity {
   @Field()
   @Column()
   price: number;
+
+  @Field(() => [Article], { nullable: true })
+  @OneToMany(() => Article, article => article.product)
+  articles?: Article[];
 }
