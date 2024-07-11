@@ -18,7 +18,7 @@ function App() {
         <Route path="admin/new-article" element={<NewArticle />} />
         <Route path="register" element={<Register />} />
         <Route path="admin" element={<Admin />} />
-        <Route path="Login" element={<Login />} />
+        <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
       </Route>
     </Routes>

@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.10.2",
+    "@playwright/test": "^1.45.1",
     "@types/jsonwebtoken": "^9.0.6",
     "argon2": "^0.40.3",
     "class-validator": "^0.14.1",
