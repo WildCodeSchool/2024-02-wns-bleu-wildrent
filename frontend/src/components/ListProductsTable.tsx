@@ -1,9 +1,8 @@
-import { Button, Table } from 'antd'
-import React, { useState } from 'react'
+import { Table } from 'antd'
 import { useGetAllProductsQuery } from '../generated/graphql-types';
 import DeleteProductButton from './DeleteProductButton';
-import EditProductModal from './EditProductModal';
-import { ProductCardProps } from './ProductCard';
+import { Product } from '../interface/types';
+import EditProductRow from './EditProduct/EditProductRow';
 
 type Article = {
     id: string
@@ -11,9 +10,6 @@ type Article = {
 }
 
 function ListProductsTable() {
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
     const {data : productsData} = useGetAllProductsQuery()
 
     const columns = [
@@ -28,6 +24,11 @@ function ListProductsTable() {
             key: "name"
         },
         {
+            title: "Prix",
+            dataIndex: "price",
+            key: "price"
+        },
+        {
             title: "Disponibles",
             dataIndex: "articles",
             key: "available",
@@ -40,28 +41,22 @@ function ListProductsTable() {
             render: (articles: Article[]) => articles.filter(article => article.availability === false).length
         },
         {
-            title: "Total",
+            title: "Stock total",
             dataIndex: "articles",
             key: "total",
             render: (articles: string[]) => articles.length
         },
         {
-            title: "Modifier",
-            key: "edit",
+            title: "Actions",
+            key: "actions",
             dataIndex: "id",
-            render: (id: string, record: ProductCardProps) => (
-                <>
-                    <Button onClick={() => setIsModalOpen(true)} >Modifier le produit d'id {id}</Button>
-                    <EditProductModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} product={record} />
-                </>)
-        },
-        {
-            title: "Supprimer",
-            dataIndex: "id",
-            key: "delete",
-            render: (id: string) => (
-                <DeleteProductButton productId={id}/>)
-        },
+            render: (id: string, record: Product) => (
+                <div className='flex gap-2'>
+                    <EditProductRow product={record}/>
+                    <DeleteProductButton productId={id}/>
+                </div>
+            )   
+        }
       ]
 
     return (

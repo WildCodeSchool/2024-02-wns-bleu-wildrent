@@ -11,7 +11,6 @@ import {
 import Title from "antd/es/typography/Title";
 
 const NewArticle = () => {
-  // const navigate = useNavigate();
 
   const columns = [
     {

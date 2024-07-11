@@ -149,6 +149,14 @@ export type DeleteProductMutationVariables = Exact<{
 
 export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: string };
 
+export type EditProductMutationVariables = Exact<{
+  data: NewProductInput;
+  productId: Scalars['String']['input'];
+}>;
+
+
+export type EditProductMutation = { __typename?: 'Mutation', editProduct: { __typename?: 'Product', price: number, name: string, imgUrl: string, id: number, description: string } };
+
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -337,6 +345,44 @@ export function useDeleteProductMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProductMutation>;
 export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
 export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
+export const EditProductDocument = gql`
+    mutation EditProduct($data: NewProductInput!, $productId: String!) {
+  editProduct(data: $data, productId: $productId) {
+    price
+    name
+    imgUrl
+    id
+    description
+  }
+}
+    `;
+export type EditProductMutationFn = Apollo.MutationFunction<EditProductMutation, EditProductMutationVariables>;
+
+/**
+ * __useEditProductMutation__
+ *
+ * To run a mutation, you first call `useEditProductMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditProductMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editProductMutation, { data, loading, error }] = useEditProductMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *      productId: // value for 'productId'
+ *   },
+ * });
+ */
+export function useEditProductMutation(baseOptions?: Apollo.MutationHookOptions<EditProductMutation, EditProductMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditProductMutation, EditProductMutationVariables>(EditProductDocument, options);
+      }
+export type EditProductMutationHookResult = ReturnType<typeof useEditProductMutation>;
+export type EditProductMutationResult = Apollo.MutationResult<EditProductMutation>;
+export type EditProductMutationOptions = Apollo.BaseMutationOptions<EditProductMutation, EditProductMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {

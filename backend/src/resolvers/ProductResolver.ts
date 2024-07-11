@@ -30,7 +30,7 @@ class ProductResolver {
   async createNewProduct(@Arg("data") newProductData: NewProductInput) {
     const resultFromSave = await Product.save({
       ...newProductData,
-    });
+    })
 
     return resultFromSave;
   }
