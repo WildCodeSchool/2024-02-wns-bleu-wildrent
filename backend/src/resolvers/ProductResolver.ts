@@ -1,3 +1,4 @@
+import { Like } from "typeorm";
 import { Product } from "../entities/product";
 import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
 
@@ -39,6 +40,14 @@ class ProductResolver {
       id: Number.parseInt(productId),
     });
     return product;
+  }
+
+  @Query(() => [Product])
+  async searchProducts(@Arg("keyword") keyword: string) {
+    const products = await Product.find({
+      where: [{ name: Like(`%${keyword}%`) }],
+    });
+    return products;
   }
 }
 

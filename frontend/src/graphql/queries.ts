@@ -58,3 +58,15 @@ export const LOGOUT = gql`
     logout
   }
 `;
+
+export const SEARCH_PRODUCTS = gql`
+  query SearchProducts($keyword: String!) {
+    searchProducts(keyword: $keyword) {
+      id
+      name
+      description
+      imgUrl
+      price
+    }
+  }
+`;

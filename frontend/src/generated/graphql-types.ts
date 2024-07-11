@@ -77,6 +77,7 @@ export type Query = {
   getOneProductById: Product;
   login: Scalars['String']['output'];
   logout: Scalars['String']['output'];
+  searchProducts: Array<Product>;
   whoAmI: UserInfo;
 };
 
@@ -89,6 +90,11 @@ export type QueryGetOneProductByIdArgs = {
 export type QueryLoginArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
+};
+
+
+export type QuerySearchProductsArgs = {
+  keyword: Scalars['String']['input'];
 };
 
 export type UserInfo = {
@@ -156,6 +162,13 @@ export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type LogoutQuery = { __typename?: 'Query', logout: string };
+
+export type SearchProductsQueryVariables = Exact<{
+  keyword: Scalars['String']['input'];
+}>;
+
+
+export type SearchProductsQuery = { __typename?: 'Query', searchProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number }> };
 
 
 export const CreateNewProductDocument = gql`
@@ -520,3 +533,47 @@ export type LogoutQueryHookResult = ReturnType<typeof useLogoutQuery>;
 export type LogoutLazyQueryHookResult = ReturnType<typeof useLogoutLazyQuery>;
 export type LogoutSuspenseQueryHookResult = ReturnType<typeof useLogoutSuspenseQuery>;
 export type LogoutQueryResult = Apollo.QueryResult<LogoutQuery, LogoutQueryVariables>;
+export const SearchProductsDocument = gql`
+    query SearchProducts($keyword: String!) {
+  searchProducts(keyword: $keyword) {
+    id
+    name
+    description
+    imgUrl
+    price
+  }
+}
+    `;
+
+/**
+ * __useSearchProductsQuery__
+ *
+ * To run a query within a React component, call `useSearchProductsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchProductsQuery({
+ *   variables: {
+ *      keyword: // value for 'keyword'
+ *   },
+ * });
+ */
+export function useSearchProductsQuery(baseOptions: Apollo.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables> & ({ variables: SearchProductsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+      }
+export function useSearchProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+        }
+export function useSearchProductsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
+        }
+export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
+export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
+export type SearchProductsSuspenseQueryHookResult = ReturnType<typeof useSearchProductsSuspenseQuery>;
+export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;

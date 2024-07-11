@@ -1,7 +1,8 @@
 import { Card } from "antd";
 import Meta from "antd/es/card/Meta";
+import { Product } from "../interface/types";
 
-export const ProductCard = ({ product }: any) => {
+export const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Card
       hoverable
