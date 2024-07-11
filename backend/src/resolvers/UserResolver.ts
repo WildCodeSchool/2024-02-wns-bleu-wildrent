@@ -8,8 +8,10 @@ import { Context } from "src";
 class UserInfo {
   @Field()
   isLoggedIn: boolean;
+
   @Field({ nullable: true })
   email: string;
+
   @Field({ nullable: true })
   role: string;
 }
@@ -20,6 +22,7 @@ class UserResolver {
     context.res.setHeader("Set-Cookie", `token=;Max-Age=0`);
     return "Logged out";
   }
+
   @Query(() => String)
   async login(
     @Arg("email") emailFromClient: string,
@@ -56,6 +59,8 @@ class UserResolver {
   @Mutation(() => String)
   async createUser(
     @Arg("email") email: string,
+    @Arg("firstname") firstname: string,
+    @Arg("lastname") lastname: string,
     @Arg("password") password: string
   ) {
     console.log("process", process.env);
@@ -64,6 +69,8 @@ class UserResolver {
 
     const userFromDB = await User.save({
       email: email,
+      firstname: firstname,
+      lastname: lastname,
       hashedPassword: hashedPassword,
     });
 

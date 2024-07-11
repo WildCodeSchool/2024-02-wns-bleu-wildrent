@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+}
+
+.content {
+  max-width: 25rem;
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
+}
+
+.button {
+  width: 100%;
+  font-size: 1rem;
+}

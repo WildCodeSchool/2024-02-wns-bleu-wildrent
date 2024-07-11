@@ -36,3 +36,25 @@ export const GET_PRODUCT_BY_ID = gql`
     }
   }
 `;
+
+export const GET_JWT = gql`
+  query Login($password: String!, $email: String!) {
+    login(password: $password, email: $email)
+  }
+`;
+
+export const WHO_AM_I = gql`
+  query WhoAmI {
+    whoAmI {
+      email
+      isLoggedIn
+      role
+    }
+  }
+`;
+
+export const LOGOUT = gql`
+  query Logout {
+    logout
+  }
+`;

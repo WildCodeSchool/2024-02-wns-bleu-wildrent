@@ -26,7 +26,17 @@ export const CREATE_NEW_ARTICLE = gql`
 `;
 
 export const CREATE_NEW_USER = gql`
-  mutation CreateNewUser($password: String!, $email: String!) {
-    createUser(password: $password, email: $email)
+  mutation CreateNewUser(
+    $email: String!
+    $password: String!
+    $firstname: String!
+    $lastname: String!
+  ) {
+    createUser(
+      email: $email
+      password: $password
+      firstname: $firstname
+      lastname: $lastname
+    )
   }
 `;

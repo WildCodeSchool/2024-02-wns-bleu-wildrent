@@ -2,10 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import HomePage from "./pages/Home";
 import NewProduct from "./pages/NewProduct";
-import Layout from "./components/Layout";
 import NewArticle from "./pages/NewArticle";
+import Layout from "./components/Layout";
 import Register from "./pages/Register";
 import ProductDescription from "./pages/ProductDescription";
+import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -15,6 +17,8 @@ function App() {
         <Route path="admin" element={<NewProduct />} />
         <Route path="admin/new-article" element={<NewArticle />} />
         <Route path="register" element={<Register />} />
+        <Route path="admin" element={<Admin />} />
+        <Route path="Login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
       </Route>
     </Routes>
