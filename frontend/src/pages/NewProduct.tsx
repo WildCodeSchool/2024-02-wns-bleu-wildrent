@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { GetAllProductsDocument, useCreateNewProductMutation } from "../generated/graphql-types";
+import { GetAllProductsDocument, SearchProductsDocument, useCreateNewProductMutation } from "../generated/graphql-types";
 import { Button, Form, Input } from "antd";
+import ListProductsTable from "../components/ListProductsTable";
 
 const NewProduct = () => {
   const navigate = useNavigate();
@@ -11,7 +12,8 @@ const NewProduct = () => {
     onError(error) {
       console.log("error after executing mutation", error);
     },
-    refetchQueries: [{ query: GetAllProductsDocument }]
+    refetchQueries: [ GetAllProductsDocument, SearchProductsDocument],
+    
   });
 
   const onFinish = async (values: any) => {
@@ -70,6 +72,7 @@ const NewProduct = () => {
           </Button>
         </Form.Item>
       </Form>
+      <ListProductsTable/>
     </>
   );
 };

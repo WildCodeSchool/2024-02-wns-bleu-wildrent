@@ -8,7 +8,7 @@ class NewArticleInput {
   availability: boolean;
 
   @Field()
-  productId: number;
+  productId: number
 }
 
 @Resolver(Article)
@@ -22,7 +22,7 @@ class ArticleResolver {
   @Mutation(() => Article)
   async createNewArticle(@Arg("data") newArticleData: NewArticleInput) {
     const product = await Product.findOne({
-      where: { id: newArticleData.productId },
+      where: { id: Number(newArticleData.productId)},
     });
     if (!product) {
       throw new Error("Product not found");

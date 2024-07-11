@@ -4,7 +4,6 @@ import { Form, Select, Button, Table } from "antd";
 import { CREATE_NEW_ARTICLE } from "../graphql/mutations";
 import {
   GetAllArticlesDocument,
-  Product,
   NewArticleInput,
   useGetAllProductsQuery,
   useGetAllArticlesQuery,
@@ -12,7 +11,6 @@ import {
 import Title from "antd/es/typography/Title";
 
 const NewArticle = () => {
-  // const navigate = useNavigate();
 
   const columns = [
     {
@@ -99,7 +97,7 @@ const NewArticle = () => {
           rules={[{ required: true, message: "A product is required" }]}
         >
           <Select>
-            {productsData?.getAllProducts.map((product: Product) => (
+            {productsData?.getAllProducts.map((product) => (
               <Select.Option key={product.id} value={product.id}>
                 {product.name}
               </Select.Option>

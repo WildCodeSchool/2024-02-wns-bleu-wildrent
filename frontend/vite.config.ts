@@ -21,4 +21,4 @@ const config: UserConfig = {
   },
 };
 
-export default defineConfig(config);
+export default defineConfig(config)

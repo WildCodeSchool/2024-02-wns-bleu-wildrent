@@ -15,7 +15,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
           <>
             <div> {product.description}</div>
             <div> {product.price} euros / jour</div>
-            <div>En savoir plus </div>
           </>
         }
       />

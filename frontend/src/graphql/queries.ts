@@ -8,6 +8,9 @@ export const GET_ALL_PRODUCTS = gql`
       description
       imgUrl
       price
+      articles {
+        id
+        availability }
     }
   }
 `;

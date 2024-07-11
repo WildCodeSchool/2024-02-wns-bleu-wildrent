@@ -7,6 +7,7 @@ import ProductDescription from "./pages/ProductDescription";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
+import SearchError from "./pages/search/SearchError";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
         <Route path="search/:keyword" element={<SearchPage />} />
+        <Route path="search/" element={<SearchError />} />
       </Route>
     </Routes>
   );
