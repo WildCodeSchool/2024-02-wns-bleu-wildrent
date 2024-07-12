@@ -1,10 +1,14 @@
 import React from 'react'
 import { GetAllArticlesDocument, GetAllProductsDocument, useDeleteProductMutation } from '../generated/graphql-types';
-import { Button, Popconfirm } from 'antd';
+import { Button, message, Popconfirm } from 'antd';
 
 function DeleteProductButton( {productId} : {productId: string}) {
 
-  const [deleteProduct] = useDeleteProductMutation()
+  const [deleteProduct] = useDeleteProductMutation({
+    onCompleted(){
+      message.success('produit supprimé avec succès')
+    }
+})
 
   return (
     <Popconfirm 

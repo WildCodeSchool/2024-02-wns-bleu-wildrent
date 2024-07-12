@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { Product } from '../../interface/types';
-import { GetAllProductsDocument, useEditProductMutation } from '../../generated/graphql-types';
+import { GetAllArticlesDocument, GetAllProductsDocument, useEditProductMutation } from '../../generated/graphql-types';
 
 interface EditProductFormProps {
   product: Product
@@ -19,7 +19,7 @@ const EditProductForm = ({ product, setIsModalOpen } : EditProductFormProps) => 
     onError(error) {
       console.log("error after executing mutation", error);
     },
-    refetchQueries: [GetAllProductsDocument]    
+    refetchQueries: [GetAllProductsDocument, GetAllArticlesDocument]    
   })
 
   const onFinish = async (values: any) => {

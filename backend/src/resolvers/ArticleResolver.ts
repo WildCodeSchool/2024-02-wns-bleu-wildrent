@@ -7,9 +7,16 @@ class NewArticleInput {
   @Field()
   availability: boolean;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   productId: number
 }
+
+@InputType()
+class EditArticleInput {
+  @Field()
+  availability: boolean;
+}
+
 
 @Resolver(Article)
 class ArticleResolver {
@@ -36,6 +43,24 @@ class ArticleResolver {
     await newArticle.save();
     return newArticle;
   }
+
+  @Mutation(() => Article)
+  async editArticle(@Arg("article")articleId: string,  @Arg("data") newArticleData: EditArticleInput) {
+    const article = await Article.findOneByOrFail({
+      id: Number.parseInt(articleId),
+    })
+
+    article.availability = newArticleData.availability
+    const updatedArticle = await article.save()
+    return updatedArticle
+  }
+
+  @Mutation(() => String)
+  async deleteArticle(@Arg("id") idToDelete: string) {
+    await Article.delete(idToDelete)
+    return `Product deleted successfully`
+  }
+
 }
 
 export default ArticleResolver;

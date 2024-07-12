@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { GetAllProductsDocument, SearchProductsDocument, useCreateNewProductMutation } from "../generated/graphql-types";
 import { Button, Form, Input } from "antd";
 import ListProductsTable from "../components/ListProductsTable";
 
 const NewProduct = () => {
-  const navigate = useNavigate();
   const [createNewProduct] = useCreateNewProductMutation({
     onCompleted(data) {
       console.log("mutation completed data", data);
@@ -27,7 +25,6 @@ const NewProduct = () => {
         data: formJson,
       },
     })
-    navigate("/")
   }
 
 

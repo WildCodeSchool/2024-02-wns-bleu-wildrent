@@ -57,3 +57,17 @@ export const EDIT_PRODUCT = gql`
     }
   }
 `
+
+export const DELETE_ARTICLE = gql`
+  mutation DeleteArticle($deleteArticleId: String!) {
+    deleteArticle(id: $deleteArticleId)
+  }
+`
+export const EDIT_ARTICLE = gql`
+mutation EditArticle($data: EditArticleInput!, $article: String!) {
+  editArticle(data: $data, article: $article) {
+    id
+    availability
+  }
+}
+`
