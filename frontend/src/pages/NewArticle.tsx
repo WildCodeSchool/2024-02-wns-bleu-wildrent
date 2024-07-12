@@ -7,8 +7,11 @@ import {
   NewArticleInput,
   useGetAllProductsQuery,
   useGetAllArticlesQuery,
+  GetAllProductsDocument,
 } from "../generated/graphql-types";
 import Title from "antd/es/typography/Title";
+import DeleteArticleButton from "../components/DeleteArticleButton";
+import EditArticleDropdown from "../components/EditArticleDropdown";
 
 const NewArticle = () => {
 
@@ -19,17 +22,24 @@ const NewArticle = () => {
       key: "id",
     },
     {
-      title: "Availability",
+      title: "Disponibilité",
       dataIndex: "availability",
-      key: "availability",
-      render: (availability: boolean) => (
-        <span>{availability ? "Available" : "Unavailable"}</span>
+      key: "edit availability",
+      render: (availability: boolean, record: { id: number }) => (
+        <EditArticleDropdown availability={availability} id={record.id}/>
       ),
     },
     {
       title: "Product Name",
       dataIndex: ["product", "name"],
       key: "productName",
+    },
+    {
+      title: "action",
+      key: "productName",
+      dataIndex: "id",
+      render: (id: string) => <DeleteArticleButton articleId={id}/>
+
     },
   ];
 
@@ -40,7 +50,7 @@ const NewArticle = () => {
     onError(error) {
       console.error("error after executing mutation", error);
     },
-    refetchQueries: [{ query: GetAllArticlesDocument }],
+    refetchQueries: [GetAllArticlesDocument, GetAllProductsDocument],
   });
 
   const {
@@ -66,7 +76,6 @@ const NewArticle = () => {
         data: formJson,
       },
     });
-    // navigate("/")
   };
 
   if (productsLoading || articlesLoading) return <p>Loading...</p>;
