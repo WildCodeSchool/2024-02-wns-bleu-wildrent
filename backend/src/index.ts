@@ -13,6 +13,9 @@ export type Context = {
   id: number;
   email: string;
   role: string;
+  req: Request;
+  res: Response;
+  payload?: { id: number; email: string; role: string };
 };
 
 const start = async () => {
@@ -53,17 +56,27 @@ const start = async () => {
       const cookies = setCookieParser.parse(req.headers.cookie ?? "", {
         map: true,
       });
+      let payload;
 
       if (cookies.token && cookies.token.value) {
-        const payload = jwt.verify(
-          cookies.token.value,
-          process.env.JWT_SECRET_KEY
-        ) as jwt.JwtPayload;
+        try {
+          payload = jwt.verify(
+            cookies.token.value,
+            process.env.JWT_SECRET_KEY
+          ) as jwt.JwtPayload;
+        } catch (err) {
+          console.error("Failed to verify token", err);
+        }
+
         if (payload) {
           return { ...payload, res: res };
         }
       }
-      return { res: res };
+      return {
+        res: res,
+        req,
+        payload,
+      };
     },
   });
 

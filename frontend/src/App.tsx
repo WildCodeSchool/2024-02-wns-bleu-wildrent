@@ -9,10 +9,9 @@ import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
 import SearchError from "./pages/search/SearchError";
 import AccessRestriction from "./restrictions/AccessRestriction";
-import NewArticle from "./pages/NewArticle";
 
 const user = {
-  role: "admin",
+  role: "user",
 };
 
 const App = () => {
@@ -33,14 +32,6 @@ const App = () => {
         <Route path="/product/:productId" element={<ProductDescription />} />
         <Route path="search/:keyword" element={<SearchPage />} />
         <Route path="search/" element={<SearchError />} />
-        <Route
-          path="admin/new-article"
-          element={
-            <AccessRestriction user={user}>
-              <NewArticle />
-            </AccessRestriction>
-          }
-        />
         <Route path="register" element={<Register />} />
       </Route>
     </Routes>

@@ -1,6 +1,16 @@
+import { ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 
-const AccessRestriction = ({ children, user }) => {
+export type AccessRestrictionTypes = {
+  children: ReactNode;
+  user?: {
+    role: string;
+  };
+};
+const AccessRestriction: React.FC<AccessRestrictionTypes> = ({
+  children,
+  user,
+}) => {
   if (!user || user.role !== "admin") {
     return <Navigate to="/" />;
   }
