@@ -63,7 +63,9 @@ const start = async () => {
           return { ...payload, res: res };
         }
       }
-      return { res: res };
+      return {
+        res: res,
+      };
     },
   });
 

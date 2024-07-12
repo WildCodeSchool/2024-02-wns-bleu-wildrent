@@ -8,6 +8,11 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
 import SearchError from "./pages/search/SearchError";
+import AccessRestriction from "./restrictions/AccessRestriction";
+
+const user = {
+  role: "user",
+};
 
 const App = () => {
   return (
@@ -15,11 +20,19 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="register" element={<Register />} />
-        <Route path="admin" element={<Admin />} />
+        <Route
+          path="admin"
+          element={
+            <AccessRestriction user={user}>
+              <Admin />
+            </AccessRestriction>
+          }
+        />
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
         <Route path="search/:keyword" element={<SearchPage />} />
         <Route path="search/" element={<SearchError />} />
+        <Route path="register" element={<Register />} />
       </Route>
     </Routes>
   );
