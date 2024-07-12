@@ -131,7 +131,9 @@ export type QuerySearchProductsArgs = {
 export type UserInfo = {
   __typename?: 'UserInfo';
   email?: Maybe<Scalars['String']['output']>;
+  firstname?: Maybe<Scalars['String']['output']>;
   isLoggedIn: Scalars['Boolean']['output'];
+  lastname?: Maybe<Scalars['String']['output']>;
   role?: Maybe<Scalars['String']['output']>;
 };
 
@@ -217,7 +219,7 @@ export type LoginQuery = { __typename?: 'Query', login: string };
 export type WhoAmIQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'UserInfo', email?: string | null, isLoggedIn: boolean, role?: string | null } };
+export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'UserInfo', email?: string | null, firstname?: string | null, lastname?: string | null, isLoggedIn: boolean, role?: string | null } };
 
 export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -659,6 +661,8 @@ export const WhoAmIDocument = gql`
     query WhoAmI {
   whoAmI {
     email
+    firstname
+    lastname
     isLoggedIn
     role
   }

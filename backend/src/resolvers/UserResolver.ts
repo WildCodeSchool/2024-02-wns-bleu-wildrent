@@ -13,6 +13,12 @@ class UserInfo {
   email: string;
 
   @Field({ nullable: true })
+  firstname: string;
+
+  @Field({ nullable: true })
+  lastname: string;
+
+  @Field({ nullable: true })
   role: string;
 }
 
@@ -91,7 +97,13 @@ class UserResolver {
   async whoAmI(@Ctx() context: Context) {
     if (context.id !== undefined) {
       const user = await User.findOneByOrFail({ id: context.id });
-      return { email: user.email, role: user.role, isLoggedIn: true };
+      return {
+        email: user.email,
+        role: user.role,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        isLoggedIn: true,
+      };
     } else {
       return { isLoggedIn: false };
     }
