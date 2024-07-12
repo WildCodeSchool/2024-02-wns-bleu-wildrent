@@ -11,7 +11,7 @@ import SearchError from "./pages/search/SearchError";
 import AccessRestriction from "./restrictions/AccessRestriction";
 
 const user = {
-  role: "user",
+  role: "admin",
 };
 
 const App = () => {
