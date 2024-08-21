@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import ProductDescription from "./pages/ProductDescription";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import Reservation from "./pages/Reservation";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="admin" element={<Admin />} />
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
+        <Route path="/reservation/:reservationId" element={<Reservation/>} />
       </Route>
     </Routes>
   );

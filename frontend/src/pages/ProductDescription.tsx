@@ -28,7 +28,7 @@ const ProductDescription = () => {
           <div className="product-details-image-container">
             <img
               className="product-details-image"
-              src={data.getOneProductById.imgUrl}
+              src={data.ts.imgUrl}
               alt={data.getOneProductById.name}
             />
           </div>

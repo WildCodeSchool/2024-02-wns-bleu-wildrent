@@ -58,3 +58,20 @@ export const LOGOUT = gql`
     logout
   }
 `;
+
+
+
+export const GET_RESERVATION_BY_ID = gql`
+  query GetOneReservationById($reservationId: String!) {
+    getOneReservationById(reservationId: $reservationId) {
+      id
+      date
+      status
+      user {
+        id
+        email
+        firstname
+      }
+    }
+  }
+`;

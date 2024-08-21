@@ -40,3 +40,4 @@ export const CREATE_NEW_USER = gql`
     )
   }
 `;
+
