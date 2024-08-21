@@ -1,17 +1,19 @@
 // import { useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { Form, Select, Button, Table } from "antd";
-import { GET_ALL_ARTICLES, GET_ALL_PRODUCTS } from "../graphql/queries";
 import { CREATE_NEW_ARTICLE } from "../graphql/mutations";
 import {
   GetAllArticlesDocument,
-  Product,
   NewArticleInput,
+  useGetAllProductsQuery,
+  useGetAllArticlesQuery,
+  GetAllProductsDocument,
 } from "../generated/graphql-types";
 import Title from "antd/es/typography/Title";
+import DeleteArticleButton from "../components/DeleteArticleButton";
+import EditArticleDropdown from "../components/EditArticleDropdown";
 
 const NewArticle = () => {
-  // const navigate = useNavigate();
 
   const columns = [
     {
@@ -20,17 +22,24 @@ const NewArticle = () => {
       key: "id",
     },
     {
-      title: "Availability",
+      title: "Disponibilité",
       dataIndex: "availability",
-      key: "availability",
-      render: (availability: boolean) => (
-        <span>{availability ? "Available" : "Unavailable"}</span>
+      key: "edit availability",
+      render: (availability: boolean, record: { id: number }) => (
+        <EditArticleDropdown availability={availability} id={record.id}/>
       ),
     },
     {
       title: "Product Name",
       dataIndex: ["product", "name"],
       key: "productName",
+    },
+    {
+      title: "action",
+      key: "productName",
+      dataIndex: "id",
+      render: (id: string) => <DeleteArticleButton articleId={id}/>
+
     },
   ];
 
@@ -41,20 +50,20 @@ const NewArticle = () => {
     onError(error) {
       console.error("error after executing mutation", error);
     },
-    refetchQueries: [{ query: GetAllArticlesDocument }],
+    refetchQueries: [GetAllArticlesDocument, GetAllProductsDocument],
   });
 
   const {
     data: productsData,
     loading: productsLoading,
     error: productsError,
-  } = useQuery(GET_ALL_PRODUCTS);
+  } = useGetAllProductsQuery();
 
   const {
     data: articlesData,
     loading: articlesLoading,
     error: articlesError,
-  } = useQuery(GET_ALL_ARTICLES);
+  } = useGetAllArticlesQuery();
 
   const onFinish = async (values: any) => {
     const formJson: NewArticleInput = {
@@ -67,7 +76,6 @@ const NewArticle = () => {
         data: formJson,
       },
     });
-    // navigate("/")
   };
 
   if (productsLoading || articlesLoading) return <p>Loading...</p>;
@@ -98,7 +106,7 @@ const NewArticle = () => {
           rules={[{ required: true, message: "A product is required" }]}
         >
           <Select>
-            {productsData.getAllProducts.map((product: Product) => (
+            {productsData?.getAllProducts.map((product) => (
               <Select.Option key={product.id} value={product.id}>
                 {product.name}
               </Select.Option>

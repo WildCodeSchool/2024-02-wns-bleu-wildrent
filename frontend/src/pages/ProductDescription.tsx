@@ -5,10 +5,6 @@ import { useParams } from "react-router-dom";
 const ProductDescription = () => {
   const { productId } = useParams();
 
-  if (!productId) {
-    return <p>Erreur: l'ID du produit est manquant</p>;
-  }
-
   const { data, loading, error } = useQuery(GET_PRODUCT_BY_ID, {
     variables: { productId: productId },
   });

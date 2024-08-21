@@ -4,6 +4,7 @@ import { test, expect } from "vitest";
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_ALL_PRODUCTS } from "../graphql/queries";
 import Home from "../pages/Home";
+import { MemoryRouter } from "react-router-dom";
 
 const mocks = [
   {
@@ -13,23 +14,28 @@ const mocks = [
     },
     result: {
       data: {
-        getAllProducts: [{
-            id: '1',
-            name: 'chaussettes',
-            description: 'super',
-            imgUrl: '',
-            price: 12
-            }]
-        },
+        getAllProducts: [
+          {
+            id: "1",
+            name: "chaussettes",
+            description: "super",
+            imgUrl: "",
+            price: 12,
+            articles: [{ id: 1, availability: true }],
+          },
+        ],
+      },
     },
   },
 ];
 
-test("renders home",  async () => {
+test("renders home", async () => {
   render(
-    <MockedProvider mocks={mocks} addTypename={false}>
+    <MemoryRouter>
+      <MockedProvider mocks={mocks} addTypename={false}>
         <Home />
-    </MockedProvider>
+      </MockedProvider>
+    </MemoryRouter>
   );
   expect(await screen.findByText("chaussettes")).toBeInTheDocument();
 });

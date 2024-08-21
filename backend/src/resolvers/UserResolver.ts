@@ -91,7 +91,13 @@ class UserResolver {
   async whoAmI(@Ctx() context: Context) {
     if (context.id !== undefined) {
       const user = await User.findOneByOrFail({ id: context.id });
-      return { email: user.email, role: user.role, isLoggedIn: true };
+      return {
+        email: user.email,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        role: user.role,
+        isLoggedIn: true,
+      };
     } else {
       return { isLoggedIn: false };
     }

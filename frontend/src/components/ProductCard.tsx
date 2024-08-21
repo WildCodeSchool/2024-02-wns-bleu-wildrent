@@ -1,7 +1,8 @@
 import { Card } from "antd";
 import Meta from "antd/es/card/Meta";
+import { Product } from "../interface/types";
 
-export const ProductCard = ({ product }: any) => {
+export const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Card
       hoverable
@@ -14,7 +15,6 @@ export const ProductCard = ({ product }: any) => {
           <>
             <div> {product.description}</div>
             <div> {product.price} euros / jour</div>
-            <div>En savoir plus </div>
           </>
         }
       />

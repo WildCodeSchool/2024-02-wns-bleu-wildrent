@@ -1,5 +1,13 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
+import { Reservation } from "./reservation";
+
 
 @ObjectType() //typeGraphQl
 @Entity() //typeORM
@@ -22,4 +30,7 @@ export class User extends BaseEntity {
 
   @Column({ default: "USER" })
   role: string;
+
+  @OneToMany(() => Reservation, (reservation) => reservation.user)
+  reservations: Reservation[];
 }
