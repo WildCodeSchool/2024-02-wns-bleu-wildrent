@@ -13,7 +13,11 @@ import { useLogoutLazyQuery } from "../generated/graphql-types";
 
 const { Search } = Input;
 
-function Navbar() {
+interface NavbarType {
+  user: string;
+}
+
+function Navbar({ user }: NavbarType) {
   const navigate = useNavigate();
 
   const onSearch = (value: string) => {
@@ -22,7 +26,7 @@ function Navbar() {
 
   const [logout] = useLogoutLazyQuery();
   const userInfo = useContext(UserContext);
-
+  console.log(userInfo, "userinfo");
   return (
     <div className="flex justify-between items-center p-4 bg-lightBlue mb-4">
       <div className="flex items-center">
@@ -44,10 +48,15 @@ function Navbar() {
         {userInfo.isLoggedIn && (
           <p className="mr-4">Bonjour, {userInfo.firstname}</p>
         )}
-
-        <Link to="/Admin" className="mr-4">
-          <UserOutlined style={{ fontSize: "18px", color: "black" }} />
-        </Link>
+        {user === "admin" ? (
+          <Link to="/admin" className="mr-4">
+            <UserOutlined style={{ fontSize: "18px", color: "black" }} />
+          </Link>
+        ) : (
+          <Link to="/profile" className="mr-4">
+            <UserOutlined style={{ fontSize: "18px", color: "black" }} />
+          </Link>
+        )}
 
         <ShoppingCartOutlined style={{ fontSize: "18px", color: "black" }} />
 

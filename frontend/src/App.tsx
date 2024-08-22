@@ -9,15 +9,15 @@ import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
 import SearchError from "./pages/search/SearchError";
 import AccessRestriction from "./restrictions/AccessRestriction";
-
-const user = {
-  role: "admin",
-};
+import Profile from "./pages/Profile";
 
 const App = () => {
+
+  const user = "admin";
+
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout user={user}/>}>
         <Route index element={<HomePage />} />
         <Route path="register" element={<Register />} />
         <Route
@@ -25,6 +25,14 @@ const App = () => {
           element={
             <AccessRestriction user={user}>
               <Admin />
+            </AccessRestriction>
+          }
+        />
+        <Route
+          path="profile"
+          element={
+            <AccessRestriction user={user}>
+              <Profile />
             </AccessRestriction>
           }
         />
