@@ -19,7 +19,7 @@ function Layout({ user }: LayoutType) {
   const { data, refetch, loading, error } = useWhoAmIQuery();
 
   if (loading) {
-    return <p>Loading</p>;
+    return <p>Loading </p>;
   }
   if (error) {
     console.log("error", error);
