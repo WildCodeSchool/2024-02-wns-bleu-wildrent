@@ -1,5 +1,4 @@
 import { Modal } from 'antd'
-import React from 'react'
 import EditProductForm from './EditProductForm'
 import { Product } from '../../interface/types'
 

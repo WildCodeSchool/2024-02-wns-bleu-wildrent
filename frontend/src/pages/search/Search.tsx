@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSearchProductsQuery } from '../../generated/graphql-types';
 import { ProductCard } from '../../components/ProductCard';
 
