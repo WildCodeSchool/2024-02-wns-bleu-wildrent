@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { useLoginLazyQuery } from "../generated/graphql-types";
 import { Form, Input, Button, Card, message } from "antd";
@@ -11,22 +11,26 @@ const Login = () => {
   const [login] = useLoginLazyQuery();
   const navigate = useNavigate();
 
-  const onFinish = async (values: { email: string; password: string }) => {
+  const onFinish = async (values: any) => {
     try {
       const { data } = await login({
         variables: values,
       });
 
       if (data && data.login) {
-        userInfo.refetch();
         navigate("/");
-        message.success("Login successful!");
+        message.success("Connexion réussie !");
+        userInfo.refetch();
       } else {
-        message.error("Login failed. Please check your credentials.");
+        message.error(
+          "Échec de la connexion. Veuillez vérifier vos informations."
+        );
       }
     } catch (error) {
-      message.error("Login failed. Please check your credentials.");
-      console.error("Error: ", error);
+      message.error(
+        "Échec de la connexion. Veuillez vérifier vos informations."
+      );
+      console.error("Erreur :", error);
     }
   };
 
@@ -38,8 +42,8 @@ const Login = () => {
             <Form.Item
               name="email"
               rules={[
-                { required: true, message: "Please input your email!" },
-                { type: "email", message: "The input is not valid E-mail!" },
+                { required: true, message: "Veuillez entrer votre email !" },
+                { type: "email", message: "L'email n'est pas valide." },
               ]}
             >
               <Input
@@ -50,19 +54,37 @@ const Login = () => {
             <Form.Item
               name="password"
               rules={[
-                { required: true, message: "Please input your password!" },
+                {
+                  required: true,
+                  message: "Veuillez entrer votre mot de passe !",
+                },
               ]}
             >
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder="Password"
+                placeholder="Mot de passe"
               />
             </Form.Item>
-            <Form.Item>
+            <Form.Item style={{ marginBottom: 0 }}>
               <Button type="primary" htmlType="submit" className="button">
                 Connexion
               </Button>
+            </Form.Item>
+            <Form.Item style={{ marginTop: "10px", textAlign: "center" }}>
+              <span style={{ fontSize: "0.9em", color: "#888" }}>
+                Vous n'avez pas de compte ?{" "}
+                <Link
+                  to="/register"
+                  style={{
+                    color: "#1890ff",
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                  }}
+                >
+                  Inscrivez-vous ici
+                </Link>
+              </span>
             </Form.Item>
           </Form>
         </Card>

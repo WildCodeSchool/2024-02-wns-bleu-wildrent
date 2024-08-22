@@ -1,6 +1,4 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../components/Layout";
 import { useCreateNewUserMutation } from "../generated/graphql-types";
 import { Form, Input, Button, Card, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
@@ -8,7 +6,6 @@ import "../styles/commonLoginRegister.css";
 
 const Register = () => {
   const [createUser] = useCreateNewUserMutation();
-  const userInfo = useContext(UserContext);
   const navigate = useNavigate();
 
   const onFinish = async (values: {
@@ -24,7 +21,6 @@ const Register = () => {
       });
 
       if (data && data.createUser) {
-        userInfo.refetch();
         navigate("/");
         message.success("Registration successful!");
       } else {

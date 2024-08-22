@@ -51,6 +51,8 @@ export const WHO_AM_I = gql`
   query WhoAmI {
     whoAmI {
       email
+      firstname
+      lastname
       isLoggedIn
       role
     }
