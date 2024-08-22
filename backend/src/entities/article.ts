@@ -8,6 +8,8 @@ import {
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { Product } from "./product";
+import { Reservation } from "./reservation";
+
 
 @ObjectType() //typeGraphQl
 @Entity() //typeORM
@@ -24,4 +26,9 @@ export class Article extends BaseEntity {
   @ManyToOne(() => Product)
   @JoinColumn({ name: "product_id" })
   product: Product;
+
+  @Field(() => Reservation)
+  @ManyToOne(() => Reservation)
+  @JoinColumn({ name: "reservation_id" })
+  reservation: Reservation;
 }

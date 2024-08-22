@@ -10,7 +10,8 @@ export const GET_ALL_PRODUCTS = gql`
       price
       articles {
         id
-        availability }
+        availability
+      }
     }
   }
 `;
@@ -72,6 +73,21 @@ export const SEARCH_PRODUCTS = gql`
       description
       imgUrl
       price
+    }
+  }
+`;
+
+export const GET_RESERVATION_BY_ID = gql`
+  query GetOneReservationById($reservationId: String!) {
+    getOneReservationById(reservationId: $reservationId) {
+      id
+      date
+      status
+      user {
+      id
+      firstname
+      lastname
+      email
     }
   }
 `;

@@ -22,21 +22,29 @@ export type Article = {
   availability: Scalars['Boolean']['output'];
   id: Scalars['Float']['output'];
   product: Product;
+  reservation: Reservation;
 };
 
 export type EditArticleInput = {
   availability: Scalars['Boolean']['input'];
 };
 
+export type EditReservationInput = {
+  status: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   createNewArticle: Article;
   createNewProduct: Product;
+  createNewReservation: Reservation;
   createUser: Scalars['String']['output'];
   deleteArticle: Scalars['String']['output'];
   deleteProduct: Scalars['String']['output'];
+  deleteReservation: Scalars['String']['output'];
   editArticle: Article;
   editProduct: Product;
+  editReservation: Reservation;
 };
 
 
@@ -47,6 +55,11 @@ export type MutationCreateNewArticleArgs = {
 
 export type MutationCreateNewProductArgs = {
   data: NewProductInput;
+};
+
+
+export type MutationCreateNewReservationArgs = {
+  data: NewReservationInput;
 };
 
 
@@ -68,6 +81,11 @@ export type MutationDeleteProductArgs = {
 };
 
 
+export type MutationDeleteReservationArgs = {
+  id: Scalars['String']['input'];
+};
+
+
 export type MutationEditArticleArgs = {
   article: Scalars['String']['input'];
   data: EditArticleInput;
@@ -77,6 +95,12 @@ export type MutationEditArticleArgs = {
 export type MutationEditProductArgs = {
   data: NewProductInput;
   productId: Scalars['String']['input'];
+};
+
+
+export type MutationEditReservationArgs = {
+  data: EditReservationInput;
+  reservation: Scalars['String']['input'];
 };
 
 export type NewArticleInput = {
@@ -89,6 +113,12 @@ export type NewProductInput = {
   imgUrl?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];
+};
+
+export type NewReservationInput = {
+  date: Scalars['String']['input'];
+  status: Scalars['String']['input'];
+  userId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Product = {
@@ -105,6 +135,7 @@ export type Query = {
   __typename?: 'Query';
   getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
+  getAllReservations: Array<Reservation>;
   getOneProductById: Product;
   login: Scalars['String']['output'];
   logout: Scalars['String']['output'];
@@ -126,6 +157,19 @@ export type QueryLoginArgs = {
 
 export type QuerySearchProductsArgs = {
   keyword: Scalars['String']['input'];
+};
+
+export type Reservation = {
+  __typename?: 'Reservation';
+  date: Scalars['String']['output'];
+  id: Scalars['Float']['output'];
+  status: Scalars['String']['output'];
+  user: User;
+};
+
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String']['output'];
 };
 
 export type UserInfo = {
@@ -190,48 +234,6 @@ export type EditArticleMutationVariables = Exact<{
 
 
 export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, availability: boolean } };
-
-export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number, articles?: Array<{ __typename?: 'Article', id: number, availability: boolean }> | null }> };
-
-export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetAllArticlesQuery = { __typename?: 'Query', getAllArticles: Array<{ __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', id: number, name: string } }> };
-
-export type GetOneProductByIdQueryVariables = Exact<{
-  productId: Scalars['String']['input'];
-}>;
-
-
-export type GetOneProductByIdQuery = { __typename?: 'Query', getOneProductById: { __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number } };
-
-export type LoginQueryVariables = Exact<{
-  password: Scalars['String']['input'];
-  email: Scalars['String']['input'];
-}>;
-
-
-export type LoginQuery = { __typename?: 'Query', login: string };
-
-export type WhoAmIQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type WhoAmIQuery = { __typename?: 'Query', whoAmI: { __typename?: 'UserInfo', email?: string | null, firstname?: string | null, lastname?: string | null, isLoggedIn: boolean, role?: string | null } };
-
-export type LogoutQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type LogoutQuery = { __typename?: 'Query', logout: string };
-
-export type SearchProductsQueryVariables = Exact<{
-  keyword: Scalars['String']['input'];
-}>;
-
-
-export type SearchProductsQuery = { __typename?: 'Query', searchProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number }> };
 
 
 export const CreateNewProductDocument = gql`
@@ -483,301 +485,3 @@ export function useEditArticleMutation(baseOptions?: Apollo.MutationHookOptions<
 export type EditArticleMutationHookResult = ReturnType<typeof useEditArticleMutation>;
 export type EditArticleMutationResult = Apollo.MutationResult<EditArticleMutation>;
 export type EditArticleMutationOptions = Apollo.BaseMutationOptions<EditArticleMutation, EditArticleMutationVariables>;
-export const GetAllProductsDocument = gql`
-    query GetAllProducts {
-  getAllProducts {
-    id
-    name
-    description
-    imgUrl
-    price
-    articles {
-      id
-      availability
-    }
-  }
-}
-    `;
-
-/**
- * __useGetAllProductsQuery__
- *
- * To run a query within a React component, call `useGetAllProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAllProductsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAllProductsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
-      }
-export function useGetAllProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
-        }
-export function useGetAllProductsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllProductsQuery, GetAllProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAllProductsQuery, GetAllProductsQueryVariables>(GetAllProductsDocument, options);
-        }
-export type GetAllProductsQueryHookResult = ReturnType<typeof useGetAllProductsQuery>;
-export type GetAllProductsLazyQueryHookResult = ReturnType<typeof useGetAllProductsLazyQuery>;
-export type GetAllProductsSuspenseQueryHookResult = ReturnType<typeof useGetAllProductsSuspenseQuery>;
-export type GetAllProductsQueryResult = Apollo.QueryResult<GetAllProductsQuery, GetAllProductsQueryVariables>;
-export const GetAllArticlesDocument = gql`
-    query GetAllArticles {
-  getAllArticles {
-    id
-    availability
-    product {
-      id
-      name
-    }
-  }
-}
-    `;
-
-/**
- * __useGetAllArticlesQuery__
- *
- * To run a query within a React component, call `useGetAllArticlesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAllArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetAllArticlesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetAllArticlesQuery(baseOptions?: Apollo.QueryHookOptions<GetAllArticlesQuery, GetAllArticlesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAllArticlesQuery, GetAllArticlesQueryVariables>(GetAllArticlesDocument, options);
-      }
-export function useGetAllArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllArticlesQuery, GetAllArticlesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAllArticlesQuery, GetAllArticlesQueryVariables>(GetAllArticlesDocument, options);
-        }
-export function useGetAllArticlesSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAllArticlesQuery, GetAllArticlesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAllArticlesQuery, GetAllArticlesQueryVariables>(GetAllArticlesDocument, options);
-        }
-export type GetAllArticlesQueryHookResult = ReturnType<typeof useGetAllArticlesQuery>;
-export type GetAllArticlesLazyQueryHookResult = ReturnType<typeof useGetAllArticlesLazyQuery>;
-export type GetAllArticlesSuspenseQueryHookResult = ReturnType<typeof useGetAllArticlesSuspenseQuery>;
-export type GetAllArticlesQueryResult = Apollo.QueryResult<GetAllArticlesQuery, GetAllArticlesQueryVariables>;
-export const GetOneProductByIdDocument = gql`
-    query GetOneProductById($productId: String!) {
-  getOneProductById(productId: $productId) {
-    id
-    name
-    description
-    imgUrl
-    price
-  }
-}
-    `;
-
-/**
- * __useGetOneProductByIdQuery__
- *
- * To run a query within a React component, call `useGetOneProductByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetOneProductByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetOneProductByIdQuery({
- *   variables: {
- *      productId: // value for 'productId'
- *   },
- * });
- */
-export function useGetOneProductByIdQuery(baseOptions: Apollo.QueryHookOptions<GetOneProductByIdQuery, GetOneProductByIdQueryVariables> & ({ variables: GetOneProductByIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>(GetOneProductByIdDocument, options);
-      }
-export function useGetOneProductByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>(GetOneProductByIdDocument, options);
-        }
-export function useGetOneProductByIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>(GetOneProductByIdDocument, options);
-        }
-export type GetOneProductByIdQueryHookResult = ReturnType<typeof useGetOneProductByIdQuery>;
-export type GetOneProductByIdLazyQueryHookResult = ReturnType<typeof useGetOneProductByIdLazyQuery>;
-export type GetOneProductByIdSuspenseQueryHookResult = ReturnType<typeof useGetOneProductByIdSuspenseQuery>;
-export type GetOneProductByIdQueryResult = Apollo.QueryResult<GetOneProductByIdQuery, GetOneProductByIdQueryVariables>;
-export const LoginDocument = gql`
-    query Login($password: String!, $email: String!) {
-  login(password: $password, email: $email)
-}
-    `;
-
-/**
- * __useLoginQuery__
- *
- * To run a query within a React component, call `useLoginQuery` and pass it any options that fit your needs.
- * When your component renders, `useLoginQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLoginQuery({
- *   variables: {
- *      password: // value for 'password'
- *      email: // value for 'email'
- *   },
- * });
- */
-export function useLoginQuery(baseOptions: Apollo.QueryHookOptions<LoginQuery, LoginQueryVariables> & ({ variables: LoginQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
-      }
-export function useLoginLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginQuery, LoginQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
-        }
-export function useLoginSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LoginQuery, LoginQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<LoginQuery, LoginQueryVariables>(LoginDocument, options);
-        }
-export type LoginQueryHookResult = ReturnType<typeof useLoginQuery>;
-export type LoginLazyQueryHookResult = ReturnType<typeof useLoginLazyQuery>;
-export type LoginSuspenseQueryHookResult = ReturnType<typeof useLoginSuspenseQuery>;
-export type LoginQueryResult = Apollo.QueryResult<LoginQuery, LoginQueryVariables>;
-export const WhoAmIDocument = gql`
-    query WhoAmI {
-  whoAmI {
-    email
-    firstname
-    lastname
-    isLoggedIn
-    role
-  }
-}
-    `;
-
-/**
- * __useWhoAmIQuery__
- *
- * To run a query within a React component, call `useWhoAmIQuery` and pass it any options that fit your needs.
- * When your component renders, `useWhoAmIQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useWhoAmIQuery({
- *   variables: {
- *   },
- * });
- */
-export function useWhoAmIQuery(baseOptions?: Apollo.QueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<WhoAmIQuery, WhoAmIQueryVariables>(WhoAmIDocument, options);
-      }
-export function useWhoAmILazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<WhoAmIQuery, WhoAmIQueryVariables>(WhoAmIDocument, options);
-        }
-export function useWhoAmISuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<WhoAmIQuery, WhoAmIQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<WhoAmIQuery, WhoAmIQueryVariables>(WhoAmIDocument, options);
-        }
-export type WhoAmIQueryHookResult = ReturnType<typeof useWhoAmIQuery>;
-export type WhoAmILazyQueryHookResult = ReturnType<typeof useWhoAmILazyQuery>;
-export type WhoAmISuspenseQueryHookResult = ReturnType<typeof useWhoAmISuspenseQuery>;
-export type WhoAmIQueryResult = Apollo.QueryResult<WhoAmIQuery, WhoAmIQueryVariables>;
-export const LogoutDocument = gql`
-    query Logout {
-  logout
-}
-    `;
-
-/**
- * __useLogoutQuery__
- *
- * To run a query within a React component, call `useLogoutQuery` and pass it any options that fit your needs.
- * When your component renders, `useLogoutQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLogoutQuery({
- *   variables: {
- *   },
- * });
- */
-export function useLogoutQuery(baseOptions?: Apollo.QueryHookOptions<LogoutQuery, LogoutQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LogoutQuery, LogoutQueryVariables>(LogoutDocument, options);
-      }
-export function useLogoutLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LogoutQuery, LogoutQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LogoutQuery, LogoutQueryVariables>(LogoutDocument, options);
-        }
-export function useLogoutSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<LogoutQuery, LogoutQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<LogoutQuery, LogoutQueryVariables>(LogoutDocument, options);
-        }
-export type LogoutQueryHookResult = ReturnType<typeof useLogoutQuery>;
-export type LogoutLazyQueryHookResult = ReturnType<typeof useLogoutLazyQuery>;
-export type LogoutSuspenseQueryHookResult = ReturnType<typeof useLogoutSuspenseQuery>;
-export type LogoutQueryResult = Apollo.QueryResult<LogoutQuery, LogoutQueryVariables>;
-export const SearchProductsDocument = gql`
-    query SearchProducts($keyword: String!) {
-  searchProducts(keyword: $keyword) {
-    id
-    name
-    description
-    imgUrl
-    price
-  }
-}
-    `;
-
-/**
- * __useSearchProductsQuery__
- *
- * To run a query within a React component, call `useSearchProductsQuery` and pass it any options that fit your needs.
- * When your component renders, `useSearchProductsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSearchProductsQuery({
- *   variables: {
- *      keyword: // value for 'keyword'
- *   },
- * });
- */
-export function useSearchProductsQuery(baseOptions: Apollo.QueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables> & ({ variables: SearchProductsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
-      }
-export function useSearchProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
-        }
-export function useSearchProductsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchProductsQuery, SearchProductsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchProductsQuery, SearchProductsQueryVariables>(SearchProductsDocument, options);
-        }
-export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQuery>;
-export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
-export type SearchProductsSuspenseQueryHookResult = ReturnType<typeof useSearchProductsSuspenseQuery>;
-export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;

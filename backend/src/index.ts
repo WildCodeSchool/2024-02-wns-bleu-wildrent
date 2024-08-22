@@ -5,6 +5,7 @@ import { buildSchema } from "type-graphql";
 import ProductResolver from "./resolvers/ProductResolver";
 import ArticleResolver from "./resolvers/ArticleResolver";
 import UserResolver from "./resolvers/UserResolver";
+import ReservationResolver from "./resolvers/ReservationResolver";
 import "dotenv/config";
 import setCookieParser from "set-cookie-parser";
 import jwt from "jsonwebtoken";
@@ -18,7 +19,12 @@ export type Context = {
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [ProductResolver, ArticleResolver, UserResolver],
+    resolvers: [
+      ProductResolver,
+      ArticleResolver,
+      UserResolver,
+      ReservationResolver,
+    ],
     authChecker: ({ context }: { context: Context }, roles) => {
       console.log("roles for this query/mutation ", roles);
       // Check user
