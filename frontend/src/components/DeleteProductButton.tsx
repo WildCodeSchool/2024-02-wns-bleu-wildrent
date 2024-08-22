@@ -1,4 +1,3 @@
-import React from 'react'
 import { GetAllArticlesDocument, GetAllProductsDocument, useDeleteProductMutation } from '../generated/graphql-types';
 import { Button, message, Popconfirm } from 'antd';
 

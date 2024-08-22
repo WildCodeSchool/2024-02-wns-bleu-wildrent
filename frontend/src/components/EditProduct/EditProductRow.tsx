@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Button } from 'antd'
 import { Product } from '../../interface/types';
 import EditProductModal from './EditProductModal';

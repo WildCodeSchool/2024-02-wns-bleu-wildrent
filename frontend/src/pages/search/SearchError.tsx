@@ -1,5 +1,3 @@
-import React from 'react'
-
 function SearchError() {
   return (
     <div className="flex justify-center">
