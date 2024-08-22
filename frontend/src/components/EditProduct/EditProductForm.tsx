@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { Product } from '../../interface/types';
 import { GetAllArticlesDocument, GetAllProductsDocument, useEditProductMutation } from '../../generated/graphql-types';

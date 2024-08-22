@@ -10,10 +10,14 @@ export const UserContext = createContext({
   refetch: () => {},
 });
 
-function Layout() {
+interface LayoutType {
+  user: string;
+}
+
+function Layout({ user }: LayoutType) {
   return (
     <div>
-      <Navbar />
+      <Navbar user={user} />
       <main className="main-content m-10">
         <Outlet />
       </main>
