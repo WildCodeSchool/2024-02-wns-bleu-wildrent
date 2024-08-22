@@ -7,20 +7,20 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "../styles/commonLoginRegister.css";
 
 const Login = () => {
-  const { login } = useContext(UserContext);
+  const userInfo = useContext(UserContext);
+  const [login] = useLoginLazyQuery();
   const navigate = useNavigate();
-  const [loginQuery] = useLoginLazyQuery();
 
   const onFinish = async (values: any) => {
     try {
-      const { data } = await loginQuery({
+      const { data } = await login({
         variables: values,
       });
 
       if (data && data.login) {
-        login();
         navigate("/");
         message.success("Connexion réussie !");
+        userInfo.refetch();
       } else {
         message.error(
           "Échec de la connexion. Veuillez vérifier vos informations."

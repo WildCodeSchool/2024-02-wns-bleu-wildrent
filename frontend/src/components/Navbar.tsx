@@ -6,7 +6,7 @@ import {
   LogoutOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
-import { Input, Button } from "antd";
+import { Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { useLogoutLazyQuery } from "../generated/graphql-types";
@@ -19,13 +19,6 @@ function Navbar() {
   const onSearch = (value: string) => {
     navigate(`/search/${value}`);
   };
-
-  const { isLoggedIn, email, firstname, role } = useContext(UserContext);
-
-  console.log("isLoggedIn:", isLoggedIn);
-  console.log("email:", email);
-  console.log("role:", role);
-  console.log("firstname:", firstname);
 
   const [logout] = useLogoutLazyQuery();
   const userInfo = useContext(UserContext);
@@ -48,7 +41,9 @@ function Navbar() {
       </div>
 
       <div className="flex items-center">
-        {isLoggedIn && <p className="mr-4">Bonjour, {firstname}</p>}
+        {userInfo.isLoggedIn && (
+          <p className="mr-4">Bonjour, {userInfo.firstname}</p>
+        )}
 
         <Link to="/Admin" className="mr-4">
           <UserOutlined style={{ fontSize: "18px", color: "black" }} />
@@ -56,13 +51,14 @@ function Navbar() {
 
         <ShoppingCartOutlined style={{ fontSize: "18px", color: "black" }} />
 
-        {isLoggedIn ? (
+        {userInfo.isLoggedIn ? (
           <Button
             type="link"
             onClick={() => {
               logout({
                 onCompleted: () => {
                   userInfo.refetch();
+                  message.success("Déconnexion réussie !");
                 },
               });
             }}
