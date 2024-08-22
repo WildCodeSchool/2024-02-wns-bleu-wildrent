@@ -13,7 +13,11 @@ import { useLogoutLazyQuery } from "../generated/graphql-types";
 
 const { Search } = Input;
 
-function Navbar() {
+interface NavbarType {
+  user: string;
+}
+
+function Navbar({ user }: NavbarType) {
   const navigate = useNavigate();
 
   const onSearch = (value: string) => {
@@ -78,6 +82,17 @@ function Navbar() {
             </Button>
           </Link>
         )}
+        {user === "admin" ? (
+          <Link to="/admin" className="mr-4">
+            <UserOutlined />
+          </Link>
+        ) : (
+          <Link to="/profile" className="mr-4">
+            <UserOutlined />
+          </Link>
+        )}
+
+        <ShoppingCartOutlined />
       </div>
     </div>
   );

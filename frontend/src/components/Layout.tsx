@@ -45,6 +45,22 @@ function Layout() {
         </div>
       </UserContext.Provider>
     );
+interface LayoutType {
+  user: string;
+}
+
+function Layout({ user }: LayoutType) {
+  return (
+    <div>
+      <Navbar user={user} />
+      <main className="main-content m-10">
+        <Outlet />
+      </main>
+      <div className="flex justify-center">
+        <Footer />
+      </div>
+    </div>
+  );
 }
 
 export default Layout;
