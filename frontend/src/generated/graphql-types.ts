@@ -139,12 +139,6 @@ export type Reservation = {
   date: Scalars['String']['output'];
   id: Scalars['Float']['output'];
   status: Scalars['String']['output'];
-  user: User;
-};
-
-export type User = {
-  __typename?: 'User';
-  email: Scalars['String']['output'];
 };
 
 export type UserInfo = {
