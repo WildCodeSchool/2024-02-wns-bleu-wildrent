@@ -26,7 +26,7 @@ function Navbar({ user }: NavbarType) {
 
   const [logout] = useLogoutLazyQuery();
   const userInfo = useContext(UserContext);
-
+  console.log(userInfo, "userinfo");
   return (
     <div className="flex justify-between items-center p-4 bg-lightBlue mb-4">
       <div className="flex items-center">
@@ -48,10 +48,15 @@ function Navbar({ user }: NavbarType) {
         {userInfo.isLoggedIn && (
           <p className="mr-4">Bonjour, {userInfo.firstname}</p>
         )}
-
-        <Link to="/Admin" className="mr-4">
-          <UserOutlined style={{ fontSize: "18px", color: "black" }} />
-        </Link>
+        {user === "admin" ? (
+          <Link to="/admin" className="mr-4">
+            <UserOutlined style={{ fontSize: "18px", color: "black" }} />
+          </Link>
+        ) : (
+          <Link to="/profile" className="mr-4">
+            <UserOutlined style={{ fontSize: "18px", color: "black" }} />
+          </Link>
+        )}
 
         <ShoppingCartOutlined style={{ fontSize: "18px", color: "black" }} />
 
@@ -82,17 +87,6 @@ function Navbar({ user }: NavbarType) {
             </Button>
           </Link>
         )}
-        {user === "admin" ? (
-          <Link to="/admin" className="mr-4">
-            <UserOutlined />
-          </Link>
-        ) : (
-          <Link to="/profile" className="mr-4">
-            <UserOutlined />
-          </Link>
-        )}
-
-        <ShoppingCartOutlined />
       </div>
     </div>
   );
