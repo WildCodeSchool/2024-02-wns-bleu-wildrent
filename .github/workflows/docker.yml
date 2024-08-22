@@ -1,24 +1,10 @@
-name: frontend-tests-workflow
+name: docker-ci
 
-on: pull_request
+on: push
 
 jobs:
-  test-client:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: Goto frontend and run tests
-        run: cd frontend && npm i && npm test
-  test-e2e: 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-      - name: run e2e tests
-        run:  docker compose -f docker-compose.e2e.yml up --build --exit-code-from e2e
-  docker-build-and-push-to-dockerhub:
-    needs: [test-client, test-e2e]
+  docker-front:
+    needs: frontend-tests-workflow
     if: github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
