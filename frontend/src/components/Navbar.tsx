@@ -13,11 +13,8 @@ import { useLogoutLazyQuery } from "../generated/graphql-types";
 
 const { Search } = Input;
 
-interface NavbarType {
-  user: string;
-}
 
-function Navbar({ user }: NavbarType) {
+function Navbar() {
   const navigate = useNavigate();
 
   const onSearch = (value: string) => {
@@ -48,7 +45,7 @@ function Navbar({ user }: NavbarType) {
         {userInfo.isLoggedIn && (
           <p className="mr-4">Bonjour, {userInfo.firstname}</p>
         )}
-        {user === "admin" ? (
+        {userInfo.role === "admin" ? (
           <Link to="/admin" className="mr-4">
             <UserOutlined style={{ fontSize: "18px", color: "black" }} />
           </Link>

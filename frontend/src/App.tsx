@@ -8,32 +8,25 @@ import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
 import SearchError from "./pages/search/SearchError";
-import AccessRestriction from "./restrictions/AccessRestriction";
 import Profile from "./pages/Profile";
 
 const App = () => {
 
-  const user = "admin";
-
   return (
     <Routes>
-      <Route path="/" element={<Layout user={user}/>}>
+      <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="register" element={<Register />} />
         <Route
           path="admin"
           element={
-            <AccessRestriction user={user}>
               <Admin />
-            </AccessRestriction>
           }
         />
         <Route
           path="profile"
           element={
-            <AccessRestriction user={user}>
               <Profile />
-            </AccessRestriction>
           }
         />
         <Route path="login" element={<Login />} />

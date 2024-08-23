@@ -12,10 +12,7 @@ export const UserContext = createContext({
   refetch: () => {},
 });
 
-interface LayoutType {
-  user: string;
-}
-function Layout({ user }: LayoutType) {
+function Layout() {
   const { data, refetch, loading, error } = useWhoAmIQuery();
 
   if (loading) {
@@ -38,7 +35,7 @@ function Layout({ user }: LayoutType) {
         }}
       >
         <div>
-          <Navbar user={user} />
+          <Navbar />
           <main className="main-content m-10">
             <Outlet />
           </main>
