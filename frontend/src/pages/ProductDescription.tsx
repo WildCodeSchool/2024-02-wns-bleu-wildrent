@@ -1,6 +1,10 @@
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_BY_ID } from "../graphql/queries";
 import { useParams } from "react-router-dom";
+import { Card, Button, Typography, Row, Col, Divider } from "antd";
+import "../styles/productDescription.css";
+
+const { Title, Text } = Typography;
 
 const ProductDescription = () => {
   const { productId } = useParams();
@@ -17,31 +21,41 @@ const ProductDescription = () => {
     return <p>Erreur</p>;
   }
   if (data) {
+    const { title, imgUrl, price, description } = data.getOneProductById;
+
     return (
-      <>
-        <h2 className="product-details-name">{data.getOneProductById.title}</h2>
-        <section className="product-details">
-          <div className="product-details-image-container">
+      <Card
+        hoverable
+        className="product-card"
+        style={{ maxWidth: 1000, margin: "20px auto", padding: "20px" }}
+      >
+        <Row gutter={[16, 16]}>
+          <Col xs={24} md={12}>
             <img
-              className="product-details-image"
-              src={data.getOneProductById.imgUrl}
-              alt={data.getOneProductById.name}
+              alt={title}
+              src={imgUrl}
+              style={{
+                width: "100%",
+                borderRadius: "8px",
+                objectFit: "cover",
+                height: "100%",
+              }}
             />
-          </div>
-          <div className="product-details-info">
-            <div className="product-details-price">
-              {data.getOneProductById.price} €
-            </div>
-            <div className="product-details-description">
-              {data.getOneProductById.description}
-            </div>
-            <hr className="separator" />
-          </div>
-        </section>
-      </>
+          </Col>
+          <Col xs={24} md={12}>
+            <Title>{title}</Title>
+            <Text>{price} €</Text>
+            <Divider />
+            <Text>{description}</Text>
+            <Divider />
+            <Button type="primary" size="large" block>
+              Réserver
+            </Button>
+          </Col>
+        </Row>
+      </Card>
     );
   }
-  return null;
 };
 
 export default ProductDescription;
