@@ -1,6 +1,6 @@
 name: frontend-tests-workflow
 
-on: push
+on: pull_request
 
 jobs:
   test-client:
