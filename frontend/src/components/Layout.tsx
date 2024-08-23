@@ -9,6 +9,7 @@ export const UserContext = createContext({
   email: "",
   role: "",
   firstname: "",
+  lastname: "",
   refetch: () => {},
 });
 
@@ -16,21 +17,22 @@ function Layout() {
   const { data, refetch, loading, error } = useWhoAmIQuery();
 
   if (loading) {
-    return <p>Loading </p>;
+    return <p>Loading...</p>;
   }
   if (error) {
     console.log("error", error);
     return <p>Error</p>;
   }
 
-  if (data)
+  if (data) {
     return (
       <UserContext.Provider
         value={{
-          isLoggedIn: data?.whoAmI.isLoggedIn,
-          email: data?.whoAmI.email ?? "",
-          role: data?.whoAmI.role ?? "",
-          firstname: data?.whoAmI.firstname ?? "",
+          isLoggedIn: data.whoAmI.isLoggedIn,
+          email: data.whoAmI.email ?? "",
+          role: data.whoAmI.role ?? "",
+          firstname: data.whoAmI.firstname ?? "",
+          lastname: data.whoAmI.lastname ?? "",
           refetch: refetch,
         }}
       >
@@ -45,5 +47,9 @@ function Layout() {
         </div>
       </UserContext.Provider>
     );
+  }
+
+  return null;
 }
+
 export default Layout;
