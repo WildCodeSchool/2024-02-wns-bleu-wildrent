@@ -13,7 +13,6 @@ import { useLogoutLazyQuery } from "../generated/graphql-types";
 
 const { Search } = Input;
 
-
 function Navbar() {
   const navigate = useNavigate();
 
@@ -23,7 +22,7 @@ function Navbar() {
 
   const [logout] = useLogoutLazyQuery();
   const userInfo = useContext(UserContext);
-  console.log(userInfo, "userinfo");
+
   return (
     <div className="flex justify-between items-center p-4 bg-lightBlue mb-4">
       <div className="flex items-center">
@@ -43,16 +42,18 @@ function Navbar() {
 
       <div className="flex items-center">
         {userInfo.isLoggedIn && (
-          <p className="mr-4">Bonjour, {userInfo.firstname}</p>
-        )}
-        {userInfo.role === "admin" ? (
-          <Link to="/admin" className="mr-4">
-            <UserOutlined style={{ fontSize: "18px", color: "black" }} />
-          </Link>
-        ) : (
-          <Link to="/profile" className="mr-4">
-            <UserOutlined style={{ fontSize: "18px", color: "black" }} />
-          </Link>
+          <>
+            <p className="mr-4">Bonjour, {userInfo.firstname}</p>
+            {userInfo.role === "admin" ? (
+              <Link to="/admin" className="mr-4">
+                <UserOutlined style={{ fontSize: "18px", color: "black" }} />
+              </Link>
+            ) : (
+              <Link to="/profile" className="mr-4">
+                <UserOutlined style={{ fontSize: "18px", color: "black" }} />
+              </Link>
+            )}
+          </>
         )}
 
         <ShoppingCartOutlined style={{ fontSize: "18px", color: "black" }} />
@@ -65,6 +66,7 @@ function Navbar() {
                 onCompleted: () => {
                   userInfo.refetch();
                   message.success("Déconnexion réussie !");
+                  navigate("/");
                 },
               });
             }}
