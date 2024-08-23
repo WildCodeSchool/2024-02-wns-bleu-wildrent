@@ -1,9 +1,14 @@
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_BY_ID } from "../graphql/queries";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Card, Button, Typography, Row, Col, Divider } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+
+const { Title, Text } = Typography;
 
 const ProductDescription = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   const { data, loading, error } = useQuery(GET_PRODUCT_BY_ID, {
     variables: { productId: productId },
@@ -17,31 +22,43 @@ const ProductDescription = () => {
     return <p>Erreur</p>;
   }
   if (data) {
+    const { title, imgUrl, price, description } = data.getOneProductById;
+
     return (
-      <>
-        <h2 className="product-details-name">{data.getOneProductById.title}</h2>
-        <section className="product-details">
-          <div className="product-details-image-container">
-            <img
-              className="product-details-image"
-              src={data.getOneProductById.imgUrl}
-              alt={data.getOneProductById.name}
-            />
-          </div>
-          <div className="product-details-info">
-            <div className="product-details-price">
-              {data.getOneProductById.price} €
-            </div>
-            <div className="product-details-description">
-              {data.getOneProductById.description}
-            </div>
-            <hr className="separator" />
-          </div>
-        </section>
-      </>
+      <div className="max-w-4xl mx-auto my-5 p-5">
+        <Button
+          type="text"
+          icon={<ArrowLeftOutlined />}
+          onClick={() => navigate(-1)}
+          className="mb-4 flex items-center"
+        >
+          Retour
+        </Button>
+
+        <Card hoverable>
+          <Row gutter={[16, 16]}>
+            <Col xs={24} md={12}>
+              <img
+                alt={title}
+                src={imgUrl}
+                className="w-full rounded-lg object-cover h-full"
+              />
+            </Col>
+            <Col xs={24} md={12}>
+              <Title className="text-xl">{title}</Title>
+              <Text className="text-lg font-semibold">{price} €</Text>
+              <Divider />
+              <Text className="text-base">{description}</Text>
+              <Divider />
+              <Button type="primary" size="large" block>
+                Réserver
+              </Button>
+            </Col>
+          </Row>
+        </Card>
+      </div>
     );
   }
-  return null;
 };
 
 export default ProductDescription;
