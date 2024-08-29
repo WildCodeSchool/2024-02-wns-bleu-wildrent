@@ -10,6 +10,7 @@ import { Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { useLogoutLazyQuery } from "../generated/graphql-types";
+import Logo from "../assets/logo.png";
 
 const { Search } = Input;
 
@@ -23,69 +24,177 @@ function Navbar() {
   const [logout] = useLogoutLazyQuery();
   const userInfo = useContext(UserContext);
 
+  const categories = [
+    { name: "Randonnée", path: "/category/randonnee" },
+    { name: "Natation", path: "/category/natation" },
+    { name: "Course", path: "/category/course" },
+  ];
+
   return (
-    <div className="flex justify-between items-center p-4 bg-lightBlue mb-4">
-      <div className="flex items-center">
-        <Link to="/" className="text-lg font-bold text-darkBlue">
-          Wildrent
-        </Link>
-      </div>
-
-      <div className="flex justify-center flex-1">
-        <Search
-          style={{ width: 400 }}
-          placeholder="chercher un produit"
-          enterButton
-          onSearch={onSearch}
-        />
-      </div>
-
-      <div className="flex items-center">
-        {userInfo.isLoggedIn && (
-          <>
-            <p className="mr-4">Bonjour, {userInfo.firstname}</p>
-            {userInfo.role === "admin" ? (
-              <Link to="/admin" className="mr-4">
-                <UserOutlined style={{ fontSize: "18px", color: "black" }} />
-              </Link>
-            ) : (
-              <Link to="/profile" className="mr-4">
-                <UserOutlined style={{ fontSize: "18px", color: "black" }} />
-              </Link>
-            )}
-          </>
-        )}
-
-        <ShoppingCartOutlined style={{ fontSize: "18px", color: "black" }} />
-
-        {userInfo.isLoggedIn ? (
-          <Button
-            type="link"
-            onClick={() => {
-              logout({
-                onCompleted: () => {
-                  userInfo.refetch();
-                  message.success("Déconnexion réussie !");
-                  navigate("/");
-                },
-              });
-            }}
-            style={{
-              padding: 0,
-              fontSize: "18px",
-              color: "black",
-              marginLeft: "15px",
-            }}
-          >
-            <LogoutOutlined />
-          </Button>
-        ) : (
-          <Link to="/login" style={{ marginLeft: "15px" }}>
-            <Button type="link" style={{ color: "black", padding: 0 }}>
-              <PoweroffOutlined style={{ fontSize: "18px", color: "black" }} />
-            </Button>
+    <div className="flex flex-col p-4 bg-lightBlue mb-4">
+      <div className="flex justify-between items-center">
+        <div className="flex items-center">
+          <Link to="/">
+            <img src={Logo} alt="Wildrent Logo" style={{ height: "50px" }} />
           </Link>
-        )}
+        </div>
+
+        <div className="flex justify-center flex-1">
+          <Search
+            style={{
+              width: 400,
+              transition: "box-shadow 0.3s ease",
+            }}
+            placeholder="Rechercher un produit"
+            onSearch={onSearch}
+            enterButton={
+              <Button
+                style={{
+                  backgroundColor: "#1A265B",
+                  border: "none",
+                  color: "#fff",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#d56b1f";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1A265B";
+                  e.currentTarget.style.color = "#fff";
+                }}
+              >
+                Rechercher
+              </Button>
+            }
+          />
+        </div>
+
+        <div className="flex items-center">
+          {userInfo.isLoggedIn && (
+            <>
+              <p
+                className="mr-4"
+                style={{
+                  color: "#1A265B",
+                  fontWeight: "500",
+                  fontSize: "18px",
+                  transition: "color 0.2s ease",
+                }}
+              >
+                Bonjour, {userInfo.firstname}
+              </p>
+              {userInfo.role === "admin" ? (
+                <Link
+                  to="/admin"
+                  className="mr-4"
+                  style={{
+                    color: "#1A265B",
+                    transition: "color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#ed8936")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#1A265B")
+                  }
+                >
+                  <UserOutlined style={{ fontSize: "18px" }} />
+                </Link>
+              ) : (
+                <Link
+                  to="/profile"
+                  className="mr-4"
+                  style={{
+                    color: "#1A265B",
+                    transition: "color 0.2s ease",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.color = "#ed8936")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.color = "#1A265B")
+                  }
+                >
+                  <UserOutlined style={{ fontSize: "18px" }} />
+                </Link>
+              )}
+            </>
+          )}
+
+          <Link
+            to="/"
+            style={{
+              color: "#1A265B",
+              transition: "color 0.2s ease",
+              marginRight: "15px",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
+          >
+            <ShoppingCartOutlined style={{ fontSize: "18px" }} />
+          </Link>
+
+          {userInfo.isLoggedIn ? (
+            <Button
+              type="link"
+              onClick={() => {
+                logout({
+                  onCompleted: () => {
+                    userInfo.refetch();
+                    message.success("Déconnexion réussie !");
+                    navigate("/");
+                  },
+                });
+              }}
+              style={{
+                padding: 0,
+                fontSize: "18px",
+                color: "#1A265B",
+                transition: "color 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
+            >
+              <LogoutOutlined />
+            </Button>
+          ) : (
+            <Link to="/login">
+              <Button
+                type="link"
+                style={{
+                  color: "#1A265B",
+                  padding: 0,
+                  fontSize: "18px",
+                  transition: "color 0.2s ease",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
+              >
+                <PoweroffOutlined />
+              </Button>
+            </Link>
+          )}
+        </div>
+      </div>
+
+      <div className="flex mt-2 space-x-6">
+        {categories.map((category) => (
+          <Link
+            key={category.name}
+            to={category.path}
+            style={{
+              color: "#1A265B",
+              fontWeight: "500",
+              fontSize: "18px",
+              transition: "color 0.2s ease",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
+            onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
+          >
+            {category.name}
+          </Link>
+        ))}
       </div>
     </div>
   );
