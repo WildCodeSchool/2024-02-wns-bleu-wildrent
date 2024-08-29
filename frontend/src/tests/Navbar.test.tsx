@@ -5,15 +5,14 @@ import Navbar from "../components/Navbar";
 import { MemoryRouter } from "react-router-dom";
 import { MockedProvider } from "@apollo/client/testing";
 
-
 test("renders the navbar", () => {
   render(
-    <MockedProvider >
+    <MockedProvider>
       <MemoryRouter>
         <Navbar />
       </MemoryRouter>
     </MockedProvider>
   );
-  const titleElement = screen.getByText(/Wildrent/);  
-  expect(titleElement).toBeInTheDocument();
+  const logoImage = screen.getByAltText("Wildrent Logo");
+  expect(logoImage).toBeInTheDocument();
 });
