@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_PRODUCT_BY_ID } from "../graphql/queries";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, Button, Typography, Row, Col, Divider } from "antd";
+import { Card, Button, Typography, Row, Col, Divider, DatePicker } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
@@ -50,7 +50,30 @@ const ProductDescription = () => {
               <Divider />
               <Text className="text-base">{description}</Text>
               <Divider />
-              <Button type="primary" size="large" block>
+              <div className="mb-4">
+                <DatePicker
+                  style={{ width: "100%" }}
+                  format="YYYY-MM-DD"
+                  className="border rounded-lg shadow-sm"
+                />
+              </div>
+              <Button
+                type="primary"
+                size="large"
+                block
+                style={{
+                  backgroundColor: "#1A265B",
+                  transition: "background-color 0.3s ease, color 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#d56b1f";
+                  e.currentTarget.style.color = "#fff";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#1A265B";
+                  e.currentTarget.style.color = "#fff";
+                }}
+              >
                 Réserver
               </Button>
             </Col>
