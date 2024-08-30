@@ -7,7 +7,7 @@ class NewArticleInput {
   @Field()
   availability: boolean;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String)
   productId: number
 }
 

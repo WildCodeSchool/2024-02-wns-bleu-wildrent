@@ -3,11 +3,11 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
+  ManyToOne
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { Product } from "./product";
+import { Reservation } from "./reservation";
 
 @ObjectType() //typeGraphQl
 @Entity() //typeORM
@@ -21,7 +21,10 @@ export class Article extends BaseEntity {
   availability: boolean;
 
   @Field(() => Product)
-  @ManyToOne(() => Product)
-  @JoinColumn({ name: "product_id" })
+  @ManyToOne(() => Product, (product) => product.articles)
   product: Product;
+
+  @Field(() => Reservation)
+  @ManyToOne(() => Reservation, (reservation) => reservation.articles)
+  reservation: Reservation;
 }

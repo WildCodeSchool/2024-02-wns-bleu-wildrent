@@ -103,6 +103,7 @@ class UserResolver {
         firstname: user.firstname,
         lastname: user.lastname,
         isLoggedIn: true,
+        userId: user.id
       };
     } else {
       return { isLoggedIn: false };
