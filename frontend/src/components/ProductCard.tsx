@@ -1,8 +1,8 @@
 import { Card, Button } from "antd";
 import Meta from "antd/es/card/Meta";
-import { Product } from "../interface/types";
+import { ProductCardProps } from "../interface/types";
 
-export const ProductCard = ({ product }: { product: Product }) => {
+function ProductCard({ product }: { product: ProductCardProps }) {
   return (
     <Card
       hoverable
@@ -36,11 +36,11 @@ export const ProductCard = ({ product }: { product: Product }) => {
             transition: "background-color 0.3s ease, color 0.3s ease",
             margin: "1rem",
           }}
-          onMouseEnter={(e) => {
+          onMouseEnter={function (e) {
             e.currentTarget.style.backgroundColor = "#d56b1f";
             e.currentTarget.style.color = "#fff";
           }}
-          onMouseLeave={(e) => {
+          onMouseLeave={function (e) {
             e.currentTarget.style.backgroundColor = "#1A265B";
             e.currentTarget.style.color = "#fff";
           }}
@@ -50,4 +50,6 @@ export const ProductCard = ({ product }: { product: Product }) => {
       </div>
     </Card>
   );
-};
+}
+
+export default ProductCard;
