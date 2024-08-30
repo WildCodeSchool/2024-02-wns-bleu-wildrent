@@ -7,12 +7,13 @@ export interface ProductCardProps {
 }
 
 export interface Product {
-  id?: number;
+  id: number;
   name: string;
   description?: string;
   imgUrl?: string;
   price: number;
 }
+
 export type EditProductModalProps = {
   isModalOpen: boolean;
   setIsModalOpen: (arg: boolean) => void;
