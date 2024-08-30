@@ -75,3 +75,42 @@ export const SEARCH_PRODUCTS = gql`
     }
   }
 `;
+
+
+export const GET_RESERVATIONS_BY_USER_ID = gql`
+  query GetReservationsByUserId {
+  getReservationsByUserId {
+    id
+    startDate
+    endDate
+    status
+    articles {
+      id
+      availability
+    }
+  }
+}
+`;
+
+export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
+  query GetCurrentReservationByUserId {
+    getCurrentReservationByUserId {
+      reservation {
+        status
+        startDate
+        endDate
+        id
+        createdAt
+        articles {
+          id
+          availability
+          product {
+            name
+            price
+          }
+        }
+      }
+      totalPrice
+    }
+}
+`;

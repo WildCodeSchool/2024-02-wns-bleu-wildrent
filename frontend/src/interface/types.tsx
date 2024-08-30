@@ -1,10 +1,16 @@
-import { Product } from "../generated/graphql-types";
-
 export interface ProductCardProps {
   id: number;
   name: string;
   description: string;
   imgUrl: string;
+  price: number;
+}
+
+export interface Product {
+  id?: number;
+  name: string;
+  description?: string;
+  imgUrl?: string;
   price: number;
 }
 export type EditProductModalProps = {
@@ -50,3 +56,24 @@ export interface NewProductFormValues {
   price: string;
   description: string;
 }
+
+export type Article = {
+    id: number
+    availability: boolean
+    product?: Product
+}
+
+export type Reservation = {
+  reservation: {
+      id: number
+      startDate: string
+      endDate: string
+      articles: Article[]
+      status: string
+      createdAt?: string
+  }
+}
+
+export type ReservationData = Reservation & {
+  totalPrice: number;
+};

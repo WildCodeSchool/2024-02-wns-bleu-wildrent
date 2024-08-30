@@ -1,11 +1,24 @@
 import { useContext } from "react";
 import { UserContext } from "../components/Layout";
 import { Card, Tabs } from "antd";
+import { useGetReservationsByUserIdQuery } from "../generated/graphql-types";
+import { ReservationCard } from "../components/ReservationCard";
 
 const { TabPane } = Tabs;
 
 const Profile = () => {
   const userInfo = useContext(UserContext);
+  const {data, loading, error} = useGetReservationsByUserIdQuery()
+
+  console.log(data)
+
+  if (loading) {
+    return <p>Loading</p>;
+  }
+  if (error) {
+    console.log("error", error);
+    return <p>Erreur</p>;
+  }
 
   return (
     <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "2rem" }}>
@@ -23,7 +36,9 @@ const Profile = () => {
             </p>
           </TabPane>
           <TabPane tab="Historique des commandes" key="2">
-            <p>A venir</p>
+            {data?.getReservationsByUserId.map(reservation => 
+              <ReservationCard reservation={reservation}/>
+            )}
           </TabPane>
         </Tabs>
       </Card>

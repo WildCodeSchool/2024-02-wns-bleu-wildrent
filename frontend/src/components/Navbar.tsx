@@ -123,7 +123,7 @@ function Navbar() {
           )}
 
           <Link
-            to="/"
+            to="/cart"
             style={{
               color: "#1A265B",
               transition: "color 0.2s ease",

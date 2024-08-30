@@ -102,7 +102,7 @@ class UserResolver {
         role: user.role,
         firstname: user.firstname,
         lastname: user.lastname,
-        isLoggedIn: true,
+        isLoggedIn: true
       };
     } else {
       return { isLoggedIn: false };

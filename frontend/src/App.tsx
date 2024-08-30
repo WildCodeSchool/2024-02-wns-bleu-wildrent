@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
 import SearchError from "./pages/search/SearchError";
 import Profile from "./pages/Profile";
+import { Cart } from "./pages/Cart";
 
 const App = () => {
 
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="search/:keyword" element={<SearchPage />} />
         <Route path="search/" element={<SearchError />} />
         <Route path="register" element={<Register />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
     </Routes>
   );
