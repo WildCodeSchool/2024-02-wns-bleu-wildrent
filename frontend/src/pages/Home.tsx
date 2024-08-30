@@ -1,4 +1,4 @@
-import { ProductCard } from "../components/ProductCard";
+import ProductCard from "../components/ProductCard";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 import { Link } from "react-router-dom";
 

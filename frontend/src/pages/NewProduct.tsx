@@ -1,6 +1,11 @@
-import { GetAllProductsDocument, SearchProductsDocument, useCreateNewProductMutation } from "../generated/graphql-types";
+import {
+  GetAllProductsDocument,
+  SearchProductsDocument,
+  useCreateNewProductMutation,
+} from "../generated/graphql-types";
 import { Button, Form, Input } from "antd";
 import ListProductsTable from "../components/ListProductsTable";
+import { NewProductFormValues } from "../interface/types";
 
 const NewProduct = () => {
   const [createNewProduct] = useCreateNewProductMutation({
@@ -10,11 +15,10 @@ const NewProduct = () => {
     onError(error) {
       console.log("error after executing mutation", error);
     },
-    refetchQueries: [ GetAllProductsDocument, SearchProductsDocument],
-    
+    refetchQueries: [GetAllProductsDocument, SearchProductsDocument],
   });
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: NewProductFormValues) => {
     const formJson = {
       ...values,
       price: parseInt(values.price),
@@ -24,9 +28,8 @@ const NewProduct = () => {
       variables: {
         data: formJson,
       },
-    })
-  }
-
+    });
+  };
 
   return (
     <>
@@ -39,28 +42,30 @@ const NewProduct = () => {
       >
         <Form.Item
           label="Nom du produit:"
-          name='name'
-          rules={[{ required: true, message: 'Un nom de produit est nécessaire' }]}
->
-          <Input className="text-field"  />
+          name="name"
+          rules={[
+            { required: true, message: "Un nom de produit est nécessaire" },
+          ]}
+        >
+          <Input className="text-field" />
         </Form.Item>
-        <Form.Item
-          label="imgUrl:"
-          name="imgUrl">
+        <Form.Item label="imgUrl:" name="imgUrl">
           <Input className="text-field" />
         </Form.Item>
         <Form.Item
           label="price:"
           name="price"
-          rules={[{ required: true, message: 'Un prix est nécessaire' }]}
->
-          <Input className="number"  />
+          rules={[{ required: true, message: "Un prix est nécessaire" }]}
+        >
+          <Input className="number" />
         </Form.Item>
         <Form.Item
           label="description:"
           name="description"
-          rules={[{ required: true, message: 'Une description est nécessaire' }]}
->
+          rules={[
+            { required: true, message: "Une description est nécessaire" },
+          ]}
+        >
           <Input className="text-field" />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -69,7 +74,7 @@ const NewProduct = () => {
           </Button>
         </Form.Item>
       </Form>
-      <ListProductsTable/>
+      <ListProductsTable />
     </>
   );
 };

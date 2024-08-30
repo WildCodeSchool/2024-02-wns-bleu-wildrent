@@ -12,9 +12,9 @@ import {
 import Title from "antd/es/typography/Title";
 import DeleteArticleButton from "../components/DeleteArticleButton";
 import EditArticleDropdown from "../components/EditArticleDropdown";
+import { NewArticleFormValues } from "../interface/types";
 
 const NewArticle = () => {
-
   const columns = [
     {
       title: "ID",
@@ -26,7 +26,7 @@ const NewArticle = () => {
       dataIndex: "availability",
       key: "edit availability",
       render: (availability: boolean, record: { id: number }) => (
-        <EditArticleDropdown availability={availability} id={record.id}/>
+        <EditArticleDropdown availability={availability} id={record.id} />
       ),
     },
     {
@@ -38,8 +38,7 @@ const NewArticle = () => {
       title: "action",
       key: "productName",
       dataIndex: "id",
-      render: (id: string) => <DeleteArticleButton articleId={id}/>
-
+      render: (id: string) => <DeleteArticleButton articleId={id} />,
     },
   ];
 
@@ -65,7 +64,7 @@ const NewArticle = () => {
     error: articlesError,
   } = useGetAllArticlesQuery();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: NewArticleFormValues) => {
     const formJson: NewArticleInput = {
       ...values,
       availability: values.availability === "true",
