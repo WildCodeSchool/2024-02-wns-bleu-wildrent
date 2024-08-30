@@ -1,6 +1,11 @@
 export interface ProductCardProps {
   id: number;
+  name: string;
+  description: string;
+  imgUrl: string;
+  price: number;
 }
+
 export interface Product {
   id?: number;
   name: string;
