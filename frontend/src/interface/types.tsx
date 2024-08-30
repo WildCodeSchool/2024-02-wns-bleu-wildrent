@@ -7,7 +7,7 @@ export interface ProductCardProps {
 }
 
 export interface Product {
-  id: number;
+  id?: number;
   name: string;
   description?: string;
   imgUrl?: string;
@@ -30,7 +30,7 @@ export type ArticleProps = {
 };
 
 export interface EditProductFormProps {
-  product: Product;
+  product: ProductCardProps;
   setIsModalOpen: (arg: boolean) => void;
 }
 
