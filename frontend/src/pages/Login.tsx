@@ -5,13 +5,14 @@ import { useLoginLazyQuery } from "../generated/graphql-types";
 import { Form, Input, Button, Card, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "../styles/commonLoginRegister.css";
+import { LoginFormValues } from "../interface/types";
 
 const Login = () => {
   const userInfo = useContext(UserContext);
   const [login] = useLoginLazyQuery();
   const navigate = useNavigate();
 
-  const onFinish = async (values: any) => {
+  const onFinish = async (values: LoginFormValues) => {
     try {
       const { data } = await login({
         variables: values,

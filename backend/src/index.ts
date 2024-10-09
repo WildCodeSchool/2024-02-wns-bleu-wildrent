@@ -8,6 +8,7 @@ import UserResolver from "./resolvers/UserResolver";
 import "dotenv/config";
 import setCookieParser from "set-cookie-parser";
 import jwt from "jsonwebtoken";
+import ReservationResolver from "./resolvers/ReservationResolver";
 
 export type Context = {
   id: number;
@@ -18,7 +19,7 @@ export type Context = {
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [ProductResolver, ArticleResolver, UserResolver],
+    resolvers: [ProductResolver, ArticleResolver, UserResolver, ReservationResolver],
     authChecker: ({ context }: { context: Context }, roles) => {
       console.log("roles for this query/mutation ", roles);
       // Check user

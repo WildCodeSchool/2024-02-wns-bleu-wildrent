@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  DateTimeISO: { input: any; output: any; }
 };
 
 export type Article = {
@@ -22,6 +23,7 @@ export type Article = {
   availability: Scalars['Boolean']['output'];
   id: Scalars['Float']['output'];
   product: Product;
+  reservation: Reservation;
 };
 
 export type EditArticleInput = {
@@ -81,7 +83,7 @@ export type MutationEditProductArgs = {
 
 export type NewArticleInput = {
   availability: Scalars['Boolean']['input'];
-  productId?: InputMaybe<Scalars['String']['input']>;
+  productId: Scalars['String']['input'];
 };
 
 export type NewProductInput = {
@@ -105,7 +107,11 @@ export type Query = {
   __typename?: 'Query';
   getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
+  getAllReservations: Array<Reservation>;
+  getCurrentReservationByUserId: ReservationWithTotal;
   getOneProductById: Product;
+  getOneReservationById: Reservation;
+  getReservationsByUserId: Array<Reservation>;
   login: Scalars['String']['output'];
   logout: Scalars['String']['output'];
   searchProducts: Array<Product>;
@@ -118,6 +124,11 @@ export type QueryGetOneProductByIdArgs = {
 };
 
 
+export type QueryGetOneReservationByIdArgs = {
+  reservationId: Scalars['String']['input'];
+};
+
+
 export type QueryLoginArgs = {
   email: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -126,6 +137,29 @@ export type QueryLoginArgs = {
 
 export type QuerySearchProductsArgs = {
   keyword: Scalars['String']['input'];
+};
+
+export type Reservation = {
+  __typename?: 'Reservation';
+  articles: Array<Article>;
+  createdAt: Scalars['DateTimeISO']['output'];
+  endDate: Scalars['DateTimeISO']['output'];
+  id: Scalars['Float']['output'];
+  startDate: Scalars['DateTimeISO']['output'];
+  status: Scalars['String']['output'];
+  user: User;
+};
+
+export type ReservationWithTotal = {
+  __typename?: 'ReservationWithTotal';
+  reservation: Reservation;
+  totalPrice: Scalars['Float']['output'];
+};
+
+export type User = {
+  __typename?: 'User';
+  email: Scalars['String']['output'];
+  reservations?: Maybe<Array<Reservation>>;
 };
 
 export type UserInfo = {
@@ -232,6 +266,16 @@ export type SearchProductsQueryVariables = Exact<{
 
 
 export type SearchProductsQuery = { __typename?: 'Query', searchProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number }> };
+
+export type GetReservationsByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'Reservation', id: number, startDate: any, endDate: any, status: string, articles: Array<{ __typename?: 'Article', id: number, availability: boolean }> }> };
+
+export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', name: string, price: number } }> } } };
 
 
 export const CreateNewProductDocument = gql`
@@ -781,3 +825,103 @@ export type SearchProductsQueryHookResult = ReturnType<typeof useSearchProductsQ
 export type SearchProductsLazyQueryHookResult = ReturnType<typeof useSearchProductsLazyQuery>;
 export type SearchProductsSuspenseQueryHookResult = ReturnType<typeof useSearchProductsSuspenseQuery>;
 export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, SearchProductsQueryVariables>;
+export const GetReservationsByUserIdDocument = gql`
+    query GetReservationsByUserId {
+  getReservationsByUserId {
+    id
+    startDate
+    endDate
+    status
+    articles {
+      id
+      availability
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetReservationsByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetReservationsByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetReservationsByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetReservationsByUserIdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetReservationsByUserIdQuery(baseOptions?: Apollo.QueryHookOptions<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>(GetReservationsByUserIdDocument, options);
+      }
+export function useGetReservationsByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>(GetReservationsByUserIdDocument, options);
+        }
+export function useGetReservationsByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>(GetReservationsByUserIdDocument, options);
+        }
+export type GetReservationsByUserIdQueryHookResult = ReturnType<typeof useGetReservationsByUserIdQuery>;
+export type GetReservationsByUserIdLazyQueryHookResult = ReturnType<typeof useGetReservationsByUserIdLazyQuery>;
+export type GetReservationsByUserIdSuspenseQueryHookResult = ReturnType<typeof useGetReservationsByUserIdSuspenseQuery>;
+export type GetReservationsByUserIdQueryResult = Apollo.QueryResult<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>;
+export const GetCurrentReservationByUserIdDocument = gql`
+    query GetCurrentReservationByUserId {
+  getCurrentReservationByUserId {
+    reservation {
+      status
+      startDate
+      endDate
+      id
+      createdAt
+      articles {
+        id
+        availability
+        product {
+          name
+          price
+        }
+      }
+    }
+    totalPrice
+  }
+}
+    `;
+
+/**
+ * __useGetCurrentReservationByUserIdQuery__
+ *
+ * To run a query within a React component, call `useGetCurrentReservationByUserIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentReservationByUserIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCurrentReservationByUserIdQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCurrentReservationByUserIdQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>(GetCurrentReservationByUserIdDocument, options);
+      }
+export function useGetCurrentReservationByUserIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>(GetCurrentReservationByUserIdDocument, options);
+        }
+export function useGetCurrentReservationByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>(GetCurrentReservationByUserIdDocument, options);
+        }
+export type GetCurrentReservationByUserIdQueryHookResult = ReturnType<typeof useGetCurrentReservationByUserIdQuery>;
+export type GetCurrentReservationByUserIdLazyQueryHookResult = ReturnType<typeof useGetCurrentReservationByUserIdLazyQuery>;
+export type GetCurrentReservationByUserIdSuspenseQueryHookResult = ReturnType<typeof useGetCurrentReservationByUserIdSuspenseQuery>;
+export type GetCurrentReservationByUserIdQueryResult = Apollo.QueryResult<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>;

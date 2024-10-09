@@ -1,4 +1,4 @@
-import { ProductCard } from "../components/ProductCard";
+import ProductCard from "../components/ProductCard";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 import { Link } from "react-router-dom";
 import { Card, Carousel, Divider, Button, Typography, Row, Col } from "antd";
@@ -95,6 +95,7 @@ const HomePage = () => {
             </div>
           </Link>
         ))}
+        <h1>hello world</h1>
       </div>
     </div>
   );

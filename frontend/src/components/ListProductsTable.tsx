@@ -1,13 +1,8 @@
 import { Table } from "antd";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 import DeleteProductButton from "./DeleteProductButton";
-import { ProductCardProps } from "../interface/types";
 import EditProductRow from "./EditProduct/EditProductRow";
-
-type Article = {
-  id: string;
-  availability: boolean;
-};
+import { ArticleProps, ProductCardProps } from "../interface/types";
 
 function ListProductsTable() {
   const { data: productsData } = useGetAllProductsQuery();
@@ -32,14 +27,14 @@ function ListProductsTable() {
       title: "Disponibles",
       dataIndex: "articles",
       key: "available",
-      render: (articles: Article[]) =>
+      render: (articles: ArticleProps[]) =>
         articles.filter((article) => article.availability === true).length,
     },
     {
       title: "Réservés",
       dataIndex: "articles",
       key: "unavailable",
-      render: (articles: Article[]) =>
+      render: (articles: ArticleProps[]) =>
         articles.filter((article) => article.availability === false).length,
     },
     {
