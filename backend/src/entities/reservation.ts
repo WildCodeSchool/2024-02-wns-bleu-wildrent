@@ -3,6 +3,14 @@ import { Field, ObjectType } from "type-graphql";
 import { User } from "./user";
 import { Article } from "./article";
 
+
+export enum ReservationStatus {
+    Pending = "pending",
+    Validated = "validated",
+    Ongoing = "ongoing",
+    Ended = "ended"
+  }
+
 @ObjectType() //typeGraphQl
 @Entity() //typeORM
 export class Reservation extends BaseEntity {
@@ -25,7 +33,7 @@ export class Reservation extends BaseEntity {
 
     @Field()
     @Column()
-    status: string;
+    status: ReservationStatus;
 
     @Field(() => User)
     @ManyToOne(() => User, (user) => user.reservations)

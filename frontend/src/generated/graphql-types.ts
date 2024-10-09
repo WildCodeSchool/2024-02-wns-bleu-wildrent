@@ -34,9 +34,10 @@ export type Mutation = {
   __typename?: 'Mutation';
   createNewArticle: Article;
   createNewProduct: Product;
-  createUser: Scalars['String']['output'];
-  deleteArticle: Scalars['String']['output'];
-  deleteProduct: Scalars['String']['output'];
+  createUser: Scalars["String"]["output"];
+  deleteArticle: Scalars["String"]["output"];
+  deleteProduct: Scalars["String"]["output"];
+  createNewReservation: Reservation;
   editArticle: Article;
   editProduct: Product;
 };
@@ -91,6 +92,12 @@ export type NewProductInput = {
   imgUrl?: InputMaybe<Scalars['String']['input']>;
   name: Scalars['String']['input'];
   price: Scalars['Float']['input'];
+};
+
+export type NewReservationInput = {
+  articleId: Scalars['String']['input'];
+  endDate: Scalars['DateTimeISO']['input'];
+  startDate: Scalars['DateTimeISO']['input'];
 };
 
 export type Product = {

@@ -1,7 +1,8 @@
 import { Context } from "src";
-import { Reservation } from "../entities/reservation";
-import { Arg, Ctx, Field, ObjectType, Query, Resolver } from "type-graphql";
+import { Reservation, ReservationStatus } from "../entities/reservation";
+import { Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver } from "type-graphql";
 import { calculateTotal } from "../utils/reservation/calculateTotal";
+import { Article } from "../entities/article";
 
 // custom object created to send the totalPrice along with the reservation data
 @ObjectType()
@@ -11,6 +12,18 @@ export class ReservationWithTotal {
 
     @Field(() => Number)
     totalPrice: number;
+}
+
+@InputType()
+class NewReservationInput {
+  @Field()
+  startDate: Date;
+
+  @Field()
+  endDate: Date;
+
+  @Field(() => String)
+  articleId: number
 }
 
 @Resolver(Reservation)
@@ -53,8 +66,43 @@ class ReservationResolver {
     }
     }
 
+    @Mutation(() => Reservation)
+    async createNewReservation(@Ctx() context: Context, @Arg("data") newReservationData: NewReservationInput) {
+    if (!context.id) {
+        throw new Error("User not authenticated");
+    }
+    // si le user a déjà une réservation pending, ne pas en créer une nouvelle
+    const existingPendingReservation = await Reservation.findOne({
+        where: {
+          user: { id: context.id },
+          status: ReservationStatus.Pending,
+        },
+      });   
+      if (existingPendingReservation) {
+        throw new Error("You already have a pending reservation.");
+      }
+
+    const article = await Article.findOne({
+        where: { id: Number(newReservationData.articleId)},
+        });
+        if (!article) {
+        throw new Error("Article not found")
+    }
+
+      const newReservation = Reservation.create({
+        startDate: newReservationData.startDate,
+        endDate: newReservationData.endDate,
+        articles: [article],
+        user: {id: context.id},
+        status: ReservationStatus.Pending
+      });
+  
+      await newReservation.save();
+      return newReservation;
+    }
 }
 export default ReservationResolver;
+
 
 
 
