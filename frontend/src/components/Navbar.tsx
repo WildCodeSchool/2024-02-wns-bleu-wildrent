@@ -31,7 +31,7 @@ function Navbar() {
   ];
 
   return (
-    <div className="flex flex-col p-4 bg-lightBlue mb-4">
+    <div className="flex flex-col p-4 bg-lightBlue">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/">

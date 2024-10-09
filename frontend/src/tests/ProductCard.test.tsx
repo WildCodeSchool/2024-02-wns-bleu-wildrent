@@ -1,11 +1,25 @@
 import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom";
-import { test, expect } from "vitest";
+import { test, expect, vi } from "vitest";
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_ALL_PRODUCTS } from "../graphql/queries";
 import Home from "../pages/Home";
 import { MemoryRouter } from "react-router-dom";
 
+Object.defineProperty(window, "matchMedia", {
+  writable: true,
+  value: vi.fn().mockImplementation((query) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addListener: vi.fn(), // Méthode dépréciée
+    removeListener: vi.fn(), // Méthode dépréciée
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+});
+
+// Mocks
 const mocks = [
   {
     request: {
@@ -29,7 +43,7 @@ const mocks = [
   },
 ];
 
-test("renders home", async () => {
+test("renders Home 'chaussettes'", async () => {
   render(
     <MemoryRouter>
       <MockedProvider mocks={mocks} addTypename={false}>
@@ -37,5 +51,7 @@ test("renders home", async () => {
       </MockedProvider>
     </MemoryRouter>
   );
-  expect(await screen.findByText("chaussettes")).toBeInTheDocument();
+
+  const elements = await screen.findAllByText("chaussettes");
+  expect(elements.length).toBe(2);
 });

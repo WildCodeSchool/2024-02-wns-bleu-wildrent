@@ -1,19 +1,98 @@
 import { ProductCard } from "../components/ProductCard";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 import { Link } from "react-router-dom";
+import { Card, Carousel, Divider, Button, Typography, Row, Col } from "antd";
+
+const { Title, Text } = Typography;
 
 const HomePage = () => {
   const { data, loading, error } = useGetAllProductsQuery();
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const carouselProducts = Array.isArray(data?.getAllProducts)
+    ? data.getAllProducts.slice(0, 5)
+    : [];
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-wrap gap-4 justify-center">
+    <div
+      className="flex flex-col items-center justify-center p-6"
+      style={{ backgroundColor: "#FFF5ED" }}
+    >
+      <h1 className="text-4xl font-bold mb-6" style={{ color: "#50A5B1" }}>
+        Produits vedettes
+      </h1>
+      <div className="w-full max-w-3xl mx-auto">
+        <Carousel autoplay effect="fade">
+          {carouselProducts.map((product) => (
+            <div key={product.id} className="p-4">
+              <Link to={`product/${product.id}`}>
+                <Card hoverable>
+                  <Row gutter={16} align="middle">
+                    <Col xs={24} md={12}>
+                      <img
+                        src={product.imgUrl}
+                        alt={product.name}
+                        className="w-full h-60 object-cover rounded-lg"
+                      />
+                    </Col>
+                    <Col xs={24} md={12}>
+                      <div className="p-4">
+                        <Title level={4} className="text-xl mb-2">
+                          {product.name}
+                        </Title>
+                        <Divider />
+                        <Text className="text-lg font-semibold block mb-2">
+                          {product.price} €
+                        </Text>
+                        <Divider />
+                        <Text className="text-base mb-4">
+                          {product.description}
+                        </Text>
+                        <Divider />
+                        <Button
+                          type="primary"
+                          size="large"
+                          block
+                          style={{
+                            backgroundColor: "#1A265B",
+                            transition:
+                              "background-color 0.3s ease, color 0.3s ease",
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = "#d56b1f";
+                            e.currentTarget.style.color = "#fff";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = "#1A265B";
+                            e.currentTarget.style.color = "#fff";
+                          }}
+                        >
+                          Réserver
+                        </Button>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card>
+              </Link>
+            </div>
+          ))}
+        </Carousel>
+      </div>
+
+      <h1
+        className="text-4xl font-bold mt-10 mb-6"
+        style={{ color: "#50A5B1" }}
+      >
+        Tous les produits
+      </h1>
+      <div className="flex flex-wrap gap-6 justify-center mt-4">
         {data?.getAllProducts.map((product) => (
           <Link to={`product/${product.id}`} key={product.id}>
-            <ProductCard product={product} />
+            <div className="w-64 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 mx-2">
+              <ProductCard product={product} />
+            </div>
           </Link>
         ))}
       </div>
