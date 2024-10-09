@@ -863,8 +863,8 @@ export function useGetReservationsByUserIdLazyQuery(baseOptions?: Apollo.LazyQue
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>(GetReservationsByUserIdDocument, options);
         }
-export function useGetReservationsByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useGetReservationsByUserIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GetReservationsByUserIdQuery, GetReservationsByUserIdQueryVariables>(GetReservationsByUserIdDocument, options);
         }
 export type GetReservationsByUserIdQueryHookResult = ReturnType<typeof useGetReservationsByUserIdQuery>;
@@ -917,8 +917,8 @@ export function useGetCurrentReservationByUserIdLazyQuery(baseOptions?: Apollo.L
           const options = {...defaultOptions, ...baseOptions}
           return Apollo.useLazyQuery<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>(GetCurrentReservationByUserIdDocument, options);
         }
-export function useGetCurrentReservationByUserIdSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
+export function useGetCurrentReservationByUserIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
           return Apollo.useSuspenseQuery<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>(GetCurrentReservationByUserIdDocument, options);
         }
 export type GetCurrentReservationByUserIdQueryHookResult = ReturnType<typeof useGetCurrentReservationByUserIdQuery>;
