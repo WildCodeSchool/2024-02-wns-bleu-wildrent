@@ -82,6 +82,7 @@ class ReservationResolver {
         throw new Error("You already have a pending reservation.");
       }
 
+    // ajouter un premier article pour initialiser la réservation 
     const article = await Article.findOne({
         where: { id: Number(newReservationData.articleId)},
         });
@@ -100,6 +101,30 @@ class ReservationResolver {
       await newReservation.save();
       return newReservation;
     }
+
+    @Mutation(() => Reservation)
+    async addArticleToReservation(@Arg("reservation")reservationId: string,  @Arg("articleId") articleId: string) {
+        const reservation = await Reservation.findOne({
+            where: { id: Number.parseInt(reservationId) }, 
+            relations: ["articles"]
+          })
+
+        if (!reservation) {
+        throw new Error("Reservation not found");
+        }
+
+        const articleToAdd = await Article.findOne({
+            where: { id: Number(articleId)},
+            });
+            if (!articleToAdd) {
+            throw new Error("Article not found")
+        }
+
+        reservation.articles = [...reservation.articles, articleToAdd]
+        const updatedReservation = await reservation.save()
+        return updatedReservation
+    }
+
 }
 export default ReservationResolver;
 

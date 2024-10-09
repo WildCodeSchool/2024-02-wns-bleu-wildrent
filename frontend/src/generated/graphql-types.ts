@@ -31,7 +31,8 @@ export type EditArticleInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
+  addArticleToReservation: Article;
   createNewArticle: Article;
   createNewProduct: Product;
   createUser: Scalars["String"]["output"];
