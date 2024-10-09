@@ -38,7 +38,7 @@ function Layout() {
       >
         <div>
           <Navbar />
-          <main className="main-content m-10">
+          <main>
             <Outlet />
           </main>
           <div className="flex justify-center">

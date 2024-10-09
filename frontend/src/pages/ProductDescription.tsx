@@ -22,7 +22,7 @@ const ProductDescription = () => {
     return <p>Erreur</p>;
   }
   if (data) {
-    const { title, imgUrl, price, description } = data.getOneProductById;
+    const { name, imgUrl, price, description } = data.getOneProductById;
 
     return (
       <div className="max-w-4xl mx-auto my-5 p-5">
@@ -39,13 +39,16 @@ const ProductDescription = () => {
           <Row gutter={[16, 16]}>
             <Col xs={24} md={12}>
               <img
-                alt={title}
+                alt={name}
                 src={imgUrl}
                 className="w-full rounded-lg object-cover h-full"
               />
             </Col>
             <Col xs={24} md={12}>
-              <Title className="text-xl">{title}</Title>
+              <Title level={4} className="text-xl mb-2">
+                {name}
+              </Title>
+              <Divider />
               <Text className="text-lg font-semibold">{price} €</Text>
               <Divider />
               <Text className="text-base">{description}</Text>

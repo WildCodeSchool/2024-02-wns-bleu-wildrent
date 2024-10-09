@@ -36,8 +36,8 @@ function ProductCard({ product }: { product: ProductCardProps }) {
             transition: "background-color 0.3s ease, color 0.3s ease",
             margin: "1rem",
           }}
-          onMouseEnter={function (e) {
-            e.currentTarget.style.backgroundColor = "#d56b1f";
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "#F0610D";
             e.currentTarget.style.color = "#fff";
           }}
           onMouseLeave={function (e) {
