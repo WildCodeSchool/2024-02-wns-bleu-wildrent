@@ -6,11 +6,12 @@ import {
   LogoutOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
-import { Input, Button, message } from "antd";
+import { Input, Button, message} from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { useLogoutLazyQuery } from "../generated/graphql-types";
 import Logo from "../assets/logo.png";
+import RangePicker from "./RangePicker";
 
 const { Search } = Input;
 
@@ -39,7 +40,7 @@ function Navbar() {
           </Link>
         </div>
 
-        <div className="flex justify-center flex-1">
+        <div className="flex flex-col justify-center gap-6">
           <Search
             style={{
               width: 400,
@@ -68,8 +69,8 @@ function Navbar() {
               </Button>
             }
           />
+          <RangePicker/>
         </div>
-
         <div className="flex items-center">
           {userInfo.isLoggedIn && (
             <>
