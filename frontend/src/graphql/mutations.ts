@@ -75,9 +75,15 @@ export const EDIT_ARTICLE = gql`
 export const CREATE_NEW_RESERVATION = gql`
  mutation CreateNewReservation($data: NewReservationInput!) {
   createNewReservation(data: $data) {
-    startDate
-    endDate
-    status
+    id
+  }
+}
+`;
+
+export const ADD_ARTICLE_TO_RESERVATION = gql`
+mutation AddArticleToReservation($articleId: String!, $reservation: String!) {
+  addArticleToReservation(articleId: $articleId, reservation: $reservation) {
+    id
   }
 }
 `;
