@@ -3,6 +3,7 @@ import { GET_PRODUCT_BY_ID } from "../graphql/queries";
 import { useParams, useNavigate } from "react-router-dom";
 import { Card, Button, Typography, Row, Col, Divider} from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
+import ReservationButton from "../components/ReservationButton";
 
 const { Title, Text } = Typography;
 
@@ -22,7 +23,7 @@ const ProductDescription = () => {
     return <p>Erreur</p>;
   }
   if (data) {
-    const { name, imgUrl, price, description } = data.getOneProductById;
+    const { name, imgUrl, price, description, articles } = data.getOneProductById;
 
     return (
       <div className="max-w-4xl mx-auto my-5 p-5">
@@ -53,25 +54,7 @@ const ProductDescription = () => {
               <Divider />
               <Text className="text-base">{description}</Text>
               <Divider />
-              <Button
-                type="primary"
-                size="large"
-                block
-                style={{
-                  backgroundColor: "#1A265B",
-                  transition: "background-color 0.3s ease, color 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#d56b1f";
-                  e.currentTarget.style.color = "#fff";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1A265B";
-                  e.currentTarget.style.color = "#fff";
-                }}
-              >
-                Réserver
-              </Button>
+              <ReservationButton articles={articles}/>
             </Col>
           </Row>
         </Card>

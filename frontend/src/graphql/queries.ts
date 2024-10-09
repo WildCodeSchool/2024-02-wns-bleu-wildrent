@@ -37,6 +37,10 @@ export const GET_PRODUCT_BY_ID = gql`
       description
       imgUrl
       price
+      articles {
+        id
+        availability
+      }
     }
   }
 `;

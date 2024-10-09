@@ -45,7 +45,7 @@ function ProductCard({ product }: { product: Product }) {
             e.currentTarget.style.color = "#fff";
           }}
         >
-          Réserver
+          En savoir plus
         </Button>
       </div>
     </Card>

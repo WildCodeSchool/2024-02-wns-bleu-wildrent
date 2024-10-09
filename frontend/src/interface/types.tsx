@@ -70,3 +70,7 @@ export type Reservation = {
 export type ReservationData = Reservation & {
   totalPrice: number;
 };
+
+export type ReservationButtonProps = {
+  articles: Article[]
+}

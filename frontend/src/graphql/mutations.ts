@@ -70,4 +70,14 @@ export const EDIT_ARTICLE = gql`
       availability
     }
   }
+`
+
+export const CREATE_NEW_RESERVATION = gql`
+ mutation CreateNewReservation($data: NewReservationInput!) {
+  createNewReservation(data: $data) {
+    startDate
+    endDate
+    status
+  }
+}
 `;

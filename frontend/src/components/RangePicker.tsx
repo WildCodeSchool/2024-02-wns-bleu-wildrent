@@ -7,8 +7,8 @@ export default function RangePicker() {
     const handleChange = (value : [Dayjs | null, Dayjs | null] | null) => {
         if (value) {
             console.log("value",typeof(value))
-            const formattedStartDate = dayjs(value[0]).format('YYYY-MM-DD');
-            const formattedEndDate = dayjs(value[1]).format('YYYY-MM-DD');
+            const formattedStartDate = dayjs(value[0]).toISOString();
+            const formattedEndDate = dayjs(value[1]).toISOString();
             localStorage.setItem('startDate', formattedStartDate)
             localStorage.setItem('endDate', formattedEndDate)
         } else {
