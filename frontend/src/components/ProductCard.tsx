@@ -1,8 +1,8 @@
 import { Card, Button } from "antd";
 import Meta from "antd/es/card/Meta";
-import { ProductCardProps } from "../interface/types";
+import { Product } from "../interface/types";
 
-function ProductCard({ product }: { product: ProductCardProps }) {
+function ProductCard({ product }: { product: Product }) {
   return (
     <Card
       hoverable

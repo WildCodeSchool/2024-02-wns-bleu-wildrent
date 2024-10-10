@@ -2,7 +2,7 @@ import { Table } from "antd";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 import DeleteProductButton from "./DeleteProductButton";
 import EditProductRow from "./EditProduct/EditProductRow";
-import { ArticleProps, ProductCardProps } from "../interface/types";
+import { ArticleProps, Product } from "../interface/types";
 
 function ListProductsTable() {
   const { data: productsData } = useGetAllProductsQuery();
@@ -47,7 +47,7 @@ function ListProductsTable() {
       title: "Actions",
       key: "actions",
       dataIndex: "id",
-      render: (id: string, record: ProductCardProps) => (
+      render: (id: string, record: Product) => (
         <div className="flex gap-2">
           <EditProductRow product={record} />
           <DeleteProductButton productId={id} />
