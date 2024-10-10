@@ -70,4 +70,12 @@ export const EDIT_ARTICLE = gql`
       availability
     }
   }
+`
+export const HANDLE_RESERVATION = gql`
+mutation HandleReservation($data: NewReservationInput!) {
+  handleReservation(data: $data) {
+    id
+  }
+}
 `;
+

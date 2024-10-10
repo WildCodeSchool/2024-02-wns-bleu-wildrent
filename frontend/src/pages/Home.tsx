@@ -69,7 +69,7 @@ const HomePage = () => {
                             e.currentTarget.style.color = "#fff";
                           }}
                         >
-                          Réserver
+                          En savoir plus
                         </Button>
                       </div>
                     </Col>

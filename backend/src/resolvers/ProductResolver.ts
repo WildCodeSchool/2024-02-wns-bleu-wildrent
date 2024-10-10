@@ -37,8 +37,9 @@ class ProductResolver {
 
   @Query(() => Product)
   async getOneProductById(@Arg("productId") productId: string) {
-    const product = await Product.findOneByOrFail({
-      id: Number.parseInt(productId),
+    const product = await Product.findOne({
+      where: { id: Number.parseInt(productId), },
+      relations: ['articles']
     });
     return product;
   }
