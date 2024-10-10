@@ -67,65 +67,64 @@ class ReservationResolver {
     }
 
     @Mutation(() => Reservation)
-    async createNewReservation(@Ctx() context: Context, @Arg("data") newReservationData: NewReservationInput) {
-    if (!context.id) {
+    async handleReservation(
+      @Ctx() context: Context,
+      @Arg("data") reservationData: NewReservationInput
+    ) {
+      if (!context.id) {
         throw new Error("User not authenticated");
-    }
-    // si le user a déjà une réservation pending, ne pas en créer une nouvelle
-    const existingPendingReservation = await Reservation.findOne({
+      }
+  
+      // Check if user already has a pending reservation
+      let reservation = await Reservation.findOne({
         where: {
           user: { id: context.id },
           status: ReservationStatus.Pending,
         },
-      });   
-      if (existingPendingReservation) {
-        throw new Error("You already have a pending reservation.");
-      }
-
-    // ajouter un premier article pour initialiser la réservation 
-    const article = await Article.findOne({
-        where: { id: Number(newReservationData.articleId)},
+        relations: ["articles"],
+      })
+  
+      // If no pending reservation exists, create a new reservation
+      if (!reservation) {
+        const article = await Article.findOne({
+          where: { id: Number(reservationData.articleId) },
         });
         if (!article) {
-        throw new Error("Article not found")
-    }
-
-      const newReservation = Reservation.create({
-        startDate: newReservationData.startDate,
-        endDate: newReservationData.endDate,
-        articles: [article],
-        user: {id: context.id},
-        status: ReservationStatus.Pending
-      });
+          throw new Error("Article not found")
+        }
   
-      await newReservation.save();
-      return newReservation;
-    }
-
-    @Mutation(() => Reservation)
-    async addArticleToReservation(@Arg("reservation")reservationId: string,  @Arg("articleId") articleId: string) {
-        const reservation = await Reservation.findOne({
-            where: { id: Number.parseInt(reservationId) }, 
-            relations: ["articles"]
-          })
-
-        if (!reservation) {
-        throw new Error("Reservation not found");
-        }
-
+        reservation = Reservation.create({
+          startDate: reservationData.startDate,
+          endDate: reservationData.endDate,
+          articles: [article],
+          user: { id: context.id },
+          status: ReservationStatus.Pending,
+        })
+        await reservation.save();
+      } else {
+        // If a pending reservation exists, add the article to the reservation
         const articleToAdd = await Article.findOne({
-            where: { id: Number(articleId)},
-            });
-            if (!articleToAdd) {
-            throw new Error("Article not found")
+          where: { id: Number(reservationData.articleId) },
+        })
+        if (!articleToAdd) {
+          throw new Error("Article not found");
         }
-
-        reservation.articles = [...reservation.articles, articleToAdd]
-        const updatedReservation = await reservation.save()
-        return updatedReservation
+  
+        // Check if article was already in the reservation
+        const isAlreadyInReservation = reservation.articles.some(
+          (article) => article.id === articleToAdd.id
+        )
+        if (!isAlreadyInReservation) {
+          reservation.articles.push(articleToAdd)
+        }
+  
+        await reservation.save()
+      }
+      return reservation;
     }
 
-}
+  }
+
 export default ReservationResolver;
 
 

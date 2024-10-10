@@ -71,12 +71,12 @@ export const EDIT_ARTICLE = gql`
     }
   }
 `
-
-export const CREATE_NEW_RESERVATION = gql`
- mutation CreateNewReservation($data: NewReservationInput!) {
-  createNewReservation(data: $data) {
+export const HANDLE_RESERVATION = gql`
+mutation HandleReservation($data: NewReservationInput!) {
+  handleReservation(data: $data) {
     id
   }
+<<<<<<< HEAD
 }
 `;
 
@@ -87,3 +87,6 @@ mutation AddArticleToReservation($articleId: String!, $reservation: String!) {
   }
 }
 `;
+=======
+}`
+>>>>>>> 8604264 (refactor createNewReservation and addArticleToReservation into one method handleReservation)
