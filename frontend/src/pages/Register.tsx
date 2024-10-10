@@ -3,10 +3,13 @@ import { useCreateNewUserMutation } from "../generated/graphql-types";
 import { Form, Input, Button, Card, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import "../styles/commonLoginRegister.css";
+import { useContext } from "react";
+import { UserContext } from "../components/Layout";
 
 const Register = () => {
   const [createUser] = useCreateNewUserMutation();
   const navigate = useNavigate();
+  const userInfo = useContext(UserContext);
 
   const onFinish = async (values: {
     email: string;
@@ -21,6 +24,8 @@ const Register = () => {
       });
 
       if (data && data.createUser) {
+        localStorage.setItem("token", data.createUser);
+        userInfo.refetch();
         navigate("/");
         message.success("Registration successful!");
       } else {
