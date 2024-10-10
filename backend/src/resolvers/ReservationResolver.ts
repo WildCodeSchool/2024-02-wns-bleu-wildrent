@@ -1,8 +1,8 @@
-import { Context } from "src";
-import { Reservation, ReservationStatus } from "../entities/reservation";
-import { Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver } from "type-graphql";
-import { calculateTotal } from "../utils/reservation/calculateTotal";
-import { Article } from "../entities/article";
+import { Context } from "src"
+import { Reservation, ReservationStatus } from "../entities/reservation"
+import { Arg, Ctx, Field, InputType, Mutation, ObjectType, Query, Resolver } from "type-graphql"
+import { calculateTotal } from "../utils/reservation/calculateTotal"
+import { Article } from "../entities/article"
 
 // custom object created to send the totalPrice along with the reservation data
 @ObjectType()

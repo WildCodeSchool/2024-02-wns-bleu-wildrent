@@ -31,16 +31,15 @@ export type EditArticleInput = {
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
-  addArticleToReservation: Article;
+  __typename?: 'Mutation';
   createNewArticle: Article;
   createNewProduct: Product;
-  createUser: Scalars["String"]["output"];
-  deleteArticle: Scalars["String"]["output"];
-  deleteProduct: Scalars["String"]["output"];
-  createNewReservation: Reservation;
+  createUser: Scalars['String']['output'];
+  deleteArticle: Scalars['String']['output'];
+  deleteProduct: Scalars['String']['output'];
   editArticle: Article;
   editProduct: Product;
+  handleReservation: Reservation;
 };
 
 
@@ -81,6 +80,11 @@ export type MutationEditArticleArgs = {
 export type MutationEditProductArgs = {
   data: NewProductInput;
   productId: Scalars['String']['input'];
+};
+
+
+export type MutationHandleReservationArgs = {
+  data: NewReservationInput;
 };
 
 export type NewArticleInput = {
@@ -233,6 +237,13 @@ export type EditArticleMutationVariables = Exact<{
 
 export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, availability: boolean } };
 
+export type HandleReservationMutationVariables = Exact<{
+  data: NewReservationInput;
+}>;
+
+
+export type HandleReservationMutation = { __typename?: 'Mutation', handleReservation: { __typename?: 'Reservation', id: number } };
+
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -248,7 +259,7 @@ export type GetOneProductByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetOneProductByIdQuery = { __typename?: 'Query', getOneProductById: { __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number } };
+export type GetOneProductByIdQuery = { __typename?: 'Query', getOneProductById: { __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number, articles?: Array<{ __typename?: 'Article', id: number, availability: boolean }> | null } };
 
 export type LoginQueryVariables = Exact<{
   password: Scalars['String']['input'];
@@ -535,6 +546,39 @@ export function useEditArticleMutation(baseOptions?: Apollo.MutationHookOptions<
 export type EditArticleMutationHookResult = ReturnType<typeof useEditArticleMutation>;
 export type EditArticleMutationResult = Apollo.MutationResult<EditArticleMutation>;
 export type EditArticleMutationOptions = Apollo.BaseMutationOptions<EditArticleMutation, EditArticleMutationVariables>;
+export const HandleReservationDocument = gql`
+    mutation HandleReservation($data: NewReservationInput!) {
+  handleReservation(data: $data) {
+    id
+  }
+}
+    `;
+export type HandleReservationMutationFn = Apollo.MutationFunction<HandleReservationMutation, HandleReservationMutationVariables>;
+
+/**
+ * __useHandleReservationMutation__
+ *
+ * To run a mutation, you first call `useHandleReservationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useHandleReservationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [handleReservationMutation, { data, loading, error }] = useHandleReservationMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useHandleReservationMutation(baseOptions?: Apollo.MutationHookOptions<HandleReservationMutation, HandleReservationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<HandleReservationMutation, HandleReservationMutationVariables>(HandleReservationDocument, options);
+      }
+export type HandleReservationMutationHookResult = ReturnType<typeof useHandleReservationMutation>;
+export type HandleReservationMutationResult = Apollo.MutationResult<HandleReservationMutation>;
+export type HandleReservationMutationOptions = Apollo.BaseMutationOptions<HandleReservationMutation, HandleReservationMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {
@@ -634,6 +678,10 @@ export const GetOneProductByIdDocument = gql`
     description
     imgUrl
     price
+    articles {
+      id
+      availability
+    }
   }
 }
     `;

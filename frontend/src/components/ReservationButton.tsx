@@ -17,8 +17,10 @@ export default function ReservationButton( {articles} : {articles : Article[]}) 
   })
 
   const onClick = () => {
-    const startDate = localStorage.getItem("startDate")
-    const endDate = localStorage.getItem("endDate")
+    const startDateString = localStorage.getItem("startDate");
+    const startDate = startDateString ? new Date(startDateString) : null
+    const endDateString = localStorage.getItem("endDate");
+    const endDate = endDateString ? new Date(endDateString) : null
 
     if (!startDate || !endDate) {
       message.error("Choisissez une période de location")
