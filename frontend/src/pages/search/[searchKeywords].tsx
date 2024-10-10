@@ -6,10 +6,10 @@ const SearchPage = () => {
   const { keyword } = useParams<{ keyword?: string }>();
 
   if (!keyword) {
-    return <SearchError />
+    return <SearchError />;
   }
 
-  return <Search keyword={keyword} />
+  return <Search keyword={keyword} />;
 };
 
-export default SearchPage
+export default SearchPage;

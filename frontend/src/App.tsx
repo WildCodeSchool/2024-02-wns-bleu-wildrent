@@ -12,24 +12,13 @@ import Profile from "./pages/Profile";
 import { Cart } from "./pages/Cart";
 
 const App = () => {
-
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="register" element={<Register />} />
-        <Route
-          path="admin"
-          element={
-              <Admin />
-          }
-        />
-        <Route
-          path="profile"
-          element={
-              <Profile />
-          }
-        />
+        <Route path="admin" element={<Admin />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
         <Route path="search/:keyword" element={<SearchPage />} />
