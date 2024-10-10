@@ -1,4 +1,4 @@
-export interface ProductCardProps {
+export interface Product {
   id: number;
   name: string;
   description: string;
@@ -9,11 +9,11 @@ export interface ProductCardProps {
 export type EditProductModalProps = {
   isModalOpen: boolean;
   setIsModalOpen: (arg: boolean) => void;
-  product: ProductCardProps;
+  product: Product;
 };
 
 export type EditProductRowProps = {
-  product: ProductCardProps;
+  product: Product;
 };
 
 export type ArticleProps = {
@@ -22,7 +22,7 @@ export type ArticleProps = {
 };
 
 export interface EditProductFormProps {
-  product: ProductCardProps;
+  product: Product;
   setIsModalOpen: (arg: boolean) => void;
 }
 
@@ -53,7 +53,7 @@ export interface NewProductFormValues {
 export type Article = {
   id: number;
   availability: boolean;
-  product?: ProductCardProps;
+  product?: Product;
 };
 
 export type Reservation = {
