@@ -9,7 +9,7 @@ import {
 import { Input, Button, message} from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
-import { useLogoutLazyQuery } from "../generated/graphql-types";
+import { Role, useLogoutLazyQuery } from "../generated/graphql-types";
 import Logo from "../assets/logo.png";
 import RangePicker from "./RangePicker";
 
@@ -85,7 +85,7 @@ function Navbar() {
               >
                 Bonjour, {userInfo.firstname}
               </p>
-              {userInfo.role === "admin" ? (
+              {userInfo.role === Role.Admin ? (
                 <Link
                   to="/admin"
                   className="mr-4"
