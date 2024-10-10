@@ -1,6 +1,6 @@
-import { Button, message } from 'antd';
-import { Article  } from '../interface/types';
-import { useHandleReservationMutation } from '../generated/graphql-types'
+import { Button, message } from "antd";
+import { Article  } from "../interface/types";
+import { useHandleReservationMutation } from "../generated/graphql-types"
 
 export default function ReservationButton( {articles} : {articles : Article[]}) {
   const [handleReservation] = useHandleReservationMutation({

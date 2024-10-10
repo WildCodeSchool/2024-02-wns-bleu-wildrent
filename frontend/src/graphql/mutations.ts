@@ -76,17 +76,6 @@ mutation HandleReservation($data: NewReservationInput!) {
   handleReservation(data: $data) {
     id
   }
-<<<<<<< HEAD
 }
 `;
 
-export const ADD_ARTICLE_TO_RESERVATION = gql`
-mutation AddArticleToReservation($articleId: String!, $reservation: String!) {
-  addArticleToReservation(articleId: $articleId, reservation: $reservation) {
-    id
-  }
-}
-`;
-=======
-}`
->>>>>>> 8604264 (refactor createNewReservation and addArticleToReservation into one method handleReservation)
