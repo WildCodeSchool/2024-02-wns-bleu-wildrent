@@ -168,10 +168,20 @@ export type ReservationWithTotal = {
   totalPrice: Scalars['Float']['output'];
 };
 
+/** user role */
+export enum Role {
+  Admin = 'Admin',
+  User = 'User'
+}
+
 export type User = {
   __typename?: 'User';
   email: Scalars['String']['output'];
+  firstname: Scalars['String']['output'];
+  hashedPassword: Scalars['String']['output'];
+  lastname: Scalars['String']['output'];
   reservations?: Maybe<Array<Reservation>>;
+  role: Role;
 };
 
 export type UserInfo = {

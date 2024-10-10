@@ -1,6 +1,6 @@
 import { Mutation, Arg, Query, Ctx, ObjectType, Field } from "type-graphql";
 import argon2 from "argon2";
-import { User } from "../entities/user";
+import { Role, User } from "../entities/user";
 import jwt from "jsonwebtoken";
 import { Context } from "src";
 
@@ -19,7 +19,7 @@ class UserInfo {
   lastname: string;
 
   @Field({ nullable: true })
-  role: string;
+  role: Role;
 }
 
 class UserResolver {
