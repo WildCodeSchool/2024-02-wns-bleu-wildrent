@@ -1,8 +1,8 @@
 import CurrentReservation from "../components/CurrentReservation";
-import { useGetCurrentReservationByUserIdQuery } from "../generated/graphql-types"
+import { useGetCurrentReservationByUserIdQuery } from "../generated/graphql-types";
 
 export const Cart = () => {
-  const {data, loading, error} = useGetCurrentReservationByUserIdQuery()
+  const { data, loading, error } = useGetCurrentReservationByUserIdQuery();
 
   if (loading) {
     return <p>Loading</p>;
@@ -13,10 +13,10 @@ export const Cart = () => {
   }
 
   if (!data || !data.getCurrentReservationByUserId) {
-    return <p>Aucune réservation trouvée.</p>
+    return <p>Aucune réservation trouvée.</p>;
   }
 
   return (
     <CurrentReservation reservationData={data.getCurrentReservationByUserId} />
-  ) 
-}
+  );
+};
