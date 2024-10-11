@@ -27,13 +27,13 @@ const Register = () => {
         localStorage.setItem("token", data.createUser);
         userInfo.refetch();
         navigate("/");
-        message.success("Registration successful!");
+        message.success("Inscription réussie !");
       } else {
-        message.error("Registration failed. Please try again.");
+        message.error("Échec de l'inscription. Veuillez réessayer.");
       }
     } catch (error) {
-      message.error("Registration failed. Please try again.");
-      console.error("Error: ", error);
+      message.error("Échec de l'inscription. Veuillez réessayer.");
+      console.error("Erreur: ", error);
     }
   };
 
@@ -44,8 +44,8 @@ const Register = () => {
           <Form.Item
             name="email"
             rules={[
-              { required: true, message: "Please input your email!" },
-              { type: "email", message: "The input is not valid E-mail!" },
+              { required: true, message: "Veuillez entrer votre email !" },
+              { type: "email", message: "L'email n'est pas valide." },
             ]}
           >
             <Input
@@ -56,32 +56,37 @@ const Register = () => {
           <Form.Item
             name="firstname"
             rules={[
-              { required: true, message: "Please input your firstname!" },
+              { required: true, message: "Veuillez entrer votre prénom !" },
             ]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Firstname"
+              placeholder="Prénom"
             />
           </Form.Item>
           <Form.Item
             name="lastname"
-            rules={[{ required: true, message: "Please input your lastname!" }]}
+            rules={[{ required: true, message: "Veuillez entrer votre nom !" }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
-              placeholder="Lastname"
+              placeholder="Nom"
             />
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[
+              {
+                required: true,
+                message: "Veuillez entrer votre mot de passe !",
+              },
+            ]}
             hasFeedback
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Password"
+              placeholder="Mot de passe"
             />
           </Form.Item>
           <Form.Item
@@ -89,7 +94,10 @@ const Register = () => {
             dependencies={["password"]}
             hasFeedback
             rules={[
-              { required: true, message: "Please confirm your password!" },
+              {
+                required: true,
+                message: "Veuillez confirmer votre mot de passe !",
+              },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   if (!value || getFieldValue("password") === value) {
@@ -97,7 +105,7 @@ const Register = () => {
                   }
                   return Promise.reject(
                     new Error(
-                      "The two passwords that you entered do not match!"
+                      "Les mots de passe que vous avez saisis ne correspondent pas !"
                     )
                   );
                 },
@@ -107,17 +115,21 @@ const Register = () => {
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
-              placeholder="Confirm your password"
+              placeholder="Confirmez votre mot de passe"
             />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="button">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full bg-blue-900 text-white transition-colors duration-300 hover:bg-orange-600"
+            >
               Inscription
             </Button>
           </Form.Item>
           <Form.Item style={{ marginTop: "10px", textAlign: "center" }}>
             <span style={{ fontSize: "0.9em", color: "#888" }}>
-              Vous avez deja un compte ?{" "}
+              Vous avez déjà un compte ?{" "}
               <Link
                 to="/login"
                 style={{
@@ -126,7 +138,7 @@ const Register = () => {
                   textDecoration: "none",
                 }}
               >
-                Connectez vous ici
+                Connectez-vous ici
               </Link>
             </span>
           </Form.Item>

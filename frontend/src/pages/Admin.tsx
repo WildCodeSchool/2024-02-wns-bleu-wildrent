@@ -1,7 +1,9 @@
-import { Tabs, TabsProps } from "antd";
+import { Tabs, TabsProps, Typography } from "antd";
 import NewProduct from "./NewProduct";
 import NewArticle from "./NewArticle";
 import { useMediaQuery } from "react-responsive";
+
+const { Title } = Typography;
 
 function Admin() {
   const isMobile = useMediaQuery({ maxWidth: 640 });
@@ -25,13 +27,16 @@ function Admin() {
   ];
 
   return (
-    <div>
-      <div className="mb-4">Bienvenue sur l'interface admin</div>
+    <div className="p-5">
+      <Title level={2} className="text-center mb-6">
+        Interface administrateur
+      </Title>
       <Tabs
         type="card"
         tabPosition={isMobile ? "left" : "top"}
         defaultActiveKey="1"
         items={items}
+        className="shadow-lg rounded-md"
       />
     </div>
   );
