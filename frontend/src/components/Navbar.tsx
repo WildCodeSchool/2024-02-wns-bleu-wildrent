@@ -6,7 +6,7 @@ import {
   LogoutOutlined,
   PoweroffOutlined,
 } from "@ant-design/icons";
-import { Input, Button, message} from "antd";
+import { Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { Role, useLogoutLazyQuery } from "../generated/graphql-types";
@@ -17,11 +17,6 @@ const { Search } = Input;
 
 function Navbar() {
   const navigate = useNavigate();
-
-  const onSearch = (value: string) => {
-    navigate(`/search/${value}`);
-  };
-
   const [logout] = useLogoutLazyQuery();
   const userInfo = useContext(UserContext);
 
@@ -31,68 +26,51 @@ function Navbar() {
     { name: "Course", path: "/category/course" },
   ];
 
+  const onSearch = (value: string) => {
+    navigate(`/search/${value}`);
+  };
+
   return (
     <div className="flex flex-col p-4 bg-lightBlue">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <Link to="/">
-            <img src={Logo} alt="Wildrent Logo" style={{ height: "50px" }} />
+            <img src={Logo} alt="Wildrent Logo" className="h-12" />
           </Link>
         </div>
 
         <div className="flex flex-col justify-center gap-6">
           <Search
-            style={{
-              width: 400,
-              transition: "box-shadow 0.3s ease",
-            }}
+            className="w-96 transition-shadow duration-300"
             placeholder="Rechercher un produit"
             onSearch={onSearch}
             enterButton={
               <Button
-                style={{
-                  backgroundColor: "#1A265B",
-                  border: "none",
-                  color: "#fff",
-                  transition: "background-color 0.3s ease, color 0.3s ease",
-                }}
+                className="bg-blue-900 text-white transition-all duration-300"
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#d56b1f";
-                  e.currentTarget.style.color = "#fff";
+                  e.currentTarget.classList.add("bg-orange-600");
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#1A265B";
-                  e.currentTarget.style.color = "#fff";
+                  e.currentTarget.classList.remove("bg-orange-600");
                 }}
               >
                 Rechercher
               </Button>
             }
           />
-          <RangePicker/>
+          <RangePicker />
         </div>
+
         <div className="flex items-center">
           {userInfo.isLoggedIn && (
             <>
-              <p
-                className="mr-4"
-                style={{
-                  color: "#1A265B",
-                  fontWeight: "500",
-                  fontSize: "18px",
-                  transition: "color 0.2s ease",
-                }}
-              >
+              <p className="mr-4 text-blue-900 font-medium text-lg transition-colors duration-200">
                 Bonjour, {userInfo.firstname}
               </p>
               {userInfo.role === Role.Admin ? (
                 <Link
                   to="/admin"
-                  className="mr-4"
-                  style={{
-                    color: "#1A265B",
-                    transition: "color 0.2s ease",
-                  }}
+                  className="mr-4 text-blue-900 transition-colors duration-200"
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "#ed8936")
                   }
@@ -100,16 +78,12 @@ function Navbar() {
                     (e.currentTarget.style.color = "#1A265B")
                   }
                 >
-                  <UserOutlined style={{ fontSize: "18px" }} />
+                  <UserOutlined className="text-lg" />
                 </Link>
               ) : (
                 <Link
                   to="/profile"
-                  className="mr-4"
-                  style={{
-                    color: "#1A265B",
-                    transition: "color 0.2s ease",
-                  }}
+                  className="mr-4 text-blue-900 transition-colors duration-200"
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.color = "#ed8936")
                   }
@@ -117,7 +91,7 @@ function Navbar() {
                     (e.currentTarget.style.color = "#1A265B")
                   }
                 >
-                  <UserOutlined style={{ fontSize: "18px" }} />
+                  <UserOutlined className="text-lg" />
                 </Link>
               )}
             </>
@@ -125,15 +99,11 @@ function Navbar() {
 
           <Link
             to="/cart"
-            style={{
-              color: "#1A265B",
-              transition: "color 0.2s ease",
-              marginRight: "15px",
-            }}
+            className="text-blue-900 transition-colors duration-200 mr-4"
             onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
           >
-            <ShoppingCartOutlined style={{ fontSize: "18px" }} />
+            <ShoppingCartOutlined className="text-lg" />
           </Link>
 
           {userInfo.isLoggedIn ? (
@@ -148,31 +118,21 @@ function Navbar() {
                   },
                 });
               }}
-              style={{
-                padding: 0,
-                fontSize: "18px",
-                color: "#1A265B",
-                transition: "color 0.2s ease",
-              }}
+              className="text-blue-900 transition-colors duration-200"
               onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
             >
-              <LogoutOutlined />
+              <LogoutOutlined className="text-lg" />
             </Button>
           ) : (
             <Link to="/login">
               <Button
                 type="link"
-                style={{
-                  color: "#1A265B",
-                  padding: 0,
-                  fontSize: "18px",
-                  transition: "color 0.2s ease",
-                }}
+                className="text-blue-900 transition-colors duration-200"
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
               >
-                <PoweroffOutlined />
+                <PoweroffOutlined className="text-lg" />
               </Button>
             </Link>
           )}
@@ -184,12 +144,7 @@ function Navbar() {
           <Link
             key={category.name}
             to={category.path}
-            style={{
-              color: "#1A265B",
-              fontWeight: "500",
-              fontSize: "18px",
-              transition: "color 0.2s ease",
-            }}
+            className="text-blue-900 font-medium text-lg transition-colors duration-200"
             onMouseEnter={(e) => (e.currentTarget.style.color = "#ed8936")}
             onMouseLeave={(e) => (e.currentTarget.style.color = "#1A265B")}
           >

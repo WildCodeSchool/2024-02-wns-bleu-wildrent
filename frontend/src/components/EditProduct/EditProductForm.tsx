@@ -39,10 +39,10 @@ function EditProductForm({ product, setIsModalOpen }: EditProductFormProps) {
 
   return (
     <Form
-      style={{ maxWidth: 600, padding: 50 }}
+      className="max-w-xl p-10"
       wrapperCol={{ span: 16 }}
       labelCol={{ span: 8 }}
-      name="interface admin"
+      name="editProductForm"
       onFinish={onFinish}
       initialValues={{
         name: product.name,
@@ -58,28 +58,32 @@ function EditProductForm({ product, setIsModalOpen }: EditProductFormProps) {
           { required: true, message: "Un nom de produit est nécessaire" },
         ]}
       >
-        <Input className="text-field" />
+        <Input className="rounded-md border-gray-300" />
       </Form.Item>
-      <Form.Item label="imgUrl:" name="imgUrl">
-        <Input className="text-field" />
+
+      <Form.Item label="URL de l'image:" name="imgUrl">
+        <Input className="rounded-md border-gray-300" />
       </Form.Item>
+
       <Form.Item
-        label="price:"
+        label="Prix:"
         name="price"
         rules={[{ required: true, message: "Un prix est nécessaire" }]}
       >
-        <Input className="number" />
+        <Input className="rounded-md border-gray-300" />
       </Form.Item>
+
       <Form.Item
-        label="description:"
+        label="Description:"
         name="description"
         rules={[{ required: true, message: "Une description est nécessaire" }]}
       >
-        <Input className="text-field" />
+        <Input className="rounded-md border-gray-300" />
       </Form.Item>
+
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
-          Submit
+        <Button type="primary" htmlType="submit" className="rounded-md">
+          Soumettre
         </Button>
       </Form.Item>
     </Form>
