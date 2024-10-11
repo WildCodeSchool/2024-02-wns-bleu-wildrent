@@ -25,9 +25,7 @@ export default function ReservationButton({
       message.error("Erreur lors de la réservation");
     },
   });
-  useEffect(() => {
-    console.log(userInfo.isLoggedIn, "userInfo");
-  });
+  
   const onClick = () => {
     const startDateString = localStorage.getItem("startDate");
     const startDate = startDateString ? new Date(startDateString) : null;
