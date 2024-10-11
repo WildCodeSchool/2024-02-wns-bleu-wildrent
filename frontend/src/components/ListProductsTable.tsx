@@ -1,18 +1,15 @@
-import { Table } from "antd";
+import { Table, Typography } from "antd";
 import { useGetAllProductsQuery } from "../generated/graphql-types";
 import DeleteProductButton from "./DeleteProductButton";
 import EditProductRow from "./EditProduct/EditProductRow";
 import { ArticleProps, Product } from "../interface/types";
 
+const { Title } = Typography;
+
 function ListProductsTable() {
   const { data: productsData } = useGetAllProductsQuery();
 
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Nom",
       dataIndex: "name",
@@ -22,6 +19,7 @@ function ListProductsTable() {
       title: "Prix",
       dataIndex: "price",
       key: "price",
+      render: (price: number) => `${price.toFixed(2)} €`,
     },
     {
       title: "Disponibles",
@@ -41,7 +39,7 @@ function ListProductsTable() {
       title: "Stock total",
       dataIndex: "articles",
       key: "total",
-      render: (articles: string[]) => articles.length,
+      render: (articles: ArticleProps[]) => articles.length,
     },
     {
       title: "Actions",
@@ -57,12 +55,22 @@ function ListProductsTable() {
   ];
 
   return (
-    <Table
-      dataSource={productsData?.getAllProducts}
-      columns={columns}
-      pagination={{ pageSize: 10 }}
-      locale={{ emptyText: "No articles found" }}
-    />
+    <div className="p-5">
+      <Title level={3} className="text-center text-blue-500">
+        Liste des produits
+      </Title>
+      <Table
+        dataSource={productsData?.getAllProducts}
+        columns={columns}
+        pagination={{ pageSize: 10 }}
+        locale={{ emptyText: "Aucun produit trouvé" }}
+        rowClassName="table-row"
+        bordered
+        className="rounded-lg"
+        tableLayout="fixed"
+        scroll={{ x: true }}
+      />
+    </div>
   );
 }
 

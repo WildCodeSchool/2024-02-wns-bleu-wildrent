@@ -4,7 +4,6 @@ import { UserContext } from "../components/Layout";
 import { useLoginLazyQuery } from "../generated/graphql-types";
 import { Form, Input, Button, Card, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import "../styles/commonLoginRegister.css";
 import { LoginFormValues } from "../interface/types";
 
 const Login = () => {
@@ -36,8 +35,8 @@ const Login = () => {
   };
 
   return (
-    <div className="content">
-      <Card className="card" title={<h1>Connexion</h1>}>
+    <div className="flex justify-center">
+      <Card className="w-full max-w-sm p-6" title={<h1>Connexion</h1>}>
         <Form name="login" onFinish={onFinish}>
           <Form.Item
             name="email"
@@ -49,6 +48,7 @@ const Login = () => {
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Email"
+              className="border border-gray-300 rounded-md"
             />
           </Form.Item>
           <Form.Item
@@ -64,10 +64,15 @@ const Login = () => {
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Mot de passe"
+              className="border border-gray-300 rounded-md"
             />
           </Form.Item>
           <Form.Item style={{ marginBottom: 0 }}>
-            <Button type="primary" htmlType="submit" className="button">
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="w-full bg-blue-900 text-white transition-colors duration-300 hover:bg-orange-600"
+            >
               Connexion
             </Button>
           </Form.Item>

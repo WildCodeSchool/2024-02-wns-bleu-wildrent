@@ -21,7 +21,7 @@ const Profile = () => {
   }
 
   return (
-    <div style={{ maxWidth: "50rem", margin: "0 auto", padding: "2rem" }}>
+    <div className="max-w-2xl mx-auto p-8">
       <Card>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Informations personnelles" key="1">
@@ -37,7 +37,7 @@ const Profile = () => {
           </TabPane>
           <TabPane tab="Historique des commandes" key="2">
             {data?.getReservationsByUserId.map((reservation) => (
-              <ReservationCard reservation={reservation} />
+              <ReservationCard key={reservation.id} reservation={reservation} />
             ))}
           </TabPane>
         </Tabs>

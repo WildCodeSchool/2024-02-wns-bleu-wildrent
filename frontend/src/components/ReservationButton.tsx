@@ -1,7 +1,6 @@
 import { Button, message } from "antd";
 import { Article } from "../interface/types";
 import { useHandleReservationMutation } from "../generated/graphql-types";
-import { useEffect } from "react";
 
 export default function ReservationButton({
   articles,
@@ -45,7 +44,6 @@ export default function ReservationButton({
     }
 
 
-
     // TO BE DISCUSSED : comment choisir l'article si plusieurs sont dispo ?
     const firstAvailableArticleId = availableArticles[0].id;
 
@@ -66,19 +64,7 @@ export default function ReservationButton({
       type="primary"
       size="large"
       block
-      style={{
-        backgroundColor: "#1A265B",
-        transition: "background-color 0.3s ease, color 0.3s ease",
-        margin: "1rem",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = "#F0610D";
-        e.currentTarget.style.color = "#fff";
-      }}
-      onMouseLeave={function (e) {
-        e.currentTarget.style.backgroundColor = "#1A265B";
-        e.currentTarget.style.color = "#fff";
-      }}
+      className="bg-blue-900 text-white transition-colors duration-300 hover:bg-orange-600 mt-4"
     >
       Réserver
     </Button>

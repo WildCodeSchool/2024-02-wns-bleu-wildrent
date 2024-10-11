@@ -1,6 +1,5 @@
-// import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { Form, Select, Button, Table } from "antd";
+import { Form, Select, Button, Table, Card, Typography } from "antd";
 import { CREATE_NEW_ARTICLE } from "../graphql/mutations";
 import {
   GetAllArticlesDocument,
@@ -9,12 +8,14 @@ import {
   useGetAllArticlesQuery,
   GetAllProductsDocument,
 } from "../generated/graphql-types";
-import Title from "antd/es/typography/Title";
 import DeleteArticleButton from "../components/DeleteArticleButton";
 import EditArticleDropdown from "../components/EditArticleDropdown";
 import { NewArticleFormValues } from "../interface/types";
 
+const { Title } = Typography;
+
 const NewArticle = () => {
+  const [form] = Form.useForm();
   const columns = [
     {
       title: "ID",
@@ -30,13 +31,13 @@ const NewArticle = () => {
       ),
     },
     {
-      title: "Product Name",
+      title: "Nom du produit",
       dataIndex: ["product", "name"],
       key: "productName",
     },
     {
-      title: "action",
-      key: "productName",
+      title: "Supprimer",
+      key: "action",
       dataIndex: "id",
       render: (id: string) => <DeleteArticleButton articleId={id} />,
     },
@@ -45,6 +46,7 @@ const NewArticle = () => {
   const [createNewArticle] = useMutation(CREATE_NEW_ARTICLE, {
     onCompleted(data) {
       console.log("mutation completed data", data);
+      form.resetFields();
     },
     onError(error) {
       console.error("error after executing mutation", error);
@@ -57,7 +59,6 @@ const NewArticle = () => {
     loading: productsLoading,
     error: productsError,
   } = useGetAllProductsQuery();
-
   const {
     data: articlesData,
     loading: articlesLoading,
@@ -68,12 +69,12 @@ const NewArticle = () => {
     const formJson: NewArticleInput = {
       ...values,
       availability: values.availability === "true",
+      productId: String(values.productId),
     };
+    console.log(formJson);
 
     await createNewArticle({
-      variables: {
-        data: formJson,
-      },
+      variables: { data: formJson },
     });
   };
 
@@ -82,51 +83,64 @@ const NewArticle = () => {
 
   return (
     <>
-      <Form
-        style={{ maxWidth: 600, padding: 50 }}
-        wrapperCol={{ span: 16 }}
-        labelCol={{ span: 8 }}
-        onFinish={onFinish}
-        name="interface admin"
-      >
-        <Form.Item
-          label="Availability:"
-          name="availability"
-          rules={[{ required: true, message: "Availability is required" }]}
-        >
-          <Select>
-            <Select.Option value="true">Available</Select.Option>
-            <Select.Option value="false">Unavailable</Select.Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Product:"
-          name="productId"
-          rules={[{ required: true, message: "A product is required" }]}
-        >
-          <Select>
-            {productsData?.getAllProducts.map((product) => (
-              <Select.Option key={product.id} value={product.id}>
-                {product.name}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+      <div className="flex justify-center py-8">
+        <Card className="w-full max-w-3xl rounded-xl shadow-lg">
+          <Form
+            form={form}
+            className="max-w-lg mx-auto"
+            onFinish={onFinish}
+            name="interface admin"
+          >
+            <Title level={3} className="text-center text-blue-500">
+              Ajouter un nouvel article
+            </Title>
 
-      <div style={{ marginTop: 50 }}>
-        <Title level={2}>List of Articles</Title>
+            <Form.Item
+              name="availability"
+              rules={[
+                { required: true, message: "La disponibilité est requise" },
+              ]}
+            >
+              <Select placeholder="Disponibilité">
+                <Select.Option value="true">Disponible</Select.Option>
+                <Select.Option value="false">Indisponible</Select.Option>
+              </Select>
+            </Form.Item>
 
+            <Form.Item
+              name="productId"
+              rules={[{ required: true, message: "Un produit est requis" }]}
+            >
+              <Select placeholder="Produit">
+                {productsData?.getAllProducts.map((product) => (
+                  <Select.Option key={product.id} value={product.id}>
+                    {product.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                Valider
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      </div>
+
+      <div className="mt-20">
+        <Title level={3} className="text-center text-blue-500">
+          Liste des articles
+        </Title>
         <Table
           dataSource={articlesData?.getAllArticles}
           columns={columns}
           pagination={{ pageSize: 10 }}
-          locale={{ emptyText: "No articles found" }}
+          locale={{ emptyText: "Aucun article trouvé" }}
+          bordered
+          className="rounded-xl"
+          scroll={{ x: true }}
         />
       </div>
     </>

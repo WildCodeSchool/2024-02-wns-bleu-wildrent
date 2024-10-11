@@ -1,6 +1,6 @@
 import { Mutation, Arg, Query, Ctx, ObjectType, Field } from "type-graphql";
 import argon2 from "argon2";
-import { User } from "../entities/user";
+import { Role, User } from "../entities/user";
 import jwt from "jsonwebtoken";
 import { Context } from "src";
 
@@ -19,7 +19,7 @@ class UserInfo {
   lastname: string;
 
   @Field({ nullable: true })
-  role: string;
+  role: Role;
 }
 
 class UserResolver {
@@ -67,7 +67,8 @@ class UserResolver {
     @Arg("email") email: string,
     @Arg("firstname") firstname: string,
     @Arg("lastname") lastname: string,
-    @Arg("password") password: string
+    @Arg("password") password: string,
+    @Ctx() context: any
   ) {
     console.log("process", process.env);
 
@@ -89,7 +90,7 @@ class UserResolver {
       { id: userFromDB.id, email: userFromDB.email, role: userFromDB.role },
       process.env.JWT_SECRET_KEY
     );
-
+    context.res.setHeader("Set-Cookie", `token=${token}; Secure; HttpOnly`);
     return token;
   }
 
@@ -102,7 +103,7 @@ class UserResolver {
         role: user.role,
         firstname: user.firstname,
         lastname: user.lastname,
-        isLoggedIn: true
+        isLoggedIn: true,
       };
     } else {
       return { isLoggedIn: false };

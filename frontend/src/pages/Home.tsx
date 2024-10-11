@@ -16,13 +16,11 @@ const HomePage = () => {
     : [];
 
   return (
-    <div
-      className="flex flex-col items-center justify-center p-6"
-      style={{ backgroundColor: "#FFF5ED" }}
-    >
-      <h1 className="text-4xl font-bold mb-6" style={{ color: "#50A5B1" }}>
+    <div className="flex flex-col items-center justify-center p-6 bg-[#FFF5ED]">
+      <h1 className="text-4xl font-bold mb-6 text-[#50A5B1]">
         Produits vedettes
       </h1>
+
       <div className="w-full max-w-3xl mx-auto">
         <Carousel autoplay effect="fade">
           {carouselProducts.map((product) => (
@@ -55,21 +53,9 @@ const HomePage = () => {
                           type="primary"
                           size="large"
                           block
-                          style={{
-                            backgroundColor: "#1A265B",
-                            transition:
-                              "background-color 0.3s ease, color 0.3s ease",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.backgroundColor = "#d56b1f";
-                            e.currentTarget.style.color = "#fff";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.backgroundColor = "#1A265B";
-                            e.currentTarget.style.color = "#fff";
-                          }}
+                          className="bg-[#1A265B] hover:bg-[#d56b1f] text-white transition-colors duration-300"
                         >
-                          En savoir plus
+                          Réserver
                         </Button>
                       </div>
                     </Col>
@@ -81,12 +67,10 @@ const HomePage = () => {
         </Carousel>
       </div>
 
-      <h1
-        className="text-4xl font-bold mt-10 mb-6"
-        style={{ color: "#50A5B1" }}
-      >
+      <h1 className="text-4xl font-bold mt-10 mb-6 text-[#50A5B1]">
         Tous les produits
       </h1>
+
       <div className="flex flex-wrap gap-6 justify-center mt-4">
         {data?.getAllProducts.map((product) => (
           <Link to={`product/${product.id}`} key={product.id}>
@@ -95,7 +79,6 @@ const HomePage = () => {
             </div>
           </Link>
         ))}
-        <h1>hello world</h1>
       </div>
     </div>
   );

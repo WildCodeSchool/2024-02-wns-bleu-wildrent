@@ -31,19 +31,7 @@ function ProductCard({ product }: { product: Product }) {
           type="primary"
           size="large"
           block
-          style={{
-            backgroundColor: "#1A265B",
-            transition: "background-color 0.3s ease, color 0.3s ease",
-            margin: "1rem",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#F0610D";
-            e.currentTarget.style.color = "#fff";
-          }}
-          onMouseLeave={function (e) {
-            e.currentTarget.style.backgroundColor = "#1A265B";
-            e.currentTarget.style.color = "#fff";
-          }}
+          className="bg-blue-900 text-white transition-colors duration-300 hover:bg-orange-600 mt-4"
         >
           En savoir plus
         </Button>
