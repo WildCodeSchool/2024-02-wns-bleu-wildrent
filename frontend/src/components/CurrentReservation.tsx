@@ -1,37 +1,47 @@
 import { ReservationData } from "../interface/types";
+import { Card } from "antd";
 
 export const CurrentReservation = ({
   reservationData,
 }: {
   reservationData: ReservationData;
 }) => {
+  const formattedStartDate = new Date(
+    reservationData.reservation.startDate
+  ).toLocaleDateString("fr-FR");
+  const formattedEndDate = new Date(
+    reservationData.reservation.endDate
+  ).toLocaleDateString("fr-FR");
+
   return (
-    <div>
-      <div>id de la réservation : {reservationData.reservation.id} </div>
-      <div>date de début : {reservationData.reservation.startDate} </div>
-      <div>date de fin : {reservationData.reservation.endDate} </div>
-      <div>
-        articles :
-        <div>
+    <Card
+      title={`Réservation numéro ${reservationData.reservation.id}`}
+      style={{ width: 400 }}
+    >
+      <p>Date de début : {formattedStartDate} </p>
+      <p>Date de fin : {formattedEndDate} </p>
+      <p>
+        Articles :
+        <p>
           {reservationData.reservation.articles &&
           reservationData.reservation.articles.length > 0 ? (
             reservationData.reservation.articles.map((article, index) =>
               article.product ? (
-                <div className="flex gap-2" key={index}>
-                  <div>nom: {article.product.name}</div>
-                  <div>prix: {article.product.price}</div>
-                </div>
+                <p className="flex gap-2" key={index}>
+                  <p>Nom: {article.product.name}</p>
+                  <p>Prix: {article.product.price}€</p>
+                </p>
               ) : (
-                <div key={index}>Article has no product details.</div>
+                <p key={index}>Article has no product details.</p>
               )
             )
           ) : (
-            <div>No articles found.</div>
+            <p>No articles found.</p>
           )}
-        </div>
-      </div>
-      <div>total: {reservationData.totalPrice}</div>
-    </div>
+        </p>
+      </p>
+      <p>Prix total : {reservationData.totalPrice}€</p>
+    </Card>
   );
 };
 
