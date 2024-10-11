@@ -40,6 +40,7 @@ export type Mutation = {
   editArticle: Article;
   editProduct: Product;
   handleReservation: Reservation;
+  updateReservationStatus: Reservation;
 };
 
 
@@ -85,6 +86,11 @@ export type MutationEditProductArgs = {
 
 export type MutationHandleReservationArgs = {
   data: NewReservationInput;
+};
+
+
+export type MutationUpdateReservationStatusArgs = {
+  reservationId: Scalars['String']['input'];
 };
 
 export type NewArticleInput = {
@@ -231,6 +237,13 @@ export type EditProductMutationVariables = Exact<{
 
 
 export type EditProductMutation = { __typename?: 'Mutation', editProduct: { __typename?: 'Product', price: number, name: string, imgUrl: string, id: number, description: string } };
+
+export type UpdateReservationStatusMutationVariables = Exact<{
+  reservationId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateReservationStatusMutation = { __typename?: 'Mutation', updateReservationStatus: { __typename?: 'Reservation', id: number, status: string, startDate: any, endDate: any } };
 
 export type DeleteArticleMutationVariables = Exact<{
   deleteArticleId: Scalars['String']['input'];
@@ -490,6 +503,42 @@ export function useEditProductMutation(baseOptions?: Apollo.MutationHookOptions<
 export type EditProductMutationHookResult = ReturnType<typeof useEditProductMutation>;
 export type EditProductMutationResult = Apollo.MutationResult<EditProductMutation>;
 export type EditProductMutationOptions = Apollo.BaseMutationOptions<EditProductMutation, EditProductMutationVariables>;
+export const UpdateReservationStatusDocument = gql`
+    mutation UpdateReservationStatus($reservationId: String!) {
+  updateReservationStatus(reservationId: $reservationId) {
+    id
+    status
+    startDate
+    endDate
+  }
+}
+    `;
+export type UpdateReservationStatusMutationFn = Apollo.MutationFunction<UpdateReservationStatusMutation, UpdateReservationStatusMutationVariables>;
+
+/**
+ * __useUpdateReservationStatusMutation__
+ *
+ * To run a mutation, you first call `useUpdateReservationStatusMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateReservationStatusMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateReservationStatusMutation, { data, loading, error }] = useUpdateReservationStatusMutation({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useUpdateReservationStatusMutation(baseOptions?: Apollo.MutationHookOptions<UpdateReservationStatusMutation, UpdateReservationStatusMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateReservationStatusMutation, UpdateReservationStatusMutationVariables>(UpdateReservationStatusDocument, options);
+      }
+export type UpdateReservationStatusMutationHookResult = ReturnType<typeof useUpdateReservationStatusMutation>;
+export type UpdateReservationStatusMutationResult = Apollo.MutationResult<UpdateReservationStatusMutation>;
+export type UpdateReservationStatusMutationOptions = Apollo.BaseMutationOptions<UpdateReservationStatusMutation, UpdateReservationStatusMutationVariables>;
 export const DeleteArticleDocument = gql`
     mutation DeleteArticle($deleteArticleId: String!) {
   deleteArticle(id: $deleteArticleId)

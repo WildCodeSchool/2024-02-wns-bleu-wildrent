@@ -58,6 +58,17 @@ export const EDIT_PRODUCT = gql`
   }
 `;
 
+export const UPDATE_RESERVATION_STATUS = gql`
+  mutation UpdateReservationStatus($reservationId: String!) {
+    updateReservationStatus(reservationId: $reservationId) {
+      id
+      status
+      startDate
+      endDate
+    }
+  }
+`;
+
 export const DELETE_ARTICLE = gql`
   mutation DeleteArticle($deleteArticleId: String!) {
     deleteArticle(id: $deleteArticleId)
@@ -70,12 +81,11 @@ export const EDIT_ARTICLE = gql`
       availability
     }
   }
-`
-export const HANDLE_RESERVATION = gql`
-mutation HandleReservation($data: NewReservationInput!) {
-  handleReservation(data: $data) {
-    id
-  }
-}
 `;
-
+export const HANDLE_RESERVATION = gql`
+  mutation HandleReservation($data: NewReservationInput!) {
+    handleReservation(data: $data) {
+      id
+    }
+  }
+`;

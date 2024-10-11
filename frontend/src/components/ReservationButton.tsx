@@ -43,6 +43,7 @@ export default function ReservationButton({
       return;
     }
 
+
     // TO BE DISCUSSED : comment choisir l'article si plusieurs sont dispo ?
     const firstAvailableArticleId = availableArticles[0].id;
 
