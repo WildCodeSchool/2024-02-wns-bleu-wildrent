@@ -6,6 +6,14 @@ export interface Product {
   price: number;
 }
 
+export interface ProductCard {
+  id?: number;
+  name: string;
+  description?: string;
+  imgUrl?: string;
+  price: number;
+}
+
 export type EditProductModalProps = {
   isModalOpen: boolean;
   setIsModalOpen: (arg: boolean) => void;
@@ -53,7 +61,7 @@ export interface NewProductFormValues {
 export type Article = {
   id: number;
   availability: boolean;
-  product?: Product;
+  product?: ProductCard;
 };
 
 export type Reservation = {

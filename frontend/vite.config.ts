@@ -1,10 +1,16 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { UserConfig } from "vitest/config";
+import checker from "vite-plugin-checker";
 
 // https://vitejs.dev/config/
 const config: UserConfig = {
-  plugins: [react()],
+  plugins: [
+    checker({
+      typescript: { buildMode: true },
+    }),
+    react(),
+  ],
   server: {
     host: true,
     hmr: {
@@ -21,4 +27,4 @@ const config: UserConfig = {
   },
 };
 
-export default defineConfig(config)
+export default defineConfig(config);
