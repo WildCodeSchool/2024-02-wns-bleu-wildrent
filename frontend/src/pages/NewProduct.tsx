@@ -6,10 +6,45 @@ import {
 import { Button, Form, Input, Card, Typography } from "antd";
 import ListProductsTable from "../components/ListProductsTable";
 import { NewProductFormValues } from "../interface/types";
+import { useState } from "react";
+import axios from "axios";
 
 const { Title } = Typography;
 
 const NewProduct = () => {
+  const [file, setFile] = useState<File>();
+  const [imageURL, setImageURL] = useState<string>();
+  const handleFileChange = (e:any) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = async (event:any) => {
+    event.preventDefault();
+    if (!file) {
+      alert("Sélectionnez un fichier à téléverser");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post("/img", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Assurez-vous que la réponse contient l'URL de l'image
+      setImageURL(response.data.filename);
+    } catch (error) {
+      console.error("Erreur lors du téléversement de l'image", error);
+    }
+  };
+
+
   const [createNewProduct] = useCreateNewProductMutation({
     onCompleted(data) {
       console.log("mutation completed data", data);
@@ -59,7 +94,29 @@ const NewProduct = () => {
             </Form.Item>
 
             <Form.Item name="imgUrl">
-              <Input placeholder="URL de l'image" className="rounded-md" />
+              <div>
+                <input
+                  className="rounded-md"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+                <button onClick={handleUpload} className="upload-btn">
+                  {" "}
+                  Téléverser l'image
+                </button>
+                {imageURL ? (
+                  <>
+                    <br />
+                    <img width={"500"} alt="uploadedImg" src={imageURL} />
+                    <br />
+                  </>
+                ) : null}
+                <button
+                  onClick={() => {
+                    console.log("post this to backend: " + imageURL);
+                  }}
+                ></button>
+              </div>
             </Form.Item>
 
             <Form.Item
