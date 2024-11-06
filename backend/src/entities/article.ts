@@ -3,7 +3,8 @@ import {
   Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne
+  ManyToOne,
+  ManyToMany
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { Product } from "./product";
@@ -24,7 +25,7 @@ export class Article extends BaseEntity {
   @ManyToOne(() => Product, (product) => product.articles)
   product: Product;
 
-  @Field(() => Reservation)
-  @ManyToOne(() => Reservation, (reservation) => reservation.articles)
-  reservation: Reservation;
+  @Field(() => [Reservation]) // GraphQL
+  @ManyToMany(() => Reservation, reservation => reservation.articles) //  TypeORM
+  reservations: Reservation[];
 }

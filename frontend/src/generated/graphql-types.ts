@@ -23,7 +23,7 @@ export type Article = {
   availability: Scalars['Boolean']['output'];
   id: Scalars['Float']['output'];
   product: Product;
-  reservation: Reservation;
+  reservations: Array<Reservation>;
 };
 
 export type EditArticleInput = {

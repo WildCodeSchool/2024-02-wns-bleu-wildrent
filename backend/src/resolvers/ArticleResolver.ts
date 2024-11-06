@@ -30,7 +30,7 @@ class EditArticleInput {
 class ArticleResolver {
   @Query(() => [Article])
   async getAllArticles() {
-    const article = await Article.find({ relations: { product: true } });
+    const article = await Article.find({ relations: { product: true, reservations: true } });
     return article;
   }
 
