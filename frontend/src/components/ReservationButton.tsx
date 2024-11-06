@@ -1,7 +1,7 @@
 import { Button, message } from "antd";
 import { Article } from "../interface/types";
 import { useHandleReservationMutation } from "../generated/graphql-types";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "./Layout";
 
 export default function ReservationButton({
@@ -25,7 +25,7 @@ export default function ReservationButton({
       message.error("Erreur lors de la réservation");
     },
   });
-  
+
   const onClick = () => {
     const startDateString = localStorage.getItem("startDate");
     const startDate = startDateString ? new Date(startDateString) : null;

@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:lts-alpine3.18
 
 RUN apk --no-cache add curl
 
@@ -17,7 +17,7 @@ COPY codegen.ts codegen.ts
 
 
 COPY package.json package.json
-RUN npm install
+RUN npm install --loglevel verbose
 
 COPY src src
 
