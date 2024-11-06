@@ -84,14 +84,16 @@ export const SEARCH_PRODUCTS = gql`
 export const GET_RESERVATIONS_BY_USER_ID = gql`
   query GetReservationsByUserId {
     getReservationsByUserId {
-      id
+      reservation
+      {id
       startDate
       endDate
       status
       articles {
         id
         availability
-      }
+      }}
+      totalPrice
     }
   }
 `;

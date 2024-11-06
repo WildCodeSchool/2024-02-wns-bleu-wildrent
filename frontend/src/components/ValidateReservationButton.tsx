@@ -3,22 +3,20 @@ import { Button, message, Popconfirm } from "antd";
 import { UPDATE_RESERVATION_STATUS } from "../graphql/mutations";
 import { Reservation } from "../interface/types";
 import {
-  GetAllArticlesDocument,
-  GetAllProductsDocument,
+  GetCurrentReservationByUserIdDocument,
+  GetReservationsByUserIdDocument,
 } from "../generated/graphql-types";
 
 function ValidateReservationButton({ reservation }: Reservation) {
   const [updateReservationStatus] = useMutation(UPDATE_RESERVATION_STATUS, {
     onCompleted: () => {
-      message.success("La réservation a bien été validée.");
-      setTimeout(function () {
-        window.location.reload();
-      }, 2000);
+      message.success("La réservation a bien été validée.")
     },
     onError: () => {
       message.error("Une erreur est survenue lors de la validation.");
     },
-  });
+    refetchQueries: [GetReservationsByUserIdDocument, GetCurrentReservationByUserIdDocument]
+  })
 
   return (
     <>
@@ -30,9 +28,7 @@ function ValidateReservationButton({ reservation }: Reservation) {
         onConfirm={() =>
           updateReservationStatus({
             variables: {
-              reservationId: reservation.id.toString(),
-              refetchQueries: [GetAllProductsDocument, GetAllArticlesDocument],
-            },
+              reservationId: reservation.id.toString()            },
           })
         }
       >

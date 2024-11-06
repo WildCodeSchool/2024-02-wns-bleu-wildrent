@@ -8,9 +8,7 @@ const { TabPane } = Tabs;
 
 const Profile = () => {
   const userInfo = useContext(UserContext);
-  const { data, loading, error } = useGetReservationsByUserIdQuery();
-
-  console.log(data);
+  const { data, loading, error } = useGetReservationsByUserIdQuery()
 
   if (loading) {
     return <p>Loading</p>;
@@ -36,8 +34,8 @@ const Profile = () => {
             </p>
           </TabPane>
           <TabPane tab="Historique des commandes" key="2">
-            {data?.getReservationsByUserId.map((reservation) => (
-              <ReservationCard key={reservation.id} reservation={reservation} />
+            {data?.getReservationsByUserId.map((reservationData) => (
+              <ReservationCard key={reservationData.reservation.id} reservationData={reservationData} />
             ))}
           </TabPane>
         </Tabs>

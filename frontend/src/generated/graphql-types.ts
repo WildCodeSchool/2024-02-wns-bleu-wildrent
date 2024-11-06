@@ -129,7 +129,7 @@ export type Query = {
   getCurrentReservationByUserId: ReservationWithTotal;
   getOneProductById: Product;
   getOneReservationById: Reservation;
-  getReservationsByUserId: Array<Reservation>;
+  getReservationsByUserId: Array<ReservationWithTotal>;
   login: Scalars['String']['output'];
   logout: Scalars['String']['output'];
   searchProducts: Array<Product>;
@@ -312,7 +312,7 @@ export type SearchProductsQuery = { __typename?: 'Query', searchProducts: Array<
 export type GetReservationsByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'Reservation', id: number, startDate: any, endDate: any, status: string, articles: Array<{ __typename?: 'Article', id: number, availability: boolean }> }> };
+export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', id: number, startDate: any, endDate: any, status: string, articles: Array<{ __typename?: 'Article', id: number, availability: boolean }> } }> };
 
 export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -943,14 +943,17 @@ export type SearchProductsQueryResult = Apollo.QueryResult<SearchProductsQuery, 
 export const GetReservationsByUserIdDocument = gql`
     query GetReservationsByUserId {
   getReservationsByUserId {
-    id
-    startDate
-    endDate
-    status
-    articles {
+    reservation {
       id
-      availability
+      startDate
+      endDate
+      status
+      articles {
+        id
+        availability
+      }
     }
+    totalPrice
   }
 }
     `;

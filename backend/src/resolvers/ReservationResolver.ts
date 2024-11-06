@@ -73,19 +73,26 @@ class ReservationResolver {
     }
   }
 
-  @Query(() => [Reservation])
+  @Query(() => [ReservationWithTotal])
   async getReservationsByUserId(@Ctx() context: Context) {
     if (context.id !== undefined) {
       const reservations = await Reservation.find({
         where: { user: { id: context.id } },
         relations: ["user", "articles", "articles.product"],
+        order: {
+          createdAt: "DESC"
+        },
       });
-      return reservations;
+  
+      return reservations.map(reservation => {
+        const totalPrice = calculateTotal(reservation.articles);
+        return { reservation, totalPrice };
+      });
     } else {
       return [];
     }
   }
-
+  
   @Mutation(() => Reservation)
   async handleReservation(
     @Ctx() context: Context,
