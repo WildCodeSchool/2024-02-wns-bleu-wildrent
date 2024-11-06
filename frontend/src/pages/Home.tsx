@@ -53,9 +53,9 @@ const HomePage = () => {
                           type="primary"
                           size="large"
                           block
-                          className="bg-[#1A265B] hover:bg-[#d56b1f] text-white transition-colors duration-300"
+                          className="bg-blue-900 text-white transition-colors duration-300 hover:bg-orange-600 mt-4"
                         >
-                          Réserver
+                          En savoir plus
                         </Button>
                       </div>
                     </Col>
