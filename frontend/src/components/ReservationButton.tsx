@@ -12,7 +12,7 @@ export default function ReservationButton({
   const userInfo = useContext(UserContext);
   const [handleReservation] = useHandleReservationMutation({
     onCompleted(data) {
-      message.success("Réservation effectuée avec succès");
+      message.success("Cet article a bien été ajouté à votre réservation");
       if (data.handleReservation) {
         localStorage.setItem(
           "reservationId",
@@ -22,7 +22,7 @@ export default function ReservationButton({
     },
     onError(error) {
       console.error("Reservation mutation error:", error);
-      message.error("Erreur lors de la réservation");
+      message.error("Erreur lors de l'ajout de l'article à la réservation'");
     },
   });
 

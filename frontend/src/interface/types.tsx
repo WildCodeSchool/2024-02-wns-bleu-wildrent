@@ -76,5 +76,5 @@ export type Reservation = {
 };
 
 export type ReservationData = Reservation & {
-  totalPrice: number;
+  totalPrice?: number;
 };
