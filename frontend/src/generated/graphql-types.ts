@@ -26,6 +26,11 @@ export type Article = {
   reservations: Array<Reservation>;
 };
 
+export type DateRangeInput = {
+  endDate: Scalars['DateTimeISO']['input'];
+  startDate: Scalars['DateTimeISO']['input'];
+};
+
 export type EditArticleInput = {
   availability: Scalars['Boolean']['input'];
 };
@@ -126,6 +131,7 @@ export type Query = {
   getAllArticles: Array<Article>;
   getAllProducts: Array<Product>;
   getAllReservations: Array<Reservation>;
+  getAvailableArticles: Array<Article>;
   getCurrentReservationByUserId: ReservationWithTotal;
   getOneProductById: Product;
   getOneReservationById: Reservation;
@@ -134,6 +140,11 @@ export type Query = {
   logout: Scalars['String']['output'];
   searchProducts: Array<Product>;
   whoAmI: UserInfo;
+};
+
+
+export type QueryGetAvailableArticlesArgs = {
+  dateRange: DateRangeInput;
 };
 
 
