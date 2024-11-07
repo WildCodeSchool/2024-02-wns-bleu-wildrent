@@ -13,13 +13,18 @@ import ReservationResolver from "./resolvers/ReservationResolver";
 export type Context = {
   id: number;
   email: string;
-  role: string;
+  role: "Admin" | "User";
 };
 
 const start = async () => {
   await dataSource.initialize();
   const schema = await buildSchema({
-    resolvers: [ProductResolver, ArticleResolver, UserResolver, ReservationResolver],
+    resolvers: [
+      ProductResolver,
+      ArticleResolver,
+      UserResolver,
+      ReservationResolver,
+    ],
     authChecker: ({ context }: { context: Context }, roles) => {
       console.log("roles for this query/mutation ", roles);
       // Check user

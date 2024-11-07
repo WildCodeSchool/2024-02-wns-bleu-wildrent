@@ -1,6 +1,15 @@
 import { Article } from "../entities/article";
-import { Arg, Field, InputType, Mutation, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Authorized,
+  Field,
+  InputType,
+  Mutation,
+  Query,
+  Resolver,
+} from "type-graphql";
 import { Product } from "../entities/product";
+import { Role } from "../entities/user";
 
 @InputType()
 class NewArticleInput {
@@ -8,7 +17,7 @@ class NewArticleInput {
   availability: boolean;
 
   @Field(() => String)
-  productId: number
+  productId: number;
 }
 
 @InputType()
@@ -16,7 +25,6 @@ class EditArticleInput {
   @Field()
   availability: boolean;
 }
-
 
 @Resolver(Article)
 class ArticleResolver {
@@ -26,10 +34,11 @@ class ArticleResolver {
     return article;
   }
 
+  @Authorized(Role.Admin)
   @Mutation(() => Article)
   async createNewArticle(@Arg("data") newArticleData: NewArticleInput) {
     const product = await Product.findOne({
-      where: { id: Number(newArticleData.productId)},
+      where: { id: Number(newArticleData.productId) },
     });
     if (!product) {
       throw new Error("Product not found");
@@ -44,23 +53,27 @@ class ArticleResolver {
     return newArticle;
   }
 
+  @Authorized(Role.Admin)
   @Mutation(() => Article)
-  async editArticle(@Arg("article")articleId: string,  @Arg("data") newArticleData: EditArticleInput) {
+  async editArticle(
+    @Arg("article") articleId: string,
+    @Arg("data") newArticleData: EditArticleInput
+  ) {
     const article = await Article.findOneByOrFail({
       id: Number.parseInt(articleId),
-    })
+    });
 
-    article.availability = newArticleData.availability
-    const updatedArticle = await article.save()
-    return updatedArticle
+    article.availability = newArticleData.availability;
+    const updatedArticle = await article.save();
+    return updatedArticle;
   }
 
+  @Authorized(Role.Admin)
   @Mutation(() => String)
   async deleteArticle(@Arg("id") idToDelete: string) {
-    await Article.delete(idToDelete)
-    return `Product deleted successfully`
+    await Article.delete(idToDelete);
+    return `Product deleted successfully`;
   }
-
 }
 
 export default ArticleResolver;
