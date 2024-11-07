@@ -37,7 +37,6 @@ const NewProduct = () => {
         },
       });
 
-      // Assurez-vous que la réponse contient l'URL de l'image
       setImageURL(response.data.filename);
     } catch (error) {
       console.error("Erreur lors du téléversement de l'image", error);
@@ -101,7 +100,6 @@ const NewProduct = () => {
                   onChange={handleFileChange}
                 />
                 <button onClick={handleUpload} className="upload-btn">
-                  {" "}
                   Téléverser l'image
                 </button>
                 {imageURL ? (

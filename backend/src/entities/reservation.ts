@@ -12,7 +12,7 @@ export enum ReservationStatus {
   }
 
 @ObjectType() //typeGraphQl
-@Entity() //typeORM
+@Entity() //typeORM 
 export class Reservation extends BaseEntity {
     @Field()
     @PrimaryGeneratedColumn()
