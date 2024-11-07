@@ -112,6 +112,7 @@ export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
           product {
             name
             price
+            imgUrl
           }
         }
       }

@@ -27,6 +27,7 @@ export type Article = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  cancelReservation: Reservation;
   createNewArticle: Article;
   createNewProduct: Product;
   createUser: Scalars['String']['output'];
@@ -35,6 +36,11 @@ export type Mutation = {
   editProduct: Product;
   handleReservation: Reservation;
   updateReservationStatus: Reservation;
+};
+
+
+export type MutationCancelReservationArgs = {
+  reservationId: Scalars['String']['input'];
 };
 
 
@@ -309,15 +315,13 @@ export type SearchAndFilterProductsQuery = { __typename?: 'Query', searchAndFilt
 
 export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
-
-export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string, price: number } }> } } };
-
 export type GetReservationsByArticleIdQueryVariables = Exact<{
   articleId: Scalars['String']['input'];
 }>;
 
 
 export type GetReservationsByArticleIdQuery = { __typename?: 'Query', getReservationsByArticleId: Array<{ __typename?: 'Reservation', id: number, startDate: any, endDate: any, createdAt: any, status: string, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string } }>, user: { __typename?: 'User', email: string } }> };
+export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
 
 
 export const CreateNewProductDocument = gql`
@@ -967,6 +971,7 @@ export const GetCurrentReservationByUserIdDocument = gql`
         product {
           name
           price
+          imgUrl
         }
       }
     }

@@ -90,11 +90,11 @@ class ReservationResolver {
         where: { user: { id: context.id } },
         relations: ["user", "articles", "articles.product"],
         order: {
-          createdAt: "DESC"
+          createdAt: "DESC",
         },
       });
-  
-      return reservations.map(reservation => {
+
+      return reservations.map((reservation) => {
         const totalPrice = calculateTotal(reservation.articles);
         return { reservation, totalPrice };
       });
@@ -102,7 +102,7 @@ class ReservationResolver {
       return [];
     }
   }
-  
+
   @Mutation(() => Reservation)
   async handleReservation(
     @Ctx() context: Context,
@@ -170,6 +170,21 @@ class ReservationResolver {
       throw new Error("Reservation not found");
     }
     reservation.status = ReservationStatus.Validated;
+    await reservation.save();
+
+    return reservation;
+  }
+
+  @Mutation(() => Reservation)
+  async cancelReservation(@Arg("reservationId") reservationId: string) {
+    const reservation = await Reservation.findOne({
+      where: { id: Number.parseInt(reservationId) },
+    });
+
+    if (!reservation) {
+      throw new Error("Reservation not found");
+    }
+    reservation.status = ReservationStatus.Ended;
     await reservation.save();
 
     return reservation;
