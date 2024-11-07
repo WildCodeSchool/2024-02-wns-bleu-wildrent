@@ -20,7 +20,9 @@ export const GET_ALL_ARTICLES = gql`
   query GetAllArticles {
     getAllArticles {
       id
-      availability
+      reservations {
+        id
+      }
       product {
         id
         name
@@ -69,18 +71,6 @@ export const LOGOUT = gql`
   }
 `;
 
-export const SEARCH_PRODUCTS = gql`
-  query SearchProducts($keyword: String!) {
-    searchProducts(keyword: $keyword) {
-      id
-      name
-      description
-      imgUrl
-      price
-    }
-  }
-`;
-
 export const GET_RESERVATIONS_BY_USER_ID = gql`
   query GetReservationsByUserId {
     getReservationsByUserId {
@@ -97,6 +87,19 @@ export const GET_RESERVATIONS_BY_USER_ID = gql`
     }
   }
 `;
+
+export const SEARCH_AND_FILTER_PRODUCTS = gql`
+query SearchAndFilterProducts($dateRangeInput: ProductDateRangeInput, $keyword: String) {
+  searchAndFilterProducts(dateRangeInput: $dateRangeInput, keyword: $keyword) {
+    id
+    name
+    description
+    price
+    imgUrl
+  }
+}
+`;
+
 
 export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
   query GetCurrentReservationByUserId {
@@ -119,4 +122,26 @@ export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
       totalPrice
     }
   }
+`;
+
+
+export const GET_RESERVATIONS_BY_ARTICLE_ID = gql`
+query GetReservationsByArticleId($articleId: String!) {
+  getReservationsByArticleId(articleId: $articleId) {
+    id
+    articles {
+      id
+      product {
+        name
+      }
+    }
+    startDate
+    endDate
+    createdAt
+    status
+    user {
+      email
+    }
+  }
+}
 `;

@@ -22,20 +22,6 @@ function ListProductsTable() {
       render: (price: number) => `${price.toFixed(2)} €`,
     },
     {
-      title: "Disponibles",
-      dataIndex: "articles",
-      key: "available",
-      render: (articles: ArticleProps[]) =>
-        articles.filter((article) => article.availability === true).length,
-    },
-    {
-      title: "Réservés",
-      dataIndex: "articles",
-      key: "unavailable",
-      render: (articles: ArticleProps[]) =>
-        articles.filter((article) => article.availability === false).length,
-    },
-    {
       title: "Stock total",
       dataIndex: "articles",
       key: "total",

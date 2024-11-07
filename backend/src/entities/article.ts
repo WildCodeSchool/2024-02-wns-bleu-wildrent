@@ -25,7 +25,7 @@ export class Article extends BaseEntity {
   @ManyToOne(() => Product, (product) => product.articles)
   product: Product;
 
-  @Field(() => [Reservation]) // GraphQL
+  @Field(() => [Reservation], { nullable: true }) // GraphQL
   @ManyToMany(() => Reservation, reservation => reservation.articles) //  TypeORM
-  reservations: Reservation[];
+  reservations?: Reservation[];
 }

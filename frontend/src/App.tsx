@@ -7,7 +7,6 @@ import ProductDescription from "./pages/ProductDescription";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
-import SearchError from "./pages/search/SearchError";
 import Profile from "./pages/Profile";
 import { Cart } from "./pages/Cart";
 
@@ -21,8 +20,8 @@ const App = () => {
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
-        <Route path="search/:keyword" element={<SearchPage />} />
-        <Route path="search/" element={<SearchError />} />
+        <Route path="search" element={<SearchPage />} /> 
+        <Route path="/search/:keyword" element={<SearchPage />} />
         <Route path="register" element={<Register />} />
         <Route path="cart" element={<Cart />} />
       </Route>

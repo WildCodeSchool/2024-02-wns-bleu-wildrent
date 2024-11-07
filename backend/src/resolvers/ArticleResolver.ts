@@ -26,45 +26,13 @@ class EditArticleInput {
   availability: boolean;
 }
 
-// data from range picket
-@InputType()
-class DateRangeInput {
-  @Field(() => Date)
-  startDate: Date
-
-  @Field(() => Date)
-  endDate: Date
-}
-
-
 @Resolver(Article)
 class ArticleResolver {
   @Query(() => [Article])
   async getAllArticles() {
-    const article = await Article.find({ relations: { product: true, reservations: true } });
+    const article = await Article.find({ relations: { product: true, reservations: true } })
     return article
   }
-
-  @Query(() => [Article])
-  async getAvailableArticles(@Arg("dateRange") dateRange: DateRangeInput) {
-    const { startDate, endDate } = dateRange
-    const articles = await Article.find({ relations: { reservations: true } })
-
-    // Filter articles based on their reservation dates
-  const availableArticles = articles.filter(article => {
-    return article.reservations.every(reservation => {
-      const reservationStart = new Date(reservation.startDate)
-      const reservationEnd = new Date(reservation.endDate)
-
-      return (
-        reservationEnd < startDate || // Reservation ends before the start date I searched
-        reservationStart > endDate    // Reservation starts after the end date I searched 
-    });
-  });
-
-    return availableArticles;
-  }
-
 
   @Authorized(Role.Admin)
   @Mutation(() => Article)
