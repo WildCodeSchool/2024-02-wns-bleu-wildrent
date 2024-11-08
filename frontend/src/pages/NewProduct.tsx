@@ -1,6 +1,6 @@
 import {
   GetAllProductsDocument,
-  SearchProductsDocument,
+  SearchAndFilterProductsDocument,
   useCreateNewProductMutation,
 } from "../generated/graphql-types";
 import { Button, Form, Input, Card, Typography } from "antd";
@@ -17,7 +17,7 @@ const NewProduct = () => {
     onError(error) {
       console.log("error after executing mutation", error);
     },
-    refetchQueries: [GetAllProductsDocument, SearchProductsDocument],
+    refetchQueries: [GetAllProductsDocument, SearchAndFilterProductsDocument],
   });
 
   const [form] = Form.useForm();

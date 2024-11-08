@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   description: string;
   imgUrl: string;
-  price: number;
+  price?: number;
 }
 
 export interface ProductCard {
@@ -11,7 +11,7 @@ export interface ProductCard {
   name: string;
   description?: string;
   imgUrl?: string;
-  price: number;
+  price?: number;
 }
 
 export type EditProductModalProps = {
@@ -60,8 +60,8 @@ export interface NewProductFormValues {
 
 export type Article = {
   id: number;
-  availability: boolean;
   product?: ProductCard;
+  reservations?: Reservation[] | null
 };
 
 export type Reservation = {

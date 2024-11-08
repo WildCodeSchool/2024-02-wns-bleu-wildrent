@@ -26,10 +26,15 @@ function Navbar() {
     { name: "Course", path: "/category/course" },
   ];
 
-  const onSearch = (value: string) => {
-    navigate(`/search/${value}`);
-  };
-  // console.log(userInfo);
+  const onSearch = (value?: string) => {
+    console.log("value", value)
+    if (value) {
+      navigate(`/search/${value}`)
+    } else {
+      navigate("/search")
+    }
+  }
+  
   return (
     <div className="flex flex-col p-4 bg-lightBlue">
       <div className="flex justify-between items-center">
@@ -58,7 +63,7 @@ function Navbar() {
               </Button>
             }
           />
-          <RangePicker />
+          <RangePicker onSearch={onSearch} />
         </div>
 
         <div className="flex items-center">
