@@ -1,6 +1,5 @@
 import {
   BaseEntity,
-  Column,
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
@@ -16,10 +15,6 @@ export class Article extends BaseEntity {
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Field()
-  @Column()
-  availability: boolean;
 
   @Field(() => Product)
   @ManyToOne(() => Product, (product) => product.articles)

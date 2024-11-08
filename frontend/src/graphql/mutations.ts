@@ -16,7 +16,6 @@ export const CREATE_NEW_ARTICLE = gql`
   mutation CreateNewArticle($data: NewArticleInput!) {
     createNewArticle(data: $data) {
       id
-      availability
       product {
         id
         name
@@ -74,14 +73,7 @@ export const DELETE_ARTICLE = gql`
     deleteArticle(id: $deleteArticleId)
   }
 `;
-export const EDIT_ARTICLE = gql`
-  mutation EditArticle($data: EditArticleInput!, $article: String!) {
-    editArticle(data: $data, article: $article) {
-      id
-      availability
-    }
-  }
-`;
+
 export const HANDLE_RESERVATION = gql`
   mutation HandleReservation($data: NewReservationInput!) {
     handleReservation(data: $data) {

@@ -19,13 +19,6 @@ class NewArticleInput {
   @Field(() => String)
   productId: number;
 }
-
-@InputType()
-class EditArticleInput {
-  @Field()
-  availability: boolean;
-}
-
 @Resolver(Article)
 class ArticleResolver {
   @Query(() => [Article])
@@ -45,27 +38,11 @@ class ArticleResolver {
     }
 
     const newArticle = Article.create({
-      availability: newArticleData.availability,
       product: product,
     });
 
     await newArticle.save();
     return newArticle;
-  }
-
-  @Authorized(Role.Admin)
-  @Mutation(() => Article)
-  async editArticle(
-    @Arg("article") articleId: string,
-    @Arg("data") newArticleData: EditArticleInput
-  ) {
-    const article = await Article.findOneByOrFail({
-      id: Number.parseInt(articleId),
-    });
-
-    article.availability = newArticleData.availability;
-    const updatedArticle = await article.save();
-    return updatedArticle;
   }
 
   @Authorized(Role.Admin)

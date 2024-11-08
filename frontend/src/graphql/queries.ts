@@ -10,7 +10,6 @@ export const GET_ALL_PRODUCTS = gql`
       price
       articles {
         id
-        availability
       }
     }
   }
@@ -41,7 +40,6 @@ export const GET_PRODUCT_BY_ID = gql`
       price
       articles {
         id
-        availability
       }
     }
   }
@@ -81,7 +79,6 @@ export const GET_RESERVATIONS_BY_USER_ID = gql`
       status
       articles {
         id
-        availability
       }}
       totalPrice
     }
@@ -112,7 +109,6 @@ export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
         createdAt
         articles {
           id
-          availability
           product {
             name
             price
