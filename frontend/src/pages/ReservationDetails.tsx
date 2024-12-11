@@ -1,8 +1,8 @@
 import { useQuery } from "@apollo/client";
-import { GetReservationsByUserIdQuery } from "../generated/graphql-types";
-import { GET_RESERVATIONS_BY_USER_ID } from "../graphql/queries";
+import { GetReservationsByUserIdQuery } from "../generated/graphql-types"; // Assurez-vous que ce type est correctement généré.
+import { GET_RESERVATIONS_BY_USER_ID } from "../graphql/queries"; // Importez la nouvelle query
 
-const ReservationsDetails = () => {
+const ReservationDetails = () => {
   const { loading, error, data } = useQuery<GetReservationsByUserIdQuery>(
     GET_RESERVATIONS_BY_USER_ID
   );
@@ -54,13 +54,7 @@ const ReservationsDetails = () => {
                     <li key={article.id}>
                       <p>
                         <strong>Article ID:</strong> {article.id}
-                      </p>
-                      <p>
-                        <strong>Produit:</strong> {article.product.name}
-                      </p>
-                      <p>
-                        <strong>Prix du produit:</strong>{" "}
-                        {article.product.price} €
+                        {article.product}
                       </p>
                     </li>
                   ))}
@@ -74,4 +68,4 @@ const ReservationsDetails = () => {
   );
 };
 
-export default ReservationsDetails;
+export default ReservationDetails;
