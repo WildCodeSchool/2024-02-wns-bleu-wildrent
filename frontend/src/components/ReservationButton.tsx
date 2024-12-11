@@ -41,17 +41,8 @@ export default function ReservationButton({
       return;
     }
 
-    // TO DO : à changer quand la recherche en amont sera mise en place
-    const availableArticles = articles.filter(
-      (article) => article.availability === true
-    );
-    if (availableArticles.length === 0 && userInfo.isLoggedIn === true) {
-      message.error("Cet article n'est pas disponible");
-      return;
-    }
-
-    // TO BE DISCUSSED : comment choisir l'article si plusieurs sont dispo ?
-    const firstAvailableArticleId = availableArticles[0].id;
+    // TO BE DISCUSSED : comment choisir l'article si plusieurs sont dispo ? 
+    const firstAvailableArticleId = articles[0].id
 
     handleReservation({
       variables: {

@@ -45,3 +45,9 @@ jobs:
           context: "{{defaultContext}}:backend"
           file: Dockerfile.prod
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-backend:latest, ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-backend:${{ github.sha }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap/wrk/index.html
+    
+      

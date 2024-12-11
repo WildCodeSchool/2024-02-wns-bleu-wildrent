@@ -54,6 +54,16 @@ class ReservationResolver {
     return reservation;
   }
 
+  @Query(() => [Reservation])
+  async getReservationsByArticleId(@Arg("articleId") articleId: string) {
+    const reservations = await Reservation.find({
+      where: { articles: { id: Number(articleId) } },
+        relations: ["user", "articles", "articles.product"],
+    });
+    return reservations
+  }
+
+
   @Query(() => ReservationWithTotal)
   async getCurrentReservationByUserId(@Ctx() context: Context) {
     if (context.id !== undefined) {

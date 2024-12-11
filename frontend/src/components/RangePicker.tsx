@@ -1,9 +1,16 @@
 import { DatePicker } from "antd"
 import dayjs, { Dayjs } from "dayjs"
 import { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
 
-export default function RangePicker() {
-    const { RangePicker } = DatePicker;
+export default function RangePicker({
+    onSearch,
+    } : {
+    onSearch: (value?: string | undefined) => void
+    }) {
+    const { RangePicker } = DatePicker
+    const { keyword } = useParams<{ keyword?: string }>();
+
 
     const [selectedDates, setSelectedDates] = useState<[Dayjs | null, Dayjs | null]>([
         localStorage.getItem("startDate") ? dayjs(localStorage.getItem("startDate")) : null,
@@ -26,6 +33,11 @@ export default function RangePicker() {
             localStorage.removeItem("startDate")
             localStorage.removeItem("endDate")
             setSelectedDates([null, null])
+        }
+        if (keyword) {
+            onSearch(keyword);
+          } else {
+            onSearch();
         }
     };
 

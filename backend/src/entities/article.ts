@@ -1,9 +1,9 @@
 import {
   BaseEntity,
-  Column,
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne
+  ManyToOne,
+  ManyToMany
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { Product } from "./product";
@@ -16,15 +16,11 @@ export class Article extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Field()
-  @Column()
-  availability: boolean;
-
   @Field(() => Product)
   @ManyToOne(() => Product, (product) => product.articles)
   product: Product;
 
-  @Field(() => Reservation)
-  @ManyToOne(() => Reservation, (reservation) => reservation.articles)
-  reservation: Reservation;
+  @Field(() => [Reservation], { nullable: true }) // GraphQL
+  @ManyToMany(() => Reservation, reservation => reservation.articles) //  TypeORM
+  reservations?: Reservation[];
 }

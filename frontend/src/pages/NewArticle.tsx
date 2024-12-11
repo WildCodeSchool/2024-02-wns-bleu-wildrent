@@ -9,13 +9,16 @@ import {
   GetAllProductsDocument,
 } from "../generated/graphql-types";
 import DeleteArticleButton from "../components/DeleteArticleButton";
-import EditArticleDropdown from "../components/EditArticleDropdown";
 import { NewArticleFormValues } from "../interface/types";
+import { useState } from "react";
+import { ReservationsInfoModal } from "../components/ReservationsInfoModal";
 
 const { Title } = Typography;
 
 const NewArticle = () => {
   const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [articleId, setArticleId] = useState("") 
   const columns = [
     {
       title: "ID",
@@ -23,17 +26,22 @@ const NewArticle = () => {
       key: "id",
     },
     {
-      title: "Disponibilité",
-      dataIndex: "availability",
-      key: "edit availability",
-      render: (availability: boolean, record: { id: number }) => (
-        <EditArticleDropdown availability={availability} id={record.id} />
-      ),
-    },
-    {
       title: "Nom du produit",
       dataIndex: ["product", "name"],
       key: "productName",
+    },
+    {
+      title: "Réservations",
+      key: "reservations",
+      dataIndex: "id",
+      render: (id: string) => 
+      <Button 
+        onClick={() => {
+        setIsModalOpen(!isModalOpen),
+        setArticleId(id)
+        }}>
+        Détails
+      </Button>
     },
     {
       title: "Supprimer",
@@ -94,19 +102,6 @@ const NewArticle = () => {
             <Title level={3} className="text-center text-blue-500">
               Ajouter un nouvel article
             </Title>
-
-            <Form.Item
-              name="availability"
-              rules={[
-                { required: true, message: "La disponibilité est requise" },
-              ]}
-            >
-              <Select placeholder="Disponibilité">
-                <Select.Option value="true">Disponible</Select.Option>
-                <Select.Option value="false">Indisponible</Select.Option>
-              </Select>
-            </Form.Item>
-
             <Form.Item
               name="productId"
               rules={[{ required: true, message: "Un produit est requis" }]}
@@ -143,6 +138,9 @@ const NewArticle = () => {
           scroll={{ x: true }}
         />
       </div>
+      {isModalOpen && 
+      <ReservationsInfoModal articleId={articleId} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+      }
     </>
   );
 };
