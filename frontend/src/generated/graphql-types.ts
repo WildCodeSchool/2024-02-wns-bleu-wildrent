@@ -297,7 +297,9 @@ export type LogoutQuery = { __typename?: 'Query', logout: string };
 export type GetReservationsByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', id: number, startDate: any, endDate: any, status: string, articles: Array<{ __typename?: 'Article', id: number }> } }> };
+export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', id: number, startDate: any, endDate: any, status: string, articles: Array<{
+    product: any; __typename?: 'Article', id: number 
+}> } }> };
 
 export type SearchAndFilterProductsQueryVariables = Exact<{
   dateRangeInput?: InputMaybe<ProductDateRangeInput>;
