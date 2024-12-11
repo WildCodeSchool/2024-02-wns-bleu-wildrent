@@ -3,6 +3,11 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import "./index.css";
+import { ConfigProvider } from "antd"
+import fr from "antd/locale/fr_FR"
+import dayjs from "dayjs"
+import "dayjs/locale/fr"
+dayjs.locale("fr")
 
 const client = new ApolloClient({
   uri: "/api",
@@ -25,7 +30,9 @@ const client = new ApolloClient({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
     <ApolloProvider client={client}>
-      <App />
+      <ConfigProvider locale={fr}>
+        <App />
+      </ConfigProvider>
     </ApolloProvider>
   </BrowserRouter>
 );
