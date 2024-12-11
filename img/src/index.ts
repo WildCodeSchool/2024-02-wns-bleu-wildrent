@@ -8,15 +8,24 @@ const app = express();
 const port = 4000;
 app.use(cors());
 
+const MIME_TYPES: Record<string, string> = {
+  "image/jpg": "jpg",
+  "image/jpeg": "jpg",
+  "image/png": "png"
+};
+
+
 const storage = multer.diskStorage({
   destination: function (_req, _file, cb) {
     cb(null, path.join(__dirname, "../uploads/"));
   },
   filename: function (_req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    const extension = MIME_TYPES[file.mimetype];
+    cb(null, Date.now() + '.' + extension);
+
   },
 });
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage }); 
 
 app.get("/", (_req, res) => {
   res.send("Healthcheck Okay");
