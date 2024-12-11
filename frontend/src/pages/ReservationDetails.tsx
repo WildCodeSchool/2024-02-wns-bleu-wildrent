@@ -20,7 +20,7 @@ const ReservationsDetails = () => {
 
   return (
     <div className="reservations-container">
-      <h1>Détails des Résesrvations</h1>
+      <h1>Détails des Réservations</h1>
       <table className="reservations-table">
         <thead>
           <tr>

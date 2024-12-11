@@ -4,7 +4,6 @@ import NewArticle from "./NewArticle";
 import ReservationDetails from "./ReservationDetails";
 import { useMediaQuery } from "react-responsive";
 
-
 const { Title } = Typography;
 
 function Admin() {
