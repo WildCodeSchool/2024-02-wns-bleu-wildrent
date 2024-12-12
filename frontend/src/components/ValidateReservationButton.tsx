@@ -7,7 +7,13 @@ import {
   GetReservationsByUserIdDocument,
 } from "../generated/graphql-types";
 
-function ValidateReservationButton({ reservation }: Reservation) {
+type ValidateReservationButtonProps = {
+  reservation: Reservation;
+};
+
+const ValidateReservationButton = ({
+  reservation,
+}: ValidateReservationButtonProps) => {
   const [updateReservationStatus] = useMutation(UPDATE_RESERVATION_STATUS, {
     onCompleted: () => {
       message.success("La réservation a bien été validée.");
@@ -40,6 +46,6 @@ function ValidateReservationButton({ reservation }: Reservation) {
       </Popconfirm>
     </>
   );
-}
+};
 
 export default ValidateReservationButton;

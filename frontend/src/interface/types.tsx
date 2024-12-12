@@ -61,20 +61,19 @@ export interface NewProductFormValues {
 export type Article = {
   id: number;
   product?: ProductCard;
-  reservations?: Reservation[] | null
+  reservations?: Reservation[] | null;
 };
 
 export type Reservation = {
-  reservation: {
-    id: number;
-    startDate: string;
-    endDate: string;
-    articles: Article[];
-    status: string;
-    createdAt?: string;
-  };
+  id: number;
+  startDate: string;
+  endDate: string;
+  articles: Article[];
+  status: string;
+  createdAt?: string;
 };
 
-export type ReservationData = Reservation & {
+export type ReservationData = {
+  reservation: Reservation;
   totalPrice?: number;
 };
