@@ -19,6 +19,7 @@ class NewArticleInput {
   @Field(() => String)
   productId: number;
 }
+
 @Resolver(Article)
 class ArticleResolver {
   @Query(() => [Article])
@@ -50,6 +51,28 @@ class ArticleResolver {
   async deleteArticle(@Arg("id") idToDelete: string) {
     await Article.delete(idToDelete);
     return `Product deleted successfully`;
+  }
+
+  @Mutation(() => Article)
+  async deleteArticleFromReservation(@Arg("articleId") articleId: string) {
+    const article = await Article.findOne({
+      where: { id: Number.parseInt(articleId) },
+      relations: { reservations: true },
+    });
+
+    if (!article) {
+      throw new Error("Article not found");
+    }
+
+    if (!article.reservations) {
+      throw new Error("Article is not part of any reservation");
+    }
+
+    article.reservations = [];
+
+    await article.save();
+
+    return article;
   }
 }
 
