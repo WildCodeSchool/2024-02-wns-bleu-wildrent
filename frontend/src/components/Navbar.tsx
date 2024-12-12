@@ -32,46 +32,52 @@ function Navbar() {
   ];
 
   const onSearch = (value?: string) => {
-      if (value) {
-      navigate(`/search/${value}`)
+    if (value) {
+      navigate(`/search/${value}`);
     } else {
-      navigate("/search")
+      navigate("/search");
     }
-  }
+  };
 
-  const showDrawer = () => setVisible(true)
-  const onClose = () => setVisible(false)
+  const showDrawer = () => setVisible(true);
+  const onClose = () => setVisible(false);
 
   return (
     <Header className="p-4 bg-lightBlue h-1/4">
       <div className="flex justify-between items-center">
-        <Link to="/">
+        <Link to="/" className="md:mx-0 mx-auto">
           <img src={Logo} alt="Wildrent Logo" className="h-12" />
         </Link>
 
         <div className="flex flex-col justify-center gap-2">
           <Search
-            className="max-w-96"
+            className="max-w-96 hidden md:block"
             placeholder="Rechercher un produit"
             onSearch={onSearch}
             enterButton={
               <Button
                 className="bg-blue-900 text-white"
-                onMouseEnter={(e) => e.currentTarget.classList.add("bg-orange-600")}
-                onMouseLeave={(e) => e.currentTarget.classList.remove("bg-orange-600")}
+                onMouseEnter={(e) =>
+                  e.currentTarget.classList.add("bg-orange-600")
+                }
+                onMouseLeave={(e) =>
+                  e.currentTarget.classList.remove("bg-orange-600")
+                }
               >
-                {visible ? "Rechercher" : <SearchOutlined />}
-            </Button>
+                <SearchOutlined />
+              </Button>
             }
           />
-          <RangePicker onSearch={onSearch} />
+          <div className="max-w-full hidden md:block">
+            <RangePicker onSearch={onSearch} />
+          </div>
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
           {userInfo.isLoggedIn && (
             <>
               <p className="text-blue-900 font-medium text-lg">
-                Bonjour, {userInfo.firstname}
+                {userInfo.firstname} {userInfo.lastname}
               </p>
               <Link
                 to={userInfo.role === Role.Admin ? "/admin" : "/profile"}
@@ -85,26 +91,24 @@ function Navbar() {
             <ShoppingCartOutlined className="text-lg" />
           </Link>
           {userInfo.isLoggedIn ? (
-            <Button
-              type="link"
+            <Link
+              to="/"
+              className="text-blue-900 font-medium"
               onClick={() => {
                 logout({
                   onCompleted: () => {
                     userInfo.refetch();
                     message.success("Déconnexion réussie !");
-                    navigate("/");
                   },
                 });
+                onClose();
               }}
-              className="text-blue-900"
             >
-              <LogoutOutlined className="text-lg" />
-            </Button>
+              <LogoutOutlined />
+            </Link>
           ) : (
-            <Link to="/login">
-              <Button type="link" className="text-blue-900">
-                <PoweroffOutlined className="text-lg" />
-              </Button>
+            <Link to="/login" className="text-blue-900">
+              <PoweroffOutlined className="text-lg" />
             </Link>
           )}
         </div>
@@ -129,12 +133,81 @@ function Navbar() {
       </div>
 
       <Drawer
-        title="Menu"
+        title="Menu Wildrent"
         placement="right"
         onClose={onClose}
         visible={visible}
+        className="text-blue-900 w-full md:w-80"
       >
         <div className="flex flex-col space-y-4">
+          <Search
+            className="max-w-full"
+            placeholder="Rechercher un produit"
+            onSearch={onSearch}
+            enterButton={
+              <Button
+                className="bg-blue-900 text-white"
+                onMouseEnter={(e) =>
+                  e.currentTarget.classList.add("bg-orange-600")
+                }
+                onMouseLeave={(e) =>
+                  e.currentTarget.classList.remove("bg-orange-600")
+                }
+              >
+                <SearchOutlined />
+              </Button>
+            }
+          />
+          <div className="w-full h-auto w-auto">
+            <RangePicker onSearch={onSearch} />
+          </div>
+          {userInfo.isLoggedIn && (
+            <p className="text-blue-900 font-medium text-lg">
+              {userInfo.firstname} {userInfo.lastname}
+            </p>
+          )}
+          {userInfo.isLoggedIn && (
+            <Link
+              to={userInfo.role === Role.Admin ? "/admin" : "/profile"}
+              className="text-blue-900 font-medium"
+              onClick={onClose}
+            >
+              <UserOutlined /> Espace personnel
+            </Link>
+          )}
+          <Link
+            to="/cart"
+            className="text-blue-900 font-medium"
+            onClick={onClose}
+          >
+            <ShoppingCartOutlined /> Panier
+          </Link>
+          {userInfo.isLoggedIn ? (
+            <Link
+              to="/"
+              className="text-blue-900 font-medium"
+              onClick={() => {
+                logout({
+                  onCompleted: () => {
+                    userInfo.refetch();
+                    message.success("Déconnexion réussie !");
+                  },
+                });
+                onClose();
+              }}
+            >
+              <LogoutOutlined /> Déconnexion
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              onClick={onClose}
+              className="text-blue-900 font-medium"
+            >
+              <PoweroffOutlined /> Connexion
+            </Link>
+          )}
+          <hr />
           {categories.map((category) => (
             <Link
               key={category.name}
@@ -144,7 +217,6 @@ function Navbar() {
             >
               {category.name}
             </Link>
-            //TO DO ajouter liens panier , admin etc 
           ))}
         </div>
       </Drawer>

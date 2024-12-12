@@ -16,6 +16,7 @@ function DeleteProductButton({ articleId }: { articleId: string }) {
       title="Supprimer cet article ? "
       description="Toutes les données le concernant seront perdues."
       okText="Oui"
+      className="bg-red-500 text-white hover:bg-red-600 focus:outline-none"
       cancelText="Non"
       onConfirm={() =>
         deleteArticle({
