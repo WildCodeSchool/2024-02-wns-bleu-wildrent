@@ -23,6 +23,7 @@ export type Article = {
   id: Scalars['Float']['output'];
   product: Product;
 <<<<<<< HEAD
+<<<<<<< HEAD
   reservations?: Maybe<Array<Reservation>>;
 =======
   reservation?: Maybe<Reservation>;
@@ -31,6 +32,9 @@ export type Article = {
 export type EditArticleInput = {
   availability: Scalars['Boolean']['input'];
 >>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
+=======
+  reservations?: Maybe<Array<Reservation>>;
+>>>>>>> 2d5d748 (fix article entity and type bugs)
 };
 
 export type Mutation = {
@@ -288,6 +292,7 @@ export type DeleteArticleFromReservationMutationVariables = Exact<{
 
 export type DeleteArticleFromReservationMutation = { __typename?: 'Mutation', deleteArticleFromReservation: { __typename?: 'Article', id: number } };
 
+<<<<<<< HEAD
 export type EditArticleMutationVariables = Exact<{
   data: EditArticleInput;
   article: Scalars['String']['input'];
@@ -297,6 +302,8 @@ export type EditArticleMutationVariables = Exact<{
 export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, availability: boolean } };
 
 >>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
+=======
+>>>>>>> 2d5d748 (fix article entity and type bugs)
 export type HandleReservationMutationVariables = Exact<{
   data: NewReservationInput;
 }>;
@@ -354,6 +361,12 @@ export type SearchAndFilterProductsQuery = { __typename?: 'Query', searchAndFilt
 
 export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
+<<<<<<< HEAD
+=======
+
+export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
+
+>>>>>>> 2d5d748 (fix article entity and type bugs)
 export type GetReservationsByArticleIdQueryVariables = Exact<{
   articleId: Scalars['String']['input'];
 }>;
@@ -681,6 +694,7 @@ export function useDeleteArticleFromReservationMutation(baseOptions?: Apollo.Mut
 export type DeleteArticleFromReservationMutationHookResult = ReturnType<typeof useDeleteArticleFromReservationMutation>;
 export type DeleteArticleFromReservationMutationResult = Apollo.MutationResult<DeleteArticleFromReservationMutation>;
 export type DeleteArticleFromReservationMutationOptions = Apollo.BaseMutationOptions<DeleteArticleFromReservationMutation, DeleteArticleFromReservationMutationVariables>;
+<<<<<<< HEAD
 export const EditArticleDocument = gql`
     mutation EditArticle($data: EditArticleInput!, $article: String!) {
   editArticle(data: $data, article: $article) {
@@ -717,6 +731,8 @@ export type EditArticleMutationHookResult = ReturnType<typeof useEditArticleMuta
 export type EditArticleMutationResult = Apollo.MutationResult<EditArticleMutation>;
 export type EditArticleMutationOptions = Apollo.BaseMutationOptions<EditArticleMutation, EditArticleMutationVariables>;
 >>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
+=======
+>>>>>>> 2d5d748 (fix article entity and type bugs)
 export const HandleReservationDocument = gql`
     mutation HandleReservation($data: NewReservationInput!) {
   handleReservation(data: $data) {

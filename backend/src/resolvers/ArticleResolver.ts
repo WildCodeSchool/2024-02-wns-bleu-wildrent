@@ -22,6 +22,7 @@ class NewArticleInput {
 <<<<<<< HEAD
 =======
 
+<<<<<<< HEAD
 @InputType()
 class EditArticleInput {
   @Field()
@@ -29,6 +30,8 @@ class EditArticleInput {
 }
 
 >>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
+=======
+>>>>>>> 2d5d748 (fix article entity and type bugs)
 @Resolver(Article)
 class ArticleResolver {
   @Query(() => [Article])
@@ -56,6 +59,7 @@ class ArticleResolver {
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   @Authorized(Role.Admin)
 =======
   @Mutation(() => Article)
@@ -73,6 +77,10 @@ class ArticleResolver {
   }
 
 >>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
+=======
+  @Authorized(Role.Admin)
+
+>>>>>>> 2d5d748 (fix article entity and type bugs)
   @Mutation(() => String)
   async deleteArticle(@Arg("id") idToDelete: string) {
     await Article.delete(idToDelete);
@@ -85,18 +93,18 @@ class ArticleResolver {
   async deleteArticleFromReservation(@Arg("articleId") articleId: string) {
     const article = await Article.findOne({
       where: { id: Number.parseInt(articleId) },
-      relations: { reservation: true },
+      relations: { reservations: true },
     });
 
     if (!article) {
       throw new Error("Article not found");
     }
 
-    if (!article.reservation) {
+    if (!article.reservations) {
       throw new Error("Article is not part of any reservation");
     }
 
-    article.reservation = null;
+    article.reservations = [];
 
     await article.save();
 
