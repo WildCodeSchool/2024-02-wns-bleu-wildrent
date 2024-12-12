@@ -5,7 +5,7 @@ import { UserContext } from "./Layout";
 function AdminRouteProtection({ children }: { children: React.ReactNode }) {
   const userInfo = useContext(UserContext);
 
-  if (!userInfo.isLoggedIn || userInfo.role !== "ADMIN") {
+  if (!userInfo.isLoggedIn || userInfo.role !== "Admin") {
     return <Navigate to="/" replace />;
   }
 
