@@ -2,13 +2,17 @@ import { Card, Divider } from "antd";
 import ValidateReservationButton from "./ValidateReservationButton";
 import { ReservationData } from "../interface/types";
 
-export const ReservationCard = ( {reservationData} : {reservationData: ReservationData}) => {
-  const formattedStartDate = new Date(reservationData.reservation.startDate).toLocaleDateString(
-    "fr-FR"
-  );
-  const formattedEndDate = new Date(reservationData.reservation.endDate).toLocaleDateString(
-    "fr-FR"
-  );
+export const ReservationCard = ({
+  reservationData,
+}: {
+  reservationData: ReservationData;
+}) => {
+  const formattedStartDate = new Date(
+    reservationData.reservation.startDate
+  ).toLocaleDateString("fr-FR");
+  const formattedEndDate = new Date(
+    reservationData.reservation.endDate
+  ).toLocaleDateString("fr-FR");
   const reservationId = reservationData.reservation.id;
   return (
     <>
@@ -19,7 +23,9 @@ export const ReservationCard = ( {reservationData} : {reservationData: Reservati
         <p>Prix : {reservationData.totalPrice} euros</p>
         <p>Status : {reservationData.reservation.status}</p>
         {reservationData.reservation.status === "pending" && (
-          <ValidateReservationButton reservation={reservationData.reservation} />
+          <ValidateReservationButton
+            reservation={reservationData.reservation}
+          />
         )}
       </Card>
       <Divider dashed />

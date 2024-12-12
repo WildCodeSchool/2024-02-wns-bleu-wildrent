@@ -65,17 +65,16 @@ export type Article = {
 };
 
 export type Reservation = {
-  reservation: {
-    id: number;
-    startDate: string;
-    endDate: string;
-    articles: Article[];
-    status: string;
-    createdAt?: string;
-  };
+  id: number;
+  startDate: string;
+  endDate: string;
+  articles: Article[];
+  status: string;
+  createdAt?: string;
 };
 
-export type ReservationData = Reservation & {
+export type ReservationData = {
+  reservation: Reservation;
   totalPrice?: number;
 };
 
