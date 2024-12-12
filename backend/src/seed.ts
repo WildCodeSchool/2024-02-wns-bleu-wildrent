@@ -1,6 +1,8 @@
 import { dataSource } from "./config/db";
 import { Article } from "./entities/article";
 import { Product } from "./entities/product";
+import { User } from "./entities/user";
+import { Reservation, ReservationStatus } from "./entities/reservation";
 
 const products = [
   {
@@ -146,9 +148,31 @@ const products = [
   },
 ];
 
+const users = [
+  {
+    email: "adele@example.com",
+    firstname: "Adele",
+    lastname: "Manga",
+    hashedPassword: "hashedpassword1",
+  },
+  {
+    email: "user2@example.com",
+    firstname: "Jane",
+    lastname: "Smith",
+    hashedPassword: "hashedpassword2",
+  },
+  {
+    email: "user3@example.com",
+    firstname: "Alice",
+    lastname: "Johnson",
+    hashedPassword: "hashedpassword3",
+  },
+];
+
 const seedDatabase = async () => {
   await dataSource.initialize();
   const savedProducts = await dataSource.getRepository(Product).save(products);
+  const savedUsers = await dataSource.getRepository(User).save(users);
 
   const articles = [
     { product: savedProducts[0] },
@@ -174,7 +198,32 @@ const seedDatabase = async () => {
     { product: savedProducts[18] },
   ];
 
-  await dataSource.getRepository(Article).save(articles);
+  const savedArticles = await dataSource.getRepository(Article).save(articles);
+
+  const reservations = [
+    {
+      user: savedUsers[0],
+      articles: [savedArticles[0], savedArticles[1]],
+      startDate: new Date("2024-12-20T08:00:00"),
+      endDate: new Date("2024-12-25T08:00:00"),
+      status: ReservationStatus.Pending,
+    },
+    {
+      user: savedUsers[1],
+      articles: [savedArticles[2], savedArticles[3]],
+      startDate: new Date("2024-12-23T08:00:00"),
+      endDate: new Date("2024-12-27T08:00:00"),
+      status: ReservationStatus.Validated,
+    },
+    {
+      user: savedUsers[2],
+      articles: [savedArticles[4], savedArticles[5]],
+      startDate: new Date("2024-12-22T08:00:00"),
+      endDate: new Date("2024-12-26T08:00:00"),
+      status: ReservationStatus.Ongoing,
+    },
+  ];
+  await dataSource.getRepository(Reservation).save(reservations);
 
   console.log("Données insérées avec succès !");
   await dataSource.destroy();
