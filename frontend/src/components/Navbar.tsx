@@ -9,9 +9,10 @@ import {
 import { Input, Button, message } from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
-import { Role, useLogoutLazyQuery } from "../generated/graphql-types";
+import { useLogoutLazyQuery } from "../generated/graphql-types";
 import Logo from "../assets/logo.png";
 import RangePicker from "./RangePicker";
+import { Role } from "../interface/types";
 
 const { Search } = Input;
 
@@ -27,14 +28,13 @@ function Navbar() {
   ];
 
   const onSearch = (value?: string) => {
-    console.log("value", value)
     if (value) {
-      navigate(`/search/${value}`)
+      navigate(`/search/${value}`);
     } else {
-      navigate("/search")
+      navigate("/search");
     }
-  }
-  
+  };
+
   return (
     <div className="flex flex-col p-4 bg-lightBlue">
       <div className="flex justify-between items-center">

@@ -61,7 +61,7 @@ export interface NewProductFormValues {
 export type Article = {
   id: number;
   product?: ProductCard;
-  reservations?: Reservation[] | null
+  reservations?: Reservation[] | null;
 };
 
 export type Reservation = {
@@ -78,3 +78,8 @@ export type Reservation = {
 export type ReservationData = Reservation & {
   totalPrice?: number;
 };
+
+export enum Role {
+  Admin = "Admin",
+  User = "User",
+}
