@@ -8,6 +8,8 @@ import ListProductsTable from "../components/ListProductsTable";
 import { NewProductFormValues } from "../interface/types";
 import { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const { Title } = Typography;
 
@@ -79,6 +81,7 @@ const NewProduct = () => {
         variables: { data: formJson },
       });
       form.resetFields();
+      toast("Produit ajouté avec succès !");
     } catch (error) {
       console.error("Erreur lors de la création du produit", error);
     }
@@ -164,8 +167,13 @@ const NewProduct = () => {
           </Form>
         </Card>
       </div>
-
       <ListProductsTable />
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        theme="light"
+        
+      />
     </>
   );
 };
