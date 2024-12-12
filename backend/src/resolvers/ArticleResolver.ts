@@ -19,19 +19,7 @@ class NewArticleInput {
   @Field(() => String)
   productId: number;
 }
-<<<<<<< HEAD
-=======
 
-<<<<<<< HEAD
-@InputType()
-class EditArticleInput {
-  @Field()
-  availability: boolean;
-}
-
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
-=======
->>>>>>> 2d5d748 (fix article entity and type bugs)
 @Resolver(Article)
 class ArticleResolver {
   @Query(() => [Article])
@@ -58,36 +46,12 @@ class ArticleResolver {
     return newArticle;
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
   @Authorized(Role.Admin)
-=======
-  @Mutation(() => Article)
-  async editArticle(
-    @Arg("article") articleId: string,
-    @Arg("data") newArticleData: EditArticleInput
-  ) {
-    const article = await Article.findOneByOrFail({
-      id: Number.parseInt(articleId),
-    });
-
-    article.availability = newArticleData.availability;
-    const updatedArticle = await article.save();
-    return updatedArticle;
-  }
-
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
-=======
-  @Authorized(Role.Admin)
-
->>>>>>> 2d5d748 (fix article entity and type bugs)
   @Mutation(() => String)
   async deleteArticle(@Arg("id") idToDelete: string) {
     await Article.delete(idToDelete);
     return `Product deleted successfully`;
   }
-<<<<<<< HEAD
-=======
 
   @Mutation(() => Article)
   async deleteArticleFromReservation(@Arg("articleId") articleId: string) {
@@ -110,7 +74,6 @@ class ArticleResolver {
 
     return article;
   }
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
 }
 
 export default ArticleResolver;

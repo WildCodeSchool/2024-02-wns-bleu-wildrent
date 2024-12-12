@@ -22,19 +22,7 @@ export type Article = {
   __typename?: 'Article';
   id: Scalars['Float']['output'];
   product: Product;
-<<<<<<< HEAD
-<<<<<<< HEAD
   reservations?: Maybe<Array<Reservation>>;
-=======
-  reservation?: Maybe<Reservation>;
-};
-
-export type EditArticleInput = {
-  availability: Scalars['Boolean']['input'];
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
-=======
-  reservations?: Maybe<Array<Reservation>>;
->>>>>>> 2d5d748 (fix article entity and type bugs)
 };
 
 export type Mutation = {
@@ -283,8 +271,6 @@ export type DeleteArticleMutationVariables = Exact<{
 
 export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: string };
 
-<<<<<<< HEAD
-=======
 export type DeleteArticleFromReservationMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -292,18 +278,6 @@ export type DeleteArticleFromReservationMutationVariables = Exact<{
 
 export type DeleteArticleFromReservationMutation = { __typename?: 'Mutation', deleteArticleFromReservation: { __typename?: 'Article', id: number } };
 
-<<<<<<< HEAD
-export type EditArticleMutationVariables = Exact<{
-  data: EditArticleInput;
-  article: Scalars['String']['input'];
-}>;
-
-
-export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, availability: boolean } };
-
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
-=======
->>>>>>> 2d5d748 (fix article entity and type bugs)
 export type HandleReservationMutationVariables = Exact<{
   data: NewReservationInput;
 }>;
@@ -361,19 +335,15 @@ export type SearchAndFilterProductsQuery = { __typename?: 'Query', searchAndFilt
 
 export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
-<<<<<<< HEAD
-=======
 
 export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
 
->>>>>>> 2d5d748 (fix article entity and type bugs)
 export type GetReservationsByArticleIdQueryVariables = Exact<{
   articleId: Scalars['String']['input'];
 }>;
 
 
 export type GetReservationsByArticleIdQuery = { __typename?: 'Query', getReservationsByArticleId: Array<{ __typename?: 'Reservation', id: number, startDate: any, endDate: any, createdAt: any, status: string, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string } }>, user: { __typename?: 'User', email: string } }> };
-export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, availability: boolean, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
 
 
 export const CreateNewProductDocument = gql`
@@ -659,8 +629,6 @@ export function useDeleteArticleMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticleMutation>;
 export type DeleteArticleMutationResult = Apollo.MutationResult<DeleteArticleMutation>;
 export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<DeleteArticleMutation, DeleteArticleMutationVariables>;
-<<<<<<< HEAD
-=======
 export const DeleteArticleFromReservationDocument = gql`
     mutation DeleteArticleFromReservation($id: String!) {
   deleteArticleFromReservation(articleId: $id) {
@@ -694,45 +662,6 @@ export function useDeleteArticleFromReservationMutation(baseOptions?: Apollo.Mut
 export type DeleteArticleFromReservationMutationHookResult = ReturnType<typeof useDeleteArticleFromReservationMutation>;
 export type DeleteArticleFromReservationMutationResult = Apollo.MutationResult<DeleteArticleFromReservationMutation>;
 export type DeleteArticleFromReservationMutationOptions = Apollo.BaseMutationOptions<DeleteArticleFromReservationMutation, DeleteArticleFromReservationMutationVariables>;
-<<<<<<< HEAD
-export const EditArticleDocument = gql`
-    mutation EditArticle($data: EditArticleInput!, $article: String!) {
-  editArticle(data: $data, article: $article) {
-    id
-    availability
-  }
-}
-    `;
-export type EditArticleMutationFn = Apollo.MutationFunction<EditArticleMutation, EditArticleMutationVariables>;
-
-/**
- * __useEditArticleMutation__
- *
- * To run a mutation, you first call `useEditArticleMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useEditArticleMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [editArticleMutation, { data, loading, error }] = useEditArticleMutation({
- *   variables: {
- *      data: // value for 'data'
- *      article: // value for 'article'
- *   },
- * });
- */
-export function useEditArticleMutation(baseOptions?: Apollo.MutationHookOptions<EditArticleMutation, EditArticleMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<EditArticleMutation, EditArticleMutationVariables>(EditArticleDocument, options);
-      }
-export type EditArticleMutationHookResult = ReturnType<typeof useEditArticleMutation>;
-export type EditArticleMutationResult = Apollo.MutationResult<EditArticleMutation>;
-export type EditArticleMutationOptions = Apollo.BaseMutationOptions<EditArticleMutation, EditArticleMutationVariables>;
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
-=======
->>>>>>> 2d5d748 (fix article entity and type bugs)
 export const HandleReservationDocument = gql`
     mutation HandleReservation($data: NewReservationInput!) {
   handleReservation(data: $data) {

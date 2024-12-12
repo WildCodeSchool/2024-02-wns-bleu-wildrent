@@ -83,8 +83,6 @@ export const DELETE_ARTICLE = gql`
   }
 `;
 
-<<<<<<< HEAD
-=======
 export const DELETE_ARTICLE_FROM_RESERVATION = gql`
   mutation DeleteArticleFromReservation($id: String!) {
     deleteArticleFromReservation(articleId: $id) {
@@ -93,18 +91,6 @@ export const DELETE_ARTICLE_FROM_RESERVATION = gql`
   }
 `;
 
-<<<<<<< HEAD
-export const EDIT_ARTICLE = gql`
-  mutation EditArticle($data: EditArticleInput!, $article: String!) {
-    editArticle(data: $data, article: $article) {
-      id
-      availability
-    }
-  }
-`;
->>>>>>> a8da192 (56/delete-article: delete article + reservation if no remaining article)
-=======
->>>>>>> 2d5d748 (fix article entity and type bugs)
 export const HANDLE_RESERVATION = gql`
   mutation HandleReservation($data: NewReservationInput!) {
     handleReservation(data: $data) {
