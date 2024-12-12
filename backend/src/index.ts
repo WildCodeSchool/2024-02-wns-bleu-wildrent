@@ -27,19 +27,16 @@ const start = async () => {
     ],
     authChecker: ({ context }: { context: Context }, roles) => {
       console.log("roles for this query/mutation ", roles);
-      // Check user
       if (!context.email) {
-        // No user, restrict access
         return false;
       }
 
-      // Check '@Authorized()'
+
       if (roles.length === 0) {
-        // Only authentication required
         return true;
       }
 
-      // Check '@Authorized(...)' roles inclues the role of user
+     
       if (roles.includes(context.role)) {
         return true;
       } else {

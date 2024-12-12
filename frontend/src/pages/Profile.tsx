@@ -9,7 +9,7 @@ const { TabPane } = Tabs;
 const Profile = () => {
   const userInfo = useContext(UserContext);
   const { data, loading, error } = useGetReservationsByUserIdQuery()
-
+console.log(data, 'data')
   if (loading) {
     return <p>Loading</p>;
   }

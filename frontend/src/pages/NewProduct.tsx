@@ -6,10 +6,55 @@ import {
 import { Button, Form, Input, Card, Typography } from "antd";
 import ListProductsTable from "../components/ListProductsTable";
 import { NewProductFormValues } from "../interface/types";
+import { useState } from "react";
+import axios from "axios";
 
 const { Title } = Typography;
 
 const NewProduct = () => {
+  const [file, setFile] = useState<File | null>(null); // Changed to File | null
+  const [imageURL, setImageURL] = useState<string | null>(null); // Changed to string | null
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // Handle file selection
+  const handleFileChange = (e: any) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      setFile(selectedFile);
+
+      // Create a preview URL for the file
+      const fileUrl = URL.createObjectURL(selectedFile);
+      setImageURL(fileUrl);
+    }
+  };
+
+  // Handle file upload to the server
+  const handleUpload = async (event: any) => {
+    event.preventDefault();
+    if (!file) {
+      alert("Sélectionnez un fichier à téléverser");
+      return;
+    }
+
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await axios.post("/img", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      setImageURL(response.data.filename);
+      setLoading(false);
+    } catch (error) {
+      console.error("Erreur lors du téléversement de l'image", error);
+      setLoading(false);
+    }
+  };
+
   const [createNewProduct] = useCreateNewProductMutation({
     onCompleted(data) {
       console.log("mutation completed data", data);
@@ -25,14 +70,18 @@ const NewProduct = () => {
   const onFinish = async (values: NewProductFormValues) => {
     const formJson = {
       ...values,
-      price: parseInt(values.price),
+      price: parseInt(values.price, 10),
+      imgUrl: imageURL || "", // Include the image URL
     };
 
-    await createNewProduct({
-      variables: { data: formJson },
-    });
-
-    form.resetFields();
+    try {
+      await createNewProduct({
+        variables: { data: formJson },
+      });
+      form.resetFields();
+    } catch (error) {
+      console.error("Erreur lors de la création du produit", error);
+    }
   };
 
   return (
@@ -59,7 +108,28 @@ const NewProduct = () => {
             </Form.Item>
 
             <Form.Item name="imgUrl">
-              <Input placeholder="URL de l'image" className="rounded-md" />
+              <div>
+                <input
+                  className="rounded-md"
+                  type="file"
+                  onChange={handleFileChange}
+                />
+                <button
+                  onClick={handleUpload}
+                  className="upload-btn"
+                  disabled={loading}
+                >
+                  {loading ? "Téléversement..." : "Téléverser l'image"}
+                </button>
+
+                {imageURL ? (
+                  <>
+                    <br />
+                    <img width={500} alt="uploadedImg" src={imageURL} />
+                    <br />
+                  </>
+                ) : null}
+              </div>
             </Form.Item>
 
             <Form.Item
@@ -94,6 +164,7 @@ const NewProduct = () => {
           </Form>
         </Card>
       </div>
+
       <ListProductsTable />
     </>
   );

@@ -27,14 +27,21 @@ export type Article = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  cancelReservation: Reservation;
   createNewArticle: Article;
   createNewProduct: Product;
   createUser: Scalars['String']['output'];
   deleteArticle: Scalars['String']['output'];
+  deleteArticleFromReservation: Article;
   deleteProduct: Scalars['String']['output'];
   editProduct: Product;
   handleReservation: Reservation;
   updateReservationStatus: Reservation;
+};
+
+
+export type MutationCancelReservationArgs = {
+  reservationId: Scalars['String']['input'];
 };
 
 
@@ -58,6 +65,11 @@ export type MutationCreateUserArgs = {
 
 export type MutationDeleteArticleArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationDeleteArticleFromReservationArgs = {
+  articleId: Scalars['String']['input'];
 };
 
 
@@ -245,12 +257,26 @@ export type UpdateReservationStatusMutationVariables = Exact<{
 
 export type UpdateReservationStatusMutation = { __typename?: 'Mutation', updateReservationStatus: { __typename?: 'Reservation', id: number, status: string, startDate: any, endDate: any } };
 
+export type CancelReservationMutationVariables = Exact<{
+  reservationId: Scalars['String']['input'];
+}>;
+
+
+export type CancelReservationMutation = { __typename?: 'Mutation', cancelReservation: { __typename?: 'Reservation', id: number, status: string } };
+
 export type DeleteArticleMutationVariables = Exact<{
   deleteArticleId: Scalars['String']['input'];
 }>;
 
 
 export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: string };
+
+export type DeleteArticleFromReservationMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteArticleFromReservationMutation = { __typename?: 'Mutation', deleteArticleFromReservation: { __typename?: 'Article', id: number } };
 
 export type HandleReservationMutationVariables = Exact<{
   data: NewReservationInput;
@@ -310,7 +336,7 @@ export type SearchAndFilterProductsQuery = { __typename?: 'Query', searchAndFilt
 export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string, price: number } }> } } };
+export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
 
 export type GetReservationsByArticleIdQueryVariables = Exact<{
   articleId: Scalars['String']['input'];
@@ -538,6 +564,40 @@ export function useUpdateReservationStatusMutation(baseOptions?: Apollo.Mutation
 export type UpdateReservationStatusMutationHookResult = ReturnType<typeof useUpdateReservationStatusMutation>;
 export type UpdateReservationStatusMutationResult = Apollo.MutationResult<UpdateReservationStatusMutation>;
 export type UpdateReservationStatusMutationOptions = Apollo.BaseMutationOptions<UpdateReservationStatusMutation, UpdateReservationStatusMutationVariables>;
+export const CancelReservationDocument = gql`
+    mutation CancelReservation($reservationId: String!) {
+  cancelReservation(reservationId: $reservationId) {
+    id
+    status
+  }
+}
+    `;
+export type CancelReservationMutationFn = Apollo.MutationFunction<CancelReservationMutation, CancelReservationMutationVariables>;
+
+/**
+ * __useCancelReservationMutation__
+ *
+ * To run a mutation, you first call `useCancelReservationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCancelReservationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cancelReservationMutation, { data, loading, error }] = useCancelReservationMutation({
+ *   variables: {
+ *      reservationId: // value for 'reservationId'
+ *   },
+ * });
+ */
+export function useCancelReservationMutation(baseOptions?: Apollo.MutationHookOptions<CancelReservationMutation, CancelReservationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CancelReservationMutation, CancelReservationMutationVariables>(CancelReservationDocument, options);
+      }
+export type CancelReservationMutationHookResult = ReturnType<typeof useCancelReservationMutation>;
+export type CancelReservationMutationResult = Apollo.MutationResult<CancelReservationMutation>;
+export type CancelReservationMutationOptions = Apollo.BaseMutationOptions<CancelReservationMutation, CancelReservationMutationVariables>;
 export const DeleteArticleDocument = gql`
     mutation DeleteArticle($deleteArticleId: String!) {
   deleteArticle(id: $deleteArticleId)
@@ -569,6 +629,39 @@ export function useDeleteArticleMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticleMutation>;
 export type DeleteArticleMutationResult = Apollo.MutationResult<DeleteArticleMutation>;
 export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<DeleteArticleMutation, DeleteArticleMutationVariables>;
+export const DeleteArticleFromReservationDocument = gql`
+    mutation DeleteArticleFromReservation($id: String!) {
+  deleteArticleFromReservation(articleId: $id) {
+    id
+  }
+}
+    `;
+export type DeleteArticleFromReservationMutationFn = Apollo.MutationFunction<DeleteArticleFromReservationMutation, DeleteArticleFromReservationMutationVariables>;
+
+/**
+ * __useDeleteArticleFromReservationMutation__
+ *
+ * To run a mutation, you first call `useDeleteArticleFromReservationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteArticleFromReservationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteArticleFromReservationMutation, { data, loading, error }] = useDeleteArticleFromReservationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteArticleFromReservationMutation(baseOptions?: Apollo.MutationHookOptions<DeleteArticleFromReservationMutation, DeleteArticleFromReservationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteArticleFromReservationMutation, DeleteArticleFromReservationMutationVariables>(DeleteArticleFromReservationDocument, options);
+      }
+export type DeleteArticleFromReservationMutationHookResult = ReturnType<typeof useDeleteArticleFromReservationMutation>;
+export type DeleteArticleFromReservationMutationResult = Apollo.MutationResult<DeleteArticleFromReservationMutation>;
+export type DeleteArticleFromReservationMutationOptions = Apollo.BaseMutationOptions<DeleteArticleFromReservationMutation, DeleteArticleFromReservationMutationVariables>;
 export const HandleReservationDocument = gql`
     mutation HandleReservation($data: NewReservationInput!) {
   handleReservation(data: $data) {
@@ -967,6 +1060,7 @@ export const GetCurrentReservationByUserIdDocument = gql`
         product {
           name
           price
+          imgUrl
         }
       }
     }

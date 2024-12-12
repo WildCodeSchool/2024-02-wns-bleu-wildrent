@@ -12,10 +12,11 @@ import {
 import { Input, Button, message, Drawer } from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
-import { Role, useLogoutLazyQuery } from "../generated/graphql-types";
+import { useLogoutLazyQuery } from "../generated/graphql-types";
 import Logo from "../assets/logo.png";
 import RangePicker from "./RangePicker";
 import { Header } from "antd/es/layout/layout";
+import { Role } from "../interface/types";
 
 const { Search } = Input;
 
