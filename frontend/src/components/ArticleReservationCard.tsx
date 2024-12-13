@@ -14,7 +14,7 @@ export const ArticleReservationCard = ({
   return (
     <>
       {reservationData.reservation.status === "pending" ? (
-        <Card title={`Détails de votre réservation`} style={{ width: 500 }}>
+        <Card title={"Détails de votre réservation"} style={{ width: 500 }}>
           {articles.map((article) => (
             <Card style={{ margin: 20 }} key={article.product?.id}>
               <div

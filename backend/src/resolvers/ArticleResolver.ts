@@ -24,7 +24,8 @@ class NewArticleInput {
 class ArticleResolver {
   @Query(() => [Article])
   async getAllArticles() {
-    const article = await Article.find({ relations: { product: true, reservations: true } })
+    const article = await Article.find({ relations: { product: true, reservations: true }, order: { product: {name: "ASC" }} 
+    })
     return article
   }
 

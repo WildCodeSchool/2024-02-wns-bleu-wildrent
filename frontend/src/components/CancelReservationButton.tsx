@@ -1,13 +1,13 @@
 import { useMutation } from "@apollo/client";
 import { Button, message, Popconfirm } from "antd";
 import { CANCEL_RESERVATION } from "../graphql/mutations";
-import { Reservation } from "../interface/types";
+import { ReservationData } from "../interface/types";
 import {
   GetCurrentReservationByUserIdDocument,
   GetReservationsByUserIdDocument,
 } from "../generated/graphql-types";
 
-function CancelReservationButton({ reservation }: Reservation) {
+function CancelReservationButton({ reservation }: ReservationData) {
   const [cancelReservation] = useMutation(CANCEL_RESERVATION, {
     onCompleted: () => {
       message.success("La réservation a bien été annulée.");
