@@ -8,7 +8,12 @@ function EditProductRow({ product }: EditProductRowProps) {
 
   return (
     <>
-      <Button onClick={() => setIsModalOpen(true)}>Modifier</Button>
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        className="bg-blue-500 text-white hover:bg-blue-600 focus:outline-none"
+      >
+        Modifier
+      </Button>
       <EditProductModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
