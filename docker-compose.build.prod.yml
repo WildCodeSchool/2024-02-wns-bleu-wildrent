@@ -1,6 +1,6 @@
 services:
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile.prod
     env_file:
@@ -14,17 +14,17 @@ services:
       db:
         condition: service_healthy
   frontend:
-      build: 
-        context: ./frontend
-        dockerfile: Dockerfile.prod
-      depends_on:
-        backend:
-          condition: service_healthy
-      healthcheck:
-        test: "curl --fail --request GET --url 'http://localhost:5173' || exit 1"
-        interval: 1s
-        timeout: 2s
-        retries: 100
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --request GET --url 'http://localhost:5173' || exit 1"
+      interval: 1s
+      timeout: 2s
+      retries: 100
   db:
     image: postgres:16.4
     healthcheck:
@@ -45,5 +45,16 @@ services:
         condition: service_healthy
       frontend:
         condition: service_healthy
+      img:
+        condition: service_healthy
     ports:
       - 7000:80
+  img:
+    build:
+      context: ./img
+      dockerfile: Dockerfile.prod
+    healthcheck:
+      test: "curl --fail --request GET --url 'http://localhost:4000' || exit 1"
+      interval: 1s
+      timeout: 2s
+      retries: 100

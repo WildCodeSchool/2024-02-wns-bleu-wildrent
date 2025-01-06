@@ -12,48 +12,8 @@ import axios from "axios";
 const { Title } = Typography;
 
 const NewProduct = () => {
-  const [file, setFile] = useState<File | null>(null); // Changed to File | null
-  const [imageURL, setImageURL] = useState<string | null>(null); // Changed to string | null
-  const [loading, setLoading] = useState<boolean>(false);
-
-  // Handle file selection
-  const handleFileChange = (e: any) => {
-    if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
-      setFile(selectedFile);
-
-      // Create a preview URL for the file
-      const fileUrl = URL.createObjectURL(selectedFile);
-      setImageURL(fileUrl);
-    }
-  };
-
-  // Handle file upload to the server
-  const handleUpload = async (event: any) => {
-    event.preventDefault();
-    if (!file) {
-      alert("Sélectionnez un fichier à téléverser");
-      return;
-    }
-
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const response = await axios.post("/img", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      setImageURL(response.data.filename);
-      setLoading(false);
-    } catch (error) {
-      console.error("Erreur lors du téléversement de l'image", error);
-      setLoading(false);
-    }
-  };
+  const [file, setFile] = useState<File | null>(null);
+  const [imageURL, setImageURL] = useState<string | null>(null);
 
   const [createNewProduct] = useCreateNewProductMutation({
     onCompleted(data) {
@@ -71,7 +31,7 @@ const NewProduct = () => {
     const formJson = {
       ...values,
       price: parseInt(values.price, 10),
-      imgUrl: imageURL || "", // Include the image URL
+      imgUrl: imageURL,
     };
 
     try {
@@ -110,22 +70,38 @@ const NewProduct = () => {
             <Form.Item name="imgUrl">
               <div>
                 <input
-                  className="rounded-md"
                   type="file"
-                  onChange={handleFileChange}
+                  onChange={(e) => {
+                    if (e.target.files) {
+                      setFile(e.target.files[0]);
+                    }
+                  }}
                 />
                 <button
-                  onClick={handleUpload}
-                  className="upload-btn"
-                  disabled={loading}
+                  onClick={async (event) => {
+                    event.preventDefault();
+                    if (file) {
+                      const url = "/img";
+                      const formData = new FormData();
+                      formData.append("file", file, file.name);
+                      try {
+                        const response = await axios.post(url, formData);
+                        console.log("response", response);
+                        setImageURL(response.data.filename);
+                      } catch (err) {
+                        console.log("error", err);
+                      }
+                    } else {
+                      alert("select a file to upload");
+                    }
+                  }}
                 >
-                  {loading ? "Téléversement..." : "Téléverser l'image"}
+                  Upload Image
                 </button>
-
                 {imageURL ? (
                   <>
                     <br />
-                    <img width={500} alt="uploadedImg" src={imageURL} />
+                    <img width={"500"} alt="uploadedImg" src={imageURL} />
                     <br />
                   </>
                 ) : null}
