@@ -7,16 +7,25 @@ import {
   GetReservationsByUserIdDocument,
 } from "../generated/graphql-types";
 
-function ValidateReservationButton({ reservation }: Reservation) {
+type ValidateReservationButtonProps = {
+  reservation: Reservation;
+};
+
+const ValidateReservationButton = ({
+  reservation,
+}: ValidateReservationButtonProps) => {
   const [updateReservationStatus] = useMutation(UPDATE_RESERVATION_STATUS, {
     onCompleted: () => {
-      message.success("La réservation a bien été validée.")
+      message.success("La réservation a bien été validée.");
     },
     onError: () => {
       message.error("Une erreur est survenue lors de la validation.");
     },
-    refetchQueries: [GetReservationsByUserIdDocument, GetCurrentReservationByUserIdDocument]
-  })
+    refetchQueries: [
+      GetReservationsByUserIdDocument,
+      GetCurrentReservationByUserIdDocument,
+    ],
+  });
 
   return (
     <>
@@ -28,16 +37,15 @@ function ValidateReservationButton({ reservation }: Reservation) {
         onConfirm={() =>
           updateReservationStatus({
             variables: {
-              reservationId: reservation.id.toString()            },
+              reservationId: reservation.id.toString(),
+            },
           })
         }
       >
-        <Button type="primary" style={{ marginTop: "10px" }}>
-          Valider
-        </Button>
+        <Button type="primary">Valider la réservation</Button>
       </Popconfirm>
     </>
   );
-}
+};
 
 export default ValidateReservationButton;

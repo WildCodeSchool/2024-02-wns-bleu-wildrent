@@ -14,7 +14,11 @@ module.exports = {
       "warn",
       { allowConstantExport: true },
     ],
-    quotes: ["error", "double"],
     "@typescript-eslint/quotes": ["error", "double"],
+    eqeqeq: ["error", "always"],
+    indent: ["error", 2],
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "no-trailing-spaces": "error",
   },
 };

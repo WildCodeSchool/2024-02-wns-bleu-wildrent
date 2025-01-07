@@ -55,6 +55,7 @@ export default function RangePicker({
             placeholder={["début de la location", "fin de la location"]}
             onChange={handleChange}
             value={selectedDates} 
+            disabledDate={(current) => current && current.valueOf() < Date.now()}
         />
     );
 }

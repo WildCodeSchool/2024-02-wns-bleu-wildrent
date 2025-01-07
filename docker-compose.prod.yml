@@ -48,9 +48,8 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./logs:/var/log/nginx
   img:
-    build:
-      context: ./img
-      dockerfile: Dockerfile.prod
+    build: ./img
+    dockerfile: Dockerfile.prod
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:4000' || exit 1"
       interval: 1s

@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import SearchPage from "./pages/search/[searchKeywords]";
 import Profile from "./pages/Profile";
 import { Cart } from "./pages/Cart";
+import AdminRouteProtection from "./components/AdminRouteProtection";
 
 const App = () => {
   return (
@@ -16,11 +17,18 @@ const App = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="register" element={<Register />} />
-        <Route path="admin" element={<Admin />} />
+        <Route
+          path="admin"
+          element={
+            <AdminRouteProtection>
+              <Admin />
+            </AdminRouteProtection>
+          }
+        />
         <Route path="profile" element={<Profile />} />
         <Route path="login" element={<Login />} />
         <Route path="/product/:productId" element={<ProductDescription />} />
-        <Route path="search" element={<SearchPage />} /> 
+        <Route path="search" element={<SearchPage />} />
         <Route path="/search/:keyword" element={<SearchPage />} />
         <Route path="register" element={<Register />} />
         <Route path="cart" element={<Cart />} />
