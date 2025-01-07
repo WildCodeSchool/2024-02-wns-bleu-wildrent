@@ -49,7 +49,7 @@ services:
         condition: service_healthy
     ports:
       - 7000:80
-    img:
+  img:
     build: ./img
     healthcheck:
       test: "curl --fail --request GET --url 'http://localhost:4000' || exit 1"
