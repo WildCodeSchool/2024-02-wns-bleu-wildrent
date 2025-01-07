@@ -29,7 +29,7 @@ function EditProductForm({ product, setIsModalOpen }: EditProductFormProps) {
 
     await editProduct({
       variables: {
-        productId: product.id.toString(),
+        productId: product.id,
         data: formJson,
       },
     });

@@ -22,8 +22,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "jsx": "react"
-  },
+    "jsx": "react"  },
   "exclude": ["node_modules"],
   "include": ["./src/**/*.ts", "seed.ts"]
 }

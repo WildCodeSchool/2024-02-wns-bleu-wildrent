@@ -49,7 +49,7 @@ export default function ReservationButton({
         data: {
           startDate,
           endDate,
-          articleId: firstAvailableArticleId.toString(),
+          articleId: firstAvailableArticleId,
         },
       },
     });

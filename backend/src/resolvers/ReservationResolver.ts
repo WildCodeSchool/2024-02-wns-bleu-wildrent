@@ -9,6 +9,7 @@ import {
   ObjectType,
   Query,
   Resolver,
+  ID
 } from "type-graphql";
 import { calculateTotal } from "../utils/reservation/calculateTotal";
 import { Article } from "../entities/article";
@@ -26,17 +27,17 @@ export class ReservationWithTotal {
 @InputType()
 class NewReservationInput {
   @Field()
-  startDate: Date;
+  startDate: Date
 
   @Field()
-  endDate: Date;
+  endDate: Date
 
-  @Field(() => String)
-  articleId: number;
+  @Field(() => ID)
+  articleId: string
 }
 
 @Resolver(Reservation)
-class ReservationResolver {
+export class ReservationResolver {
   @Query(() => [Reservation])
   async getAllReservations() {
     const reservations = await Reservation.find({
@@ -46,18 +47,18 @@ class ReservationResolver {
   }
 
   @Query(() => Reservation)
-  async getOneReservationById(@Arg("reservationId") reservationId: string) {
+  async getOneReservationById(@Arg("reservationId", () => ID) reservationId: string) {
     const reservation = await Reservation.findOne({
-      where: { id: Number.parseInt(reservationId) },
+      where: { id: reservationId },
       relations: ["user", "articles", "articles.product"],
     });
     return reservation;
   }
 
   @Query(() => [Reservation])
-  async getReservationsByArticleId(@Arg("articleId") articleId: string) {
+  async getReservationsByArticleId(@Arg("articleId", () => ID) articleId: string) {
     const reservations = await Reservation.find({
-      where: { articles: { id: Number(articleId) } },
+      where: { articles: { id: articleId } },
         relations: ["user", "articles", "articles.product"],
     });
     return reservations
@@ -124,7 +125,7 @@ class ReservationResolver {
     // If no pending reservation exists, create a new reservation
     if (!reservation) {
       const article = await Article.findOne({
-        where: { id: Number(reservationData.articleId) },
+        where: { id: reservationData.articleId },
       });
       if (!article) {
         throw new Error("Article not found");
@@ -141,7 +142,7 @@ class ReservationResolver {
     } else {
       // If a pending reservation exists, add the article to the reservation
       const articleToAdd = await Article.findOne({
-        where: { id: Number(reservationData.articleId) },
+        where: { id: reservationData.articleId },
       });
       if (!articleToAdd) {
         throw new Error("Article not found");
@@ -161,9 +162,9 @@ class ReservationResolver {
   }
 
   @Mutation(() => Reservation)
-  async updateReservationStatus(@Arg("reservationId") reservationId: string) {
+  async updateReservationStatus(@Arg("reservationId", () => ID) reservationId: string ) {
     const reservation = await Reservation.findOne({
-      where: { id: Number.parseInt(reservationId) },
+      where: { id: reservationId},
     });
 
     if (!reservation) {
@@ -176,9 +177,9 @@ class ReservationResolver {
   }
 
   @Mutation(() => Reservation)
-  async cancelReservation(@Arg("reservationId") reservationId: string) {
+  async cancelReservation(@Arg("reservationId", () => ID) reservationId: string) {
     const reservation = await Reservation.findOne({
-      where: { id: Number.parseInt(reservationId) },
+      where: { id: reservationId},
     });
 
     if (!reservation) {

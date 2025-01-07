@@ -9,6 +9,7 @@ import {
   Mutation,
   Query,
   Resolver,
+  ID
 } from "type-graphql";
 import { Role } from "../entities/user";
 
@@ -64,9 +65,9 @@ class ProductResolver {
   }
 
   @Query(() => Product)
-  async getOneProductById(@Arg("productId") productId: string) {
+  async getOneProductById(@Arg("productId", () => ID) productId: string) {
     const product = await Product.findOne({
-      where: { id: Number.parseInt(productId) },
+      where: { id: productId },
       relations: ["articles"],
     });
     return product;
@@ -133,11 +134,11 @@ class ProductResolver {
   @Authorized(Role.Admin)
   @Mutation(() => Product)
   async editProduct(
-    @Arg("productId") productId: string,
+    @Arg("productId", () => ID) productId: string,
     @Arg("data") newProductData: NewProductInput
   ) {
     const product = await Product.findOneByOrFail({
-      id: Number.parseInt(productId),
+      id: productId,
     });
 
     product.name = newProductData.name;
@@ -154,11 +155,11 @@ class ProductResolver {
   // un produit est supprimé avec les articles qui lui sont associés
   @Authorized(Role.Admin)
   @Mutation(() => String)
-  async deleteProduct(@Arg("id") idToDelete: string) {
+  async deleteProduct(@Arg("id", () => ID) idToDelete: string) {
     const articlesToDelete = await Article.find({
-      where: { product: { id: Number(idToDelete) } },
+      where: { product: { id: idToDelete} },
     });
-    articlesToDelete.map((article) => Article.delete(article.id));
+    articlesToDelete.forEach((article) => Article.delete(article.id));
     await Product.delete(idToDelete);
     return `Product deleted successfully`;
   }

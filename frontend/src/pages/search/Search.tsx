@@ -10,8 +10,8 @@ function Search({ keyword }: { keyword: string }) {
   const dateRangeInput = startDate && endDate ? { startDate, endDate } : null
 
 
-    const { data, loading, error } = useSearchAndFilterProductsQuery({
-    variables: { 
+  const { data, loading, error } = useSearchAndFilterProductsQuery({
+    variables: {
       keyword: keyword || null,
       dateRangeInput: dateRangeInput
     },

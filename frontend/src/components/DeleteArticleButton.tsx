@@ -20,7 +20,7 @@ function DeleteProductButton({ articleId }: { articleId: string }) {
       cancelText="Non"
       onConfirm={() =>
         deleteArticle({
-          variables: { deleteArticleId: articleId.toString() },
+          variables: { deleteArticleId: articleId },
           refetchQueries: [GetAllArticlesDocument],
         })
       }

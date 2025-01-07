@@ -1,5 +1,5 @@
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   description: string;
   imgUrl: string;
@@ -7,7 +7,7 @@ export interface Product {
 }
 
 export interface ProductCard {
-  id?: number;
+  id?: string;
   name: string;
   description?: string;
   imgUrl?: string;
@@ -59,13 +59,13 @@ export interface NewProductFormValues {
 }
 
 export type Article = {
-  id: number;
+  id: string;
   product?: ProductCard;
   reservations?: Reservation[] | null;
 };
 
 export type Reservation = {
-  id: number;
+  id: string;
   startDate: string;
   endDate: string;
   articles: Article[];
