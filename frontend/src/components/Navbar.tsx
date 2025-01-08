@@ -9,7 +9,7 @@ import {
   MenuOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { Input, Button, message, Drawer } from "antd";
+import { Input, Button, message, Drawer, DatePicker } from "antd";
 import { Link } from "react-router-dom";
 import { UserContext } from "../components/Layout";
 import { useLogoutLazyQuery } from "../generated/graphql-types";
@@ -26,6 +26,9 @@ function Navbar() {
   const userInfo = useContext(UserContext);
   const [visible, setVisible] = useState(false);
 
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
+
   const categories = [
     { name: "Randonnée", path: "/category/randonnee" },
     { name: "Natation", path: "/category/natation" },
@@ -37,6 +40,12 @@ function Navbar() {
       navigate(`/search/${value}`);
     } else {
       navigate("/search");
+    }
+  };
+
+  const handleDateChange = () => {
+    if (startDate && endDate) {
+      navigate(`/search?start=${startDate}&end=${endDate}`);
     }
   };
 
@@ -159,8 +168,23 @@ function Navbar() {
               </Button>
             }
           />
-          <div className="w-full h-auto w-auto">
-            <RangePicker onSearch={onSearch} />
+          <div className="w-full h-auto">
+            <DatePicker
+              onChange={(_, dateString) => {
+                setStartDate((dateString as string) || null);
+                handleDateChange();
+              }}
+              placeholder="Date de début"
+              style={{ width: "100%", marginBottom: "0.5rem" }}
+            />
+            <DatePicker
+              onChange={(_, dateString) => {
+                setEndDate((dateString as string) || null);
+                handleDateChange();
+              }}
+              placeholder="Date de fin"
+              style={{ width: "100%" }}
+            />
           </div>
           {userInfo.isLoggedIn && (
             <p className="text-blue-900 font-medium text-lg">
