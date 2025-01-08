@@ -15,7 +15,7 @@ function DeleteArticleReservationButton({
   articleId,
 }: {
   reservationData: ReservationData;
-  articleId: number;
+  articleId: string;
 }) {
   const articlesNumber = reservationData.reservation.articles.length;
   useEffect(()=> {
@@ -28,13 +28,13 @@ function DeleteArticleReservationButton({
     {
       onCompleted: () => {
         const remainingArticles = reservationData.reservation.articles.filter(
-          (article) => article.id !== articleId
+          (article) => Number(article.id) !== Number(articleId)
         ).length;
 
         if (remainingArticles === 0) {
           cancelReservation({
             variables: {
-              reservationId: reservationData.reservation.id.toString(),
+              reservationId: reservationData.reservation.id,
             },
             refetchQueries: [
               GetReservationsByUserIdDocument,

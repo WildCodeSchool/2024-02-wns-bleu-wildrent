@@ -1,4 +1,4 @@
-import { Authorized, Field, ObjectType, registerEnumType } from "type-graphql";
+import { Authorized, Field, ObjectType, registerEnumType, ID } from "type-graphql";
 import {
   BaseEntity,
   Column,
@@ -22,8 +22,9 @@ registerEnumType(Role, {
 @ObjectType() // TypeGraphQL
 @Entity() // TypeORM
 export class User extends BaseEntity {
+  @Field(() => ID)
   @PrimaryGeneratedColumn()
-  id: number;
+  id: string;
 
   @Field()
   @Column({ unique: true })

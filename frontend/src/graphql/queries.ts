@@ -31,7 +31,7 @@ export const GET_ALL_ARTICLES = gql`
 `;
 
 export const GET_PRODUCT_BY_ID = gql`
-  query GetOneProductById($productId: String!) {
+  query GetOneProductById($productId: ID!) {
     getOneProductById(productId: $productId) {
       id
       name
@@ -123,7 +123,7 @@ export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
 
 
 export const GET_RESERVATIONS_BY_ARTICLE_ID = gql`
-query GetReservationsByArticleId($articleId: String!) {
+query GetReservationsByArticleId($articleId: ID!) {
   getReservationsByArticleId(articleId: $articleId) {
     id
     articles {

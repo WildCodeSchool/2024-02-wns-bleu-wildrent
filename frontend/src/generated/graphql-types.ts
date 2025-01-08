@@ -20,7 +20,7 @@ export type Scalars = {
 
 export type Article = {
   __typename?: 'Article';
-  id: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
   product: Product;
   reservations?: Maybe<Array<Reservation>>;
 };
@@ -41,7 +41,7 @@ export type Mutation = {
 
 
 export type MutationCancelReservationArgs = {
-  reservationId: Scalars['String']['input'];
+  reservationId: Scalars['ID']['input'];
 };
 
 
@@ -64,23 +64,23 @@ export type MutationCreateUserArgs = {
 
 
 export type MutationDeleteArticleArgs = {
-  id: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationDeleteArticleFromReservationArgs = {
-  articleId: Scalars['String']['input'];
+  articleId: Scalars['ID']['input'];
 };
 
 
 export type MutationDeleteProductArgs = {
-  id: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationEditProductArgs = {
   data: NewProductInput;
-  productId: Scalars['String']['input'];
+  productId: Scalars['ID']['input'];
 };
 
 
@@ -90,12 +90,12 @@ export type MutationHandleReservationArgs = {
 
 
 export type MutationUpdateReservationStatusArgs = {
-  reservationId: Scalars['String']['input'];
+  reservationId: Scalars['ID']['input'];
 };
 
 export type NewArticleInput = {
   availability: Scalars['Boolean']['input'];
-  productId: Scalars['String']['input'];
+  productId: Scalars['ID']['input'];
 };
 
 export type NewProductInput = {
@@ -106,7 +106,7 @@ export type NewProductInput = {
 };
 
 export type NewReservationInput = {
-  articleId: Scalars['String']['input'];
+  articleId: Scalars['ID']['input'];
   endDate: Scalars['DateTimeISO']['input'];
   startDate: Scalars['DateTimeISO']['input'];
 };
@@ -115,7 +115,7 @@ export type Product = {
   __typename?: 'Product';
   articles?: Maybe<Array<Article>>;
   description: Scalars['String']['output'];
-  id: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
   imgUrl: Scalars['String']['output'];
   name: Scalars['String']['output'];
   price: Scalars['Float']['output'];
@@ -144,17 +144,17 @@ export type Query = {
 
 
 export type QueryGetOneProductByIdArgs = {
-  productId: Scalars['String']['input'];
+  productId: Scalars['ID']['input'];
 };
 
 
 export type QueryGetOneReservationByIdArgs = {
-  reservationId: Scalars['String']['input'];
+  reservationId: Scalars['ID']['input'];
 };
 
 
 export type QueryGetReservationsByArticleIdArgs = {
-  articleId: Scalars['String']['input'];
+  articleId: Scalars['ID']['input'];
 };
 
 
@@ -174,7 +174,7 @@ export type Reservation = {
   articles: Array<Article>;
   createdAt: Scalars['DateTimeISO']['output'];
   endDate: Scalars['DateTimeISO']['output'];
-  id: Scalars['Float']['output'];
+  id: Scalars['ID']['output'];
   startDate: Scalars['DateTimeISO']['output'];
   status: Scalars['String']['output'];
   user: User;
@@ -197,6 +197,7 @@ export type User = {
   email: Scalars['String']['output'];
   firstname: Scalars['String']['output'];
   hashedPassword: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   lastname: Scalars['String']['output'];
   reservations?: Maybe<Array<Reservation>>;
   role: Role;
@@ -216,14 +217,14 @@ export type CreateNewProductMutationVariables = Exact<{
 }>;
 
 
-export type CreateNewProductMutation = { __typename?: 'Mutation', createNewProduct: { __typename?: 'Product', id: number, name: string, imgUrl: string, price: number, description: string } };
+export type CreateNewProductMutation = { __typename?: 'Mutation', createNewProduct: { __typename?: 'Product', id: string, name: string, imgUrl: string, price: number, description: string } };
 
 export type CreateNewArticleMutationVariables = Exact<{
   data: NewArticleInput;
 }>;
 
 
-export type CreateNewArticleMutation = { __typename?: 'Mutation', createNewArticle: { __typename?: 'Article', id: number, product: { __typename?: 'Product', id: number, name: string } } };
+export type CreateNewArticleMutation = { __typename?: 'Mutation', createNewArticle: { __typename?: 'Article', id: string, product: { __typename?: 'Product', id: string, name: string } } };
 
 export type CreateNewUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -236,7 +237,7 @@ export type CreateNewUserMutationVariables = Exact<{
 export type CreateNewUserMutation = { __typename?: 'Mutation', createUser: string };
 
 export type DeleteProductMutationVariables = Exact<{
-  deleteProductId: Scalars['String']['input'];
+  deleteProductId: Scalars['ID']['input'];
 }>;
 
 
@@ -244,63 +245,63 @@ export type DeleteProductMutation = { __typename?: 'Mutation', deleteProduct: st
 
 export type EditProductMutationVariables = Exact<{
   data: NewProductInput;
-  productId: Scalars['String']['input'];
+  productId: Scalars['ID']['input'];
 }>;
 
 
-export type EditProductMutation = { __typename?: 'Mutation', editProduct: { __typename?: 'Product', price: number, name: string, imgUrl: string, id: number, description: string } };
+export type EditProductMutation = { __typename?: 'Mutation', editProduct: { __typename?: 'Product', price: number, name: string, imgUrl: string, id: string, description: string } };
 
 export type UpdateReservationStatusMutationVariables = Exact<{
-  reservationId: Scalars['String']['input'];
+  reservationId: Scalars['ID']['input'];
 }>;
 
 
-export type UpdateReservationStatusMutation = { __typename?: 'Mutation', updateReservationStatus: { __typename?: 'Reservation', id: number, status: string, startDate: any, endDate: any } };
+export type UpdateReservationStatusMutation = { __typename?: 'Mutation', updateReservationStatus: { __typename?: 'Reservation', id: string, status: string, startDate: any, endDate: any } };
 
 export type CancelReservationMutationVariables = Exact<{
-  reservationId: Scalars['String']['input'];
+  reservationId: Scalars['ID']['input'];
 }>;
 
 
-export type CancelReservationMutation = { __typename?: 'Mutation', cancelReservation: { __typename?: 'Reservation', id: number, status: string } };
+export type CancelReservationMutation = { __typename?: 'Mutation', cancelReservation: { __typename?: 'Reservation', id: string, status: string } };
 
 export type DeleteArticleMutationVariables = Exact<{
-  deleteArticleId: Scalars['String']['input'];
+  deleteArticleId: Scalars['ID']['input'];
 }>;
 
 
 export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: string };
 
 export type DeleteArticleFromReservationMutationVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
 }>;
 
 
-export type DeleteArticleFromReservationMutation = { __typename?: 'Mutation', deleteArticleFromReservation: { __typename?: 'Article', id: number } };
+export type DeleteArticleFromReservationMutation = { __typename?: 'Mutation', deleteArticleFromReservation: { __typename?: 'Article', id: string } };
 
 export type HandleReservationMutationVariables = Exact<{
   data: NewReservationInput;
 }>;
 
 
-export type HandleReservationMutation = { __typename?: 'Mutation', handleReservation: { __typename?: 'Reservation', id: number } };
+export type HandleReservationMutation = { __typename?: 'Mutation', handleReservation: { __typename?: 'Reservation', id: string } };
 
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number, articles?: Array<{ __typename?: 'Article', id: number }> | null }> };
+export type GetAllProductsQuery = { __typename?: 'Query', getAllProducts: Array<{ __typename?: 'Product', id: string, name: string, description: string, imgUrl: string, price: number, articles?: Array<{ __typename?: 'Article', id: string }> | null }> };
 
 export type GetAllArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllArticlesQuery = { __typename?: 'Query', getAllArticles: Array<{ __typename?: 'Article', id: number, reservations?: Array<{ __typename?: 'Reservation', id: number }> | null, product: { __typename?: 'Product', id: number, name: string } }> };
+export type GetAllArticlesQuery = { __typename?: 'Query', getAllArticles: Array<{ __typename?: 'Article', id: string, reservations?: Array<{ __typename?: 'Reservation', id: string }> | null, product: { __typename?: 'Product', id: string, name: string } }> };
 
 export type GetOneProductByIdQueryVariables = Exact<{
-  productId: Scalars['String']['input'];
+  productId: Scalars['ID']['input'];
 }>;
 
 
-export type GetOneProductByIdQuery = { __typename?: 'Query', getOneProductById: { __typename?: 'Product', id: number, name: string, description: string, imgUrl: string, price: number, articles?: Array<{ __typename?: 'Article', id: number }> | null } };
+export type GetOneProductByIdQuery = { __typename?: 'Query', getOneProductById: { __typename?: 'Product', id: string, name: string, description: string, imgUrl: string, price: number, articles?: Array<{ __typename?: 'Article', id: string }> | null } };
 
 export type LoginQueryVariables = Exact<{
   password: Scalars['String']['input'];
@@ -323,7 +324,7 @@ export type LogoutQuery = { __typename?: 'Query', logout: string };
 export type GetReservationsByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', id: number, startDate: any, endDate: any, status: string, articles: Array<{ __typename?: 'Article', id: number }> } }> };
+export type GetReservationsByUserIdQuery = { __typename?: 'Query', getReservationsByUserId: Array<{ __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', id: string, startDate: any, endDate: any, status: string, articles: Array<{ __typename?: 'Article', id: string }> } }> };
 
 export type SearchAndFilterProductsQueryVariables = Exact<{
   dateRangeInput?: InputMaybe<ProductDateRangeInput>;
@@ -331,19 +332,19 @@ export type SearchAndFilterProductsQueryVariables = Exact<{
 }>;
 
 
-export type SearchAndFilterProductsQuery = { __typename?: 'Query', searchAndFilterProducts: Array<{ __typename?: 'Product', id: number, name: string, description: string, price: number, imgUrl: string }> };
+export type SearchAndFilterProductsQuery = { __typename?: 'Query', searchAndFilterProducts: Array<{ __typename?: 'Product', id: string, name: string, description: string, price: number, imgUrl: string }> };
 
 export type GetCurrentReservationByUserIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: number, createdAt: any, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
+export type GetCurrentReservationByUserIdQuery = { __typename?: 'Query', getCurrentReservationByUserId: { __typename?: 'ReservationWithTotal', totalPrice: number, reservation: { __typename?: 'Reservation', status: string, startDate: any, endDate: any, id: string, createdAt: any, articles: Array<{ __typename?: 'Article', id: string, product: { __typename?: 'Product', name: string, price: number, imgUrl: string } }> } } };
 
 export type GetReservationsByArticleIdQueryVariables = Exact<{
-  articleId: Scalars['String']['input'];
+  articleId: Scalars['ID']['input'];
 }>;
 
 
-export type GetReservationsByArticleIdQuery = { __typename?: 'Query', getReservationsByArticleId: Array<{ __typename?: 'Reservation', id: number, startDate: any, endDate: any, createdAt: any, status: string, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string } }>, user: { __typename?: 'User', email: string } }> };
+export type GetReservationsByArticleIdQuery = { __typename?: 'Query', getReservationsByArticleId: Array<{ __typename?: 'Reservation', id: string, startDate: any, endDate: any, createdAt: any, status: string, articles: Array<{ __typename?: 'Article', id: string, product: { __typename?: 'Product', name: string } }>, user: { __typename?: 'User', email: string } }> };
 
 
 export const CreateNewProductDocument = gql`
@@ -460,7 +461,7 @@ export type CreateNewUserMutationHookResult = ReturnType<typeof useCreateNewUser
 export type CreateNewUserMutationResult = Apollo.MutationResult<CreateNewUserMutation>;
 export type CreateNewUserMutationOptions = Apollo.BaseMutationOptions<CreateNewUserMutation, CreateNewUserMutationVariables>;
 export const DeleteProductDocument = gql`
-    mutation DeleteProduct($deleteProductId: String!) {
+    mutation DeleteProduct($deleteProductId: ID!) {
   deleteProduct(id: $deleteProductId)
 }
     `;
@@ -491,7 +492,7 @@ export type DeleteProductMutationHookResult = ReturnType<typeof useDeleteProduct
 export type DeleteProductMutationResult = Apollo.MutationResult<DeleteProductMutation>;
 export type DeleteProductMutationOptions = Apollo.BaseMutationOptions<DeleteProductMutation, DeleteProductMutationVariables>;
 export const EditProductDocument = gql`
-    mutation EditProduct($data: NewProductInput!, $productId: String!) {
+    mutation EditProduct($data: NewProductInput!, $productId: ID!) {
   editProduct(data: $data, productId: $productId) {
     price
     name
@@ -529,7 +530,7 @@ export type EditProductMutationHookResult = ReturnType<typeof useEditProductMuta
 export type EditProductMutationResult = Apollo.MutationResult<EditProductMutation>;
 export type EditProductMutationOptions = Apollo.BaseMutationOptions<EditProductMutation, EditProductMutationVariables>;
 export const UpdateReservationStatusDocument = gql`
-    mutation UpdateReservationStatus($reservationId: String!) {
+    mutation UpdateReservationStatus($reservationId: ID!) {
   updateReservationStatus(reservationId: $reservationId) {
     id
     status
@@ -565,7 +566,7 @@ export type UpdateReservationStatusMutationHookResult = ReturnType<typeof useUpd
 export type UpdateReservationStatusMutationResult = Apollo.MutationResult<UpdateReservationStatusMutation>;
 export type UpdateReservationStatusMutationOptions = Apollo.BaseMutationOptions<UpdateReservationStatusMutation, UpdateReservationStatusMutationVariables>;
 export const CancelReservationDocument = gql`
-    mutation CancelReservation($reservationId: String!) {
+    mutation CancelReservation($reservationId: ID!) {
   cancelReservation(reservationId: $reservationId) {
     id
     status
@@ -599,7 +600,7 @@ export type CancelReservationMutationHookResult = ReturnType<typeof useCancelRes
 export type CancelReservationMutationResult = Apollo.MutationResult<CancelReservationMutation>;
 export type CancelReservationMutationOptions = Apollo.BaseMutationOptions<CancelReservationMutation, CancelReservationMutationVariables>;
 export const DeleteArticleDocument = gql`
-    mutation DeleteArticle($deleteArticleId: String!) {
+    mutation DeleteArticle($deleteArticleId: ID!) {
   deleteArticle(id: $deleteArticleId)
 }
     `;
@@ -630,7 +631,7 @@ export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticle
 export type DeleteArticleMutationResult = Apollo.MutationResult<DeleteArticleMutation>;
 export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<DeleteArticleMutation, DeleteArticleMutationVariables>;
 export const DeleteArticleFromReservationDocument = gql`
-    mutation DeleteArticleFromReservation($id: String!) {
+    mutation DeleteArticleFromReservation($id: ID!) {
   deleteArticleFromReservation(articleId: $id) {
     id
   }
@@ -788,7 +789,7 @@ export type GetAllArticlesLazyQueryHookResult = ReturnType<typeof useGetAllArtic
 export type GetAllArticlesSuspenseQueryHookResult = ReturnType<typeof useGetAllArticlesSuspenseQuery>;
 export type GetAllArticlesQueryResult = Apollo.QueryResult<GetAllArticlesQuery, GetAllArticlesQueryVariables>;
 export const GetOneProductByIdDocument = gql`
-    query GetOneProductById($productId: String!) {
+    query GetOneProductById($productId: ID!) {
   getOneProductById(productId: $productId) {
     id
     name
@@ -1101,7 +1102,7 @@ export type GetCurrentReservationByUserIdLazyQueryHookResult = ReturnType<typeof
 export type GetCurrentReservationByUserIdSuspenseQueryHookResult = ReturnType<typeof useGetCurrentReservationByUserIdSuspenseQuery>;
 export type GetCurrentReservationByUserIdQueryResult = Apollo.QueryResult<GetCurrentReservationByUserIdQuery, GetCurrentReservationByUserIdQueryVariables>;
 export const GetReservationsByArticleIdDocument = gql`
-    query GetReservationsByArticleId($articleId: String!) {
+    query GetReservationsByArticleId($articleId: ID!) {
   getReservationsByArticleId(articleId: $articleId) {
     id
     articles {

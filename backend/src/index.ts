@@ -11,7 +11,7 @@ import jwt from "jsonwebtoken";
 import ReservationResolver from "./resolvers/ReservationResolver";
 
 export type Context = {
-  id: number;
+  id: string;
   email: string;
   role: "Admin" | "User";
 };

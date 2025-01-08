@@ -10,7 +10,7 @@ export const ReservationsInfoModal = ( {isModalOpen, setIsModalOpen, articleId} 
              
       const { data, loading, error } = useGetReservationsByArticleIdQuery({
         variables: {
-            articleId : articleId.toString()
+            articleId : articleId
         }
     })
 
