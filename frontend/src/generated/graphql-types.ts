@@ -27,6 +27,7 @@ export type Article = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  canDeleteArticle: Scalars['String']['output'];
   cancelReservation: Reservation;
   createNewArticle: Article;
   createNewProduct: Product;
@@ -37,6 +38,11 @@ export type Mutation = {
   editProduct: Product;
   handleReservation: Reservation;
   updateReservationStatus: Reservation;
+};
+
+
+export type MutationCanDeleteArticleArgs = {
+  articleId: Scalars['String']['input'];
 };
 
 
@@ -284,6 +290,13 @@ export type HandleReservationMutationVariables = Exact<{
 
 
 export type HandleReservationMutation = { __typename?: 'Mutation', handleReservation: { __typename?: 'Reservation', id: number } };
+
+export type CanDeleteArticleMutationVariables = Exact<{
+  articleId: Scalars['String']['input'];
+}>;
+
+
+export type CanDeleteArticleMutation = { __typename?: 'Mutation', canDeleteArticle: string };
 
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -695,6 +708,37 @@ export function useHandleReservationMutation(baseOptions?: Apollo.MutationHookOp
 export type HandleReservationMutationHookResult = ReturnType<typeof useHandleReservationMutation>;
 export type HandleReservationMutationResult = Apollo.MutationResult<HandleReservationMutation>;
 export type HandleReservationMutationOptions = Apollo.BaseMutationOptions<HandleReservationMutation, HandleReservationMutationVariables>;
+export const CanDeleteArticleDocument = gql`
+    mutation CanDeleteArticle($articleId: String!) {
+  canDeleteArticle(articleId: $articleId)
+}
+    `;
+export type CanDeleteArticleMutationFn = Apollo.MutationFunction<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>;
+
+/**
+ * __useCanDeleteArticleMutation__
+ *
+ * To run a mutation, you first call `useCanDeleteArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCanDeleteArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [canDeleteArticleMutation, { data, loading, error }] = useCanDeleteArticleMutation({
+ *   variables: {
+ *      articleId: // value for 'articleId'
+ *   },
+ * });
+ */
+export function useCanDeleteArticleMutation(baseOptions?: Apollo.MutationHookOptions<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>(CanDeleteArticleDocument, options);
+      }
+export type CanDeleteArticleMutationHookResult = ReturnType<typeof useCanDeleteArticleMutation>;
+export type CanDeleteArticleMutationResult = Apollo.MutationResult<CanDeleteArticleMutation>;
+export type CanDeleteArticleMutationOptions = Apollo.BaseMutationOptions<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {
