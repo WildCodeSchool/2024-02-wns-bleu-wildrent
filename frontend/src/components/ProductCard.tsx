@@ -1,12 +1,13 @@
-import { Card, Button } from "antd";
-import Meta from "antd/es/card/Meta";
+import { Card, Button, Typography } from "antd";
 import { Product } from "../interface/types";
+
+const { Text } = Typography;
 
 function ProductCard({ product }: { product: Product }) {
   return (
     <Card
       hoverable
-      className="w-72 rounded-lg shadow-md transition-shadow duration-300 hover:shadow-lg"
+      className="w-72 h-[480px] rounded-lg shadow-xl transition-shadow duration-300 hover:shadow-2xl"
       cover={
         <img
           alt={product.description}
@@ -15,23 +16,24 @@ function ProductCard({ product }: { product: Product }) {
         />
       }
     >
-      <div className="flex flex-col items-center text-center">
-        <Meta
-          title={<div className="text-xl font-bold">{product.name}</div>}
-          description={
-            <div className="text-sm text-gray-800">
-              <div>{product.description}</div>
-              <div className="mt-2 font-semibold text-gray-900">
-                {product.price} euros / jour
-              </div>
-            </div>
-          }
-        />
+      <div className="flex flex-col h-full p-4 space-y-4">
+        <div className="text-xl font-semibold text-gray-800">
+          {product.name}
+        </div>
+
+        <div className="text-sm text-gray-600 flex-1">
+          <Text className="line-clamp-3">{product.description}</Text>
+        </div>
+
+        <div className="font-semibold text-lg text-gray-900">
+          {product.price} euros / jour
+        </div>
+
         <Button
           type="primary"
           size="large"
           block
-          className="bg-blue-900 text-white transition-colors duration-300 hover:bg-orange-600 mt-4"
+          className="bg-blue-900 text-white hover:bg-orange-600 transition-colors duration-300"
         >
           En savoir plus
         </Button>
