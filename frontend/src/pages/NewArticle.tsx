@@ -18,7 +18,7 @@ const { Title } = Typography;
 const NewArticle = () => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [articleId, setArticleId] = useState("") 
+  const [articleId, setArticleId] = useState("")
   const columns = [
     {
       title: "ID",
@@ -34,14 +34,14 @@ const NewArticle = () => {
       title: "Réservations",
       key: "reservations",
       dataIndex: "id",
-      render: (id: string) => 
-      <Button 
-        onClick={() => {
-        setIsModalOpen(!isModalOpen),
-        setArticleId(id)
-        }}>
-        Détails
-      </Button>
+      render: (id: string) =>
+        <Button
+          onClick={() => {
+            setIsModalOpen(!isModalOpen),
+            setArticleId(id)
+          }}>
+          Détails
+        </Button>
     },
     {
       title: "Supprimer",
@@ -77,7 +77,7 @@ const NewArticle = () => {
     const formJson: NewArticleInput = {
       ...values,
       availability: values.availability === "true",
-      productId: String(values.productId),
+      productId: values.productId,
     };
     console.log(formJson);
 
@@ -138,7 +138,7 @@ const NewArticle = () => {
           scroll={{ x: true }}
         />
       </div>
-      {isModalOpen && 
+      {isModalOpen && articleId &&
       <ReservationsInfoModal articleId={articleId} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
       }
     </>

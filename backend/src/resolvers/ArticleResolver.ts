@@ -7,6 +7,7 @@ import {
   Mutation,
   Query,
   Resolver,
+  ID
 } from "type-graphql";
 import { Product } from "../entities/product";
 import { Role } from "../entities/user";
@@ -16,8 +17,8 @@ class NewArticleInput {
   @Field()
   availability: boolean;
 
-  @Field(() => String)
-  productId: number;
+  @Field(() => ID)
+  productId: string;
 }
 
 @Resolver(Article)
@@ -35,7 +36,7 @@ class ArticleResolver {
   @Mutation(() => Article)
   async createNewArticle(@Arg("data") newArticleData: NewArticleInput) {
     const product = await Product.findOne({
-      where: { id: Number(newArticleData.productId) },
+      where: { id: newArticleData.productId },
     });
     if (!product) {
       throw new Error("Product not found");
@@ -51,15 +52,15 @@ class ArticleResolver {
 
   @Authorized(Role.Admin)
   @Mutation(() => String)
-  async deleteArticle(@Arg("id") idToDelete: string) {
+  async deleteArticle(@Arg("id", () => ID) idToDelete: string) {
     await Article.delete(idToDelete);
     return `Product deleted successfully`;
   }
 
   @Mutation(() => Article)
-  async deleteArticleFromReservation(@Arg("articleId") articleId: string) {
+  async deleteArticleFromReservation(@Arg("articleId", () => ID) articleId: string) {
     const article = await Article.findOne({
-      where: { id: Number.parseInt(articleId) },
+      where: { id: articleId },
       relations: { reservations: true },
     });
 

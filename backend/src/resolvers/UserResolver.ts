@@ -22,7 +22,7 @@ class UserInfo {
   role: Role;
 }
 
-class UserResolver {
+export class UserResolver {
   @Query(() => String)
   async logout(@Ctx() context: any) {
     context.res.setHeader("Set-Cookie", `token=;Max-Age=0`);
