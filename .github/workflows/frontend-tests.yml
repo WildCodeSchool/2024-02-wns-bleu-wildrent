@@ -45,3 +45,10 @@ jobs:
           context: "{{defaultContext}}:backend"
           file: Dockerfile.prod
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-backend:latest, ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-backend:${{ github.sha }}
+      - name: Build and push img
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          context: "{{defaultContext}}:img"
+          file: Dockerfile.prod
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-img:latest, ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-img:${{ github.sha }}
