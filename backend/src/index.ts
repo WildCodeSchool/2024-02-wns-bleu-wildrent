@@ -9,6 +9,7 @@ import "dotenv/config";
 import setCookieParser from "set-cookie-parser";
 import jwt from "jsonwebtoken";
 import ReservationResolver from "./resolvers/ReservationResolver";
+import PaymentResolver from "./resolvers/PaymentResolver";
 
 export type Context = {
   id: string;
@@ -24,6 +25,7 @@ const start = async () => {
       ArticleResolver,
       UserResolver,
       ReservationResolver,
+      PaymentResolver
     ],
     authChecker: ({ context }: { context: Context }, roles) => {
       console.log("roles for this query/mutation ", roles);
