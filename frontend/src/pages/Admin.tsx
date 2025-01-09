@@ -2,6 +2,7 @@ import { Tabs, Typography } from "antd";
 import NewProduct from "./NewProduct";
 import NewArticle from "./NewArticle";
 import { useMediaQuery } from "react-responsive";
+import HandleReservations from "./HandleReservations";
 
 const { Title } = Typography;
 
@@ -22,7 +23,7 @@ function Admin() {
     {
       key: "3",
       label: "Gérer les réservations",
-      children: "à venir",
+      children: <HandleReservations />,
     },
   ];
 

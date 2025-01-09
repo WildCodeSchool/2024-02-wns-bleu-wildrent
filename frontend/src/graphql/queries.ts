@@ -72,31 +72,37 @@ export const LOGOUT = gql`
 export const GET_RESERVATIONS_BY_USER_ID = gql`
   query GetReservationsByUserId {
     getReservationsByUserId {
-      reservation
-      {id
-      startDate
-      endDate
-      status
-      articles {
+      reservation {
         id
-      }}
+        startDate
+        endDate
+        status
+        articles {
+          id
+        }
+      }
       totalPrice
     }
   }
 `;
 
 export const SEARCH_AND_FILTER_PRODUCTS = gql`
-query SearchAndFilterProducts($dateRangeInput: ProductDateRangeInput, $keyword: String) {
-  searchAndFilterProducts(dateRangeInput: $dateRangeInput, keyword: $keyword) {
-    id
-    name
-    description
-    price
-    imgUrl
+  query SearchAndFilterProducts(
+    $dateRangeInput: ProductDateRangeInput
+    $keyword: String
+  ) {
+    searchAndFilterProducts(
+      dateRangeInput: $dateRangeInput
+      keyword: $keyword
+    ) {
+      id
+      name
+      description
+      price
+      imgUrl
+    }
   }
-}
 `;
-
 
 export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
   query GetCurrentReservationByUserId {
@@ -121,24 +127,42 @@ export const GET_CURRENT_RESERVATION_BY_USER_ID = gql`
   }
 `;
 
-
 export const GET_RESERVATIONS_BY_ARTICLE_ID = gql`
-query GetReservationsByArticleId($articleId: ID!) {
-  getReservationsByArticleId(articleId: $articleId) {
-    id
-    articles {
+  query GetReservationsByArticleId($articleId: String!) {
+    getReservationsByArticleId(articleId: $articleId) {
+
       id
-      product {
-        name
+      articles {
+        id
+        product {
+          name
+        }
+      }
+      startDate
+      endDate
+      createdAt
+      status
+      user {
+        email
       }
     }
-    startDate
-    endDate
-    createdAt
-    status
-    user {
-      email
+  }
+`;
+
+export const GET_ALL_RESERVATIONS = gql`
+  query GetAllReservations {
+    getAllReservations {
+      startDate
+      endDate
+      user {
+        firstname
+        lastname
+      }
+      articles {
+        product {
+          name
+        }
+      }
     }
   }
-}
 `;

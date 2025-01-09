@@ -27,6 +27,7 @@ export type Article = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  canDeleteArticle: Scalars['String']['output'];
   cancelReservation: Reservation;
   createNewArticle: Article;
   createNewProduct: Product;
@@ -37,6 +38,11 @@ export type Mutation = {
   editProduct: Product;
   handleReservation: Reservation;
   updateReservationStatus: Reservation;
+};
+
+
+export type MutationCanDeleteArticleArgs = {
+  articleId: Scalars['String']['input'];
 };
 
 
@@ -286,6 +292,13 @@ export type HandleReservationMutationVariables = Exact<{
 
 export type HandleReservationMutation = { __typename?: 'Mutation', handleReservation: { __typename?: 'Reservation', id: string } };
 
+export type CanDeleteArticleMutationVariables = Exact<{
+  articleId: Scalars['String']['input'];
+}>;
+
+
+export type CanDeleteArticleMutation = { __typename?: 'Mutation', canDeleteArticle: string };
+
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -345,6 +358,11 @@ export type GetReservationsByArticleIdQueryVariables = Exact<{
 
 
 export type GetReservationsByArticleIdQuery = { __typename?: 'Query', getReservationsByArticleId: Array<{ __typename?: 'Reservation', id: string, startDate: any, endDate: any, createdAt: any, status: string, articles: Array<{ __typename?: 'Article', id: string, product: { __typename?: 'Product', name: string } }>, user: { __typename?: 'User', email: string } }> };
+
+export type GetAllReservationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllReservationsQuery = { __typename?: 'Query', getAllReservations: Array<{ __typename?: 'Reservation', startDate: any, endDate: any, user: { __typename?: 'User', firstname: string, lastname: string }, articles: Array<{ __typename?: 'Article', product: { __typename?: 'Product', name: string } }> }> };
 
 
 export const CreateNewProductDocument = gql`
@@ -696,6 +714,37 @@ export function useHandleReservationMutation(baseOptions?: Apollo.MutationHookOp
 export type HandleReservationMutationHookResult = ReturnType<typeof useHandleReservationMutation>;
 export type HandleReservationMutationResult = Apollo.MutationResult<HandleReservationMutation>;
 export type HandleReservationMutationOptions = Apollo.BaseMutationOptions<HandleReservationMutation, HandleReservationMutationVariables>;
+export const CanDeleteArticleDocument = gql`
+    mutation CanDeleteArticle($articleId: String!) {
+  canDeleteArticle(articleId: $articleId)
+}
+    `;
+export type CanDeleteArticleMutationFn = Apollo.MutationFunction<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>;
+
+/**
+ * __useCanDeleteArticleMutation__
+ *
+ * To run a mutation, you first call `useCanDeleteArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCanDeleteArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [canDeleteArticleMutation, { data, loading, error }] = useCanDeleteArticleMutation({
+ *   variables: {
+ *      articleId: // value for 'articleId'
+ *   },
+ * });
+ */
+export function useCanDeleteArticleMutation(baseOptions?: Apollo.MutationHookOptions<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>(CanDeleteArticleDocument, options);
+      }
+export type CanDeleteArticleMutationHookResult = ReturnType<typeof useCanDeleteArticleMutation>;
+export type CanDeleteArticleMutationResult = Apollo.MutationResult<CanDeleteArticleMutation>;
+export type CanDeleteArticleMutationOptions = Apollo.BaseMutationOptions<CanDeleteArticleMutation, CanDeleteArticleMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {
@@ -1154,3 +1203,52 @@ export type GetReservationsByArticleIdQueryHookResult = ReturnType<typeof useGet
 export type GetReservationsByArticleIdLazyQueryHookResult = ReturnType<typeof useGetReservationsByArticleIdLazyQuery>;
 export type GetReservationsByArticleIdSuspenseQueryHookResult = ReturnType<typeof useGetReservationsByArticleIdSuspenseQuery>;
 export type GetReservationsByArticleIdQueryResult = Apollo.QueryResult<GetReservationsByArticleIdQuery, GetReservationsByArticleIdQueryVariables>;
+export const GetAllReservationsDocument = gql`
+    query GetAllReservations {
+  getAllReservations {
+    startDate
+    endDate
+    user {
+      firstname
+      lastname
+    }
+    articles {
+      product {
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllReservationsQuery__
+ *
+ * To run a query within a React component, call `useGetAllReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllReservationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllReservationsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllReservationsQuery, GetAllReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllReservationsQuery, GetAllReservationsQueryVariables>(GetAllReservationsDocument, options);
+      }
+export function useGetAllReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllReservationsQuery, GetAllReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllReservationsQuery, GetAllReservationsQueryVariables>(GetAllReservationsDocument, options);
+        }
+export function useGetAllReservationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllReservationsQuery, GetAllReservationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllReservationsQuery, GetAllReservationsQueryVariables>(GetAllReservationsDocument, options);
+        }
+export type GetAllReservationsQueryHookResult = ReturnType<typeof useGetAllReservationsQuery>;
+export type GetAllReservationsLazyQueryHookResult = ReturnType<typeof useGetAllReservationsLazyQuery>;
+export type GetAllReservationsSuspenseQueryHookResult = ReturnType<typeof useGetAllReservationsSuspenseQuery>;
+export type GetAllReservationsQueryResult = Apollo.QueryResult<GetAllReservationsQuery, GetAllReservationsQueryVariables>;

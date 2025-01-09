@@ -98,3 +98,9 @@ export const HANDLE_RESERVATION = gql`
     }
   }
 `;
+
+export const CAN_DELETE_ARTICLE = gql`
+  mutation CanDeleteArticle($articleId: String!) {
+    canDeleteArticle(articleId: $articleId)
+  }
+`;

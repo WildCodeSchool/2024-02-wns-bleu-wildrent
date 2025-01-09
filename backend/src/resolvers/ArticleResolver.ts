@@ -25,9 +25,11 @@ class NewArticleInput {
 class ArticleResolver {
   @Query(() => [Article])
   async getAllArticles() {
-    const article = await Article.find({ relations: { product: true, reservations: true }, order: { product: {name: "ASC" }} 
-    })
-    return article
+    const article = await Article.find({
+      relations: { product: true, reservations: true },
+      order: { product: { name: "ASC" } },
+    });
+    return article;
   }
 
   @Authorized(Role.Admin)
@@ -75,6 +77,26 @@ class ArticleResolver {
     await article.save();
 
     return article;
+  }
+
+  @Mutation(() => String)
+  async canDeleteArticle(
+    @Arg("articleId") articleId: string
+  ): Promise<boolean> {
+    const article = await Article.findOne({
+      where: { id: Number.parseInt(articleId) },
+      relations: { reservations: true },
+    });
+
+    if (!article) {
+      throw new Error("Article not found");
+    }
+
+    if (article.reservations && article.reservations.length > 0) {
+      throw new Error("Article is part of a reservation and cannot be deleted");
+    }
+
+    return true;
   }
 }
 
