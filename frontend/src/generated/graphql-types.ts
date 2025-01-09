@@ -358,6 +358,11 @@ export type GetReservationsByArticleIdQueryVariables = Exact<{
 
 export type GetReservationsByArticleIdQuery = { __typename?: 'Query', getReservationsByArticleId: Array<{ __typename?: 'Reservation', id: number, startDate: any, endDate: any, createdAt: any, status: string, articles: Array<{ __typename?: 'Article', id: number, product: { __typename?: 'Product', name: string } }>, user: { __typename?: 'User', email: string } }> };
 
+export type GetAllReservationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllReservationsQuery = { __typename?: 'Query', getAllReservations: Array<{ __typename?: 'Reservation', startDate: any, endDate: any, user: { __typename?: 'User', firstname: string, lastname: string }, articles: Array<{ __typename?: 'Article', product: { __typename?: 'Product', name: string } }> }> };
+
 
 export const CreateNewProductDocument = gql`
     mutation CreateNewProduct($data: NewProductInput!) {
@@ -1197,3 +1202,52 @@ export type GetReservationsByArticleIdQueryHookResult = ReturnType<typeof useGet
 export type GetReservationsByArticleIdLazyQueryHookResult = ReturnType<typeof useGetReservationsByArticleIdLazyQuery>;
 export type GetReservationsByArticleIdSuspenseQueryHookResult = ReturnType<typeof useGetReservationsByArticleIdSuspenseQuery>;
 export type GetReservationsByArticleIdQueryResult = Apollo.QueryResult<GetReservationsByArticleIdQuery, GetReservationsByArticleIdQueryVariables>;
+export const GetAllReservationsDocument = gql`
+    query GetAllReservations {
+  getAllReservations {
+    startDate
+    endDate
+    user {
+      firstname
+      lastname
+    }
+    articles {
+      product {
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetAllReservationsQuery__
+ *
+ * To run a query within a React component, call `useGetAllReservationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAllReservationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAllReservationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAllReservationsQuery(baseOptions?: Apollo.QueryHookOptions<GetAllReservationsQuery, GetAllReservationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAllReservationsQuery, GetAllReservationsQueryVariables>(GetAllReservationsDocument, options);
+      }
+export function useGetAllReservationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAllReservationsQuery, GetAllReservationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAllReservationsQuery, GetAllReservationsQueryVariables>(GetAllReservationsDocument, options);
+        }
+export function useGetAllReservationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAllReservationsQuery, GetAllReservationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetAllReservationsQuery, GetAllReservationsQueryVariables>(GetAllReservationsDocument, options);
+        }
+export type GetAllReservationsQueryHookResult = ReturnType<typeof useGetAllReservationsQuery>;
+export type GetAllReservationsLazyQueryHookResult = ReturnType<typeof useGetAllReservationsLazyQuery>;
+export type GetAllReservationsSuspenseQueryHookResult = ReturnType<typeof useGetAllReservationsSuspenseQuery>;
+export type GetAllReservationsQueryResult = Apollo.QueryResult<GetAllReservationsQuery, GetAllReservationsQueryVariables>;
