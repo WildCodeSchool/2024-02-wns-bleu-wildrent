@@ -52,4 +52,3 @@ jobs:
           context: "{{defaultContext}}:img"
           file: Dockerfile.prod
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-img:latest, ${{ secrets.DOCKERHUB_USERNAME }}/wildrent-img:${{ github.sha }}
-          
