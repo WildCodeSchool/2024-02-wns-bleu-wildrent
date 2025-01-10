@@ -10,6 +10,8 @@ services:
       interval: 1s
       timeout: 2s
       retries: 100
+    environment: 
+      - STRIPE_SECRET_KEY
     depends_on:
       db:
         condition: service_healthy

@@ -2,12 +2,14 @@ services:
   backend:
     build: ./backend
     env_file:
-      - .env
+      - e2e/.env.e2e
     healthcheck:
       test: 'curl --fail --request POST --header ''content-type: application/json'' --url ''http://localhost:4000'' --data ''{"query":"query { __typename }"}'' || exit 1'
       interval: 1s
       timeout: 2s
       retries: 100
+    environment: 
+      - STRIPE_SECRET_KEY
     depends_on:
       db:
         condition: service_healthy
