@@ -9,7 +9,7 @@ const { TabPane } = Tabs;
 const Profile = () => {
   const userInfo = useContext(UserContext);
   const { data, loading, error } = useGetReservationsByUserIdQuery()
-console.log(data, 'data')
+
   if (loading) {
     return <p>Loading</p>;
   }
@@ -19,7 +19,7 @@ console.log(data, 'data')
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-8">
+    <div>
       <Card>
         <Tabs defaultActiveKey="1">
           <TabPane tab="Informations personnelles" key="1">

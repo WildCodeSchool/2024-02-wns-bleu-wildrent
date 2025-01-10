@@ -30,6 +30,7 @@ export type Mutation = {
   cancelReservation: Reservation;
   createNewArticle: Article;
   createNewProduct: Product;
+  createPaymentIntent: PaymentIntentResponse;
   createUser: Scalars['String']['output'];
   deleteArticle: Scalars['String']['output'];
   deleteArticleFromReservation: Article;
@@ -52,6 +53,11 @@ export type MutationCreateNewArticleArgs = {
 
 export type MutationCreateNewProductArgs = {
   data: NewProductInput;
+};
+
+
+export type MutationCreatePaymentIntentArgs = {
+  amount: Scalars['Float']['input'];
 };
 
 
@@ -109,6 +115,11 @@ export type NewReservationInput = {
   articleId: Scalars['ID']['input'];
   endDate: Scalars['DateTimeISO']['input'];
   startDate: Scalars['DateTimeISO']['input'];
+};
+
+export type PaymentIntentResponse = {
+  __typename?: 'PaymentIntentResponse';
+  clientSecret: Scalars['String']['output'];
 };
 
 export type Product = {
@@ -285,6 +296,13 @@ export type HandleReservationMutationVariables = Exact<{
 
 
 export type HandleReservationMutation = { __typename?: 'Mutation', handleReservation: { __typename?: 'Reservation', id: string } };
+
+export type CreatePaymentIntentMutationVariables = Exact<{
+  amount: Scalars['Float']['input'];
+}>;
+
+
+export type CreatePaymentIntentMutation = { __typename?: 'Mutation', createPaymentIntent: { __typename?: 'PaymentIntentResponse', clientSecret: string } };
 
 export type GetAllProductsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -696,6 +714,39 @@ export function useHandleReservationMutation(baseOptions?: Apollo.MutationHookOp
 export type HandleReservationMutationHookResult = ReturnType<typeof useHandleReservationMutation>;
 export type HandleReservationMutationResult = Apollo.MutationResult<HandleReservationMutation>;
 export type HandleReservationMutationOptions = Apollo.BaseMutationOptions<HandleReservationMutation, HandleReservationMutationVariables>;
+export const CreatePaymentIntentDocument = gql`
+    mutation CreatePaymentIntent($amount: Float!) {
+  createPaymentIntent(amount: $amount) {
+    clientSecret
+  }
+}
+    `;
+export type CreatePaymentIntentMutationFn = Apollo.MutationFunction<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>;
+
+/**
+ * __useCreatePaymentIntentMutation__
+ *
+ * To run a mutation, you first call `useCreatePaymentIntentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreatePaymentIntentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createPaymentIntentMutation, { data, loading, error }] = useCreatePaymentIntentMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *   },
+ * });
+ */
+export function useCreatePaymentIntentMutation(baseOptions?: Apollo.MutationHookOptions<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>(CreatePaymentIntentDocument, options);
+      }
+export type CreatePaymentIntentMutationHookResult = ReturnType<typeof useCreatePaymentIntentMutation>;
+export type CreatePaymentIntentMutationResult = Apollo.MutationResult<CreatePaymentIntentMutation>;
+export type CreatePaymentIntentMutationOptions = Apollo.BaseMutationOptions<CreatePaymentIntentMutation, CreatePaymentIntentMutationVariables>;
 export const GetAllProductsDocument = gql`
     query GetAllProducts {
   getAllProducts {

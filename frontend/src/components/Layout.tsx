@@ -39,7 +39,7 @@ function Layout() {
       >
         <AntLayout>
           <Navbar />
-          <Content>
+          <Content className='flex justify-center h-full p-8'>
             <Outlet />
           </Content>
           <div className="flex justify-center">

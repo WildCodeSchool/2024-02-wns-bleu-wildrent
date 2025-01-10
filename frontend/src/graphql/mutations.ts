@@ -98,3 +98,11 @@ export const HANDLE_RESERVATION = gql`
     }
   }
 `;
+
+export const CREATE_PAYMENT_INTENT = gql`
+mutation CreatePaymentIntent($amount: Float!) {
+  createPaymentIntent(amount: $amount) {
+    clientSecret
+  }
+}
+`;

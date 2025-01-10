@@ -1,5 +1,4 @@
 import { Card, Divider } from "antd";
-import ValidateReservationButton from "./ValidateReservationButton";
 import { ReservationData } from "../interface/types";
 
 export const ReservationCard = ({
@@ -14,6 +13,7 @@ export const ReservationCard = ({
     reservationData.reservation.endDate
   ).toLocaleDateString("fr-FR");
   const reservationId = reservationData.reservation.id;
+
   return (
     <>
       <Card title={`Réservation numéro ${reservationId}`}>
@@ -22,11 +22,6 @@ export const ReservationCard = ({
         <p>Nombre d'articles : {reservationData.reservation.articles.length}</p>
         <p>Prix : {reservationData.totalPrice} euros</p>
         <p>Status : {reservationData.reservation.status}</p>
-        {reservationData.reservation.status === "pending" && (
-          <ValidateReservationButton
-            reservation={reservationData.reservation}
-          />
-        )}
       </Card>
       <Divider dashed />
     </>
